@@ -51,6 +51,20 @@ def configure_nca(config_path):
     evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
     conf.add_substep(name="Evolution", active_agents=["automata"], transition_fn=[evolve_transition])
 
+    from substeps.evolve_cell.action import GenerateStateVector, GenerateAliveMask
+    generate_state_vector = conf.create_function(GenerateStateVector, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['state_vector'], fn_type="action")
+    conf.add_substep(name="GenerateStateVector", active_agents=["automata"], action_fn=[generate_state_vector])
+    
+    generate_alive_mask = conf.create_function(GenerateAliveMask, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['alive_mask'], fn_type="action")
+    conf.add_substep(name="GenerateAliveMask", active_agents=["automata"], action_fn=[generate_alive_mask])
+ 
+    from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
+    alive_state_observation = conf.create_function(ObserveAliveState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['alive_state'], fn_type="observation") 
+    conf.add_substep(name="ObserveAliveState", active_agents=["automata"], observation_fn=[alive_state_observation])
+    
+    neighbors_state_observation = conf.create_function(ObserveNeighborsState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['neighbors_state'], fn_type="observation")
+    conf.add_substep(name="ObserveNeighborsState", active_agents=["automata"], observation_fn=[neighbors_state_observation])
+    
     conf.render(config_path)
 
     return read_config(config_path), conf.reg

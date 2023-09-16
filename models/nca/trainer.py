@@ -10,26 +10,26 @@ from AgentTorch.helpers import read_config
 
 # *************************************************************************
 # Parsing command line arguments
-parser = argparse.ArgumentParser(
-    description="AgentTorch: design, simulate and optimize agent-based models"
-)
-parser.add_argument(
-    "-c", "--config", help="Name of the yaml config file with the parameters."
-)
-# # *************************************************************************
-args = parser.parse_args()
-config_path = args.config
-
+# parser = argparse.ArgumentParser(
+#     description="AgentTorch: design, simulate and optimize agent-based models"
+# )
+# parser.add_argument(
+#     "-c", "--config", help="Name of the yaml config file with the parameters."
+# )
+# # # *************************************************************************
+# args = parser.parse_args()
+# config_path = args.config
+config_path = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
 config, registry = configure_nca('new_config.yaml')
 
-runner = NCARunner(read_config('config.yaml'), registry)
+runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml'), registry)
 runner.init()
 
 device = torch.device(runner.config['simulation_metadata']['device'])
 
 # *************************************************************************
 # Generating target
-def load_emoji(index, path="./data/emoji.png"):
+def load_emoji(index, path="/Users/shashankkumar/Documents/AgentTorch/models/nca/data/emoji.png"):
     im = imageio.imread(path)
     emoji = np.array(im[:, index*40:(index+1)*40].astype(np.float32))
     emoji /= 255.0
@@ -54,7 +54,8 @@ loss_log = []
 
 num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
 
-for ix in range(runner.config['simulation_metadata']['num_episodes']):
+for ix in range(200):
+    print(ix)
     runner.reset()
     optimizer.zero_grad()
     runner.step(num_steps_per_episode)

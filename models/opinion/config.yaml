@@ -1,8 +1,8 @@
 simulation_metadata:
-    num_episodes: 1
+    num_episodes: 20
     num_steps_per_episode: 10
     num_substeps_per_step: 1
-    device: 'cpu'
+    device: 'mps'
     learning_params:
         lr: 2e-3
         betas:

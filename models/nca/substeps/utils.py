@@ -459,62 +459,6 @@ class IsoNcaConfig():
         self.model_suffix = "model"
         self.hidden_n = config['simulation_metadata']['hidden_n']
 
-
-class CA(torch.nn.Module):
-    def __init__(self,):
-        super().__init__()
-
-        self =
-        self.isoOps = IsoNcaOps)
-        self.chn = self.CHN
-        self.ANGLE_CHN = self.ANGLE_CHN
-        self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
-        # self.model_type = self.model_type
-        self.hidden_n = self.hidden_n
-
-        # self.perception = perception
-
-        self.perception = self.isoOps.get_perception(self.model_type)
-        self.nhood_kernel = self.nhood_kernel
-        self.perchannel_conv = self.isoOps.perchannel_conv
-        # determene the number of perceived channels
-        perc_n = self.perception(torch.zeros([1, self.chn, 8, 8])).shape[1]
-        # approximately equalize the param number btw model variants
-        hidden_n = 8*1024//(perc_n+self.chn)
-        hidden_n = (hidden_n+31)//32*32
-        print('perc_n:', perc_n, 'hidden_n:', hidden_n)
-        self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
-        self.w2 = torch.nn.Conv2d(hidden_n, self.chn, 1, bias=False)
-        self.w2.weight.data.zero_()
-
-    def forward(self, x, update_rate=0.5):
-        alive = self.get_alive_mask(x)
-        y = self.perception(x)
-        y = self.w2(torch.relu(self.w1(y)))
-        b, c, h, w = y.shape
-        update_mask = (torch.rand(b, 1, h, w)+update_rate).floor()
-        x = x + y*update_mask
-        if self.SCALAR_CHN == self.chn:
-            x = x*alive
-        else:
-            x = torch.cat([x[:, :self.SCALAR_CHN]*alive,
-                            x[:, self.SCALAR_CHN:] % (np.pi*2.0)], 1)
-        return x
-
-    def seed(self, n, sz=128, angle=None, seed_size=1):
-        x = torch.zeros(n, self.chn, sz, sz)
-        if self.SCALAR_CHN != self.chn:
-            x[:, -1] = torch.rand(n, sz, sz)*np.pi*2.0
-        r, s = sz//2, seed_size
-        x[:, 3:self.SCALAR_CHN, r:r+s, r:r+s] = 1.0
-        if angle is not None:
-            x[:, -1, r:r+s, r:r+s] = angle
-        return x
-
-    def get_alive_mask(self, x):
-        mature = (x[:, 3:4] > 0.1).to(torch.float32)
-        return self.perchannel_conv(mature, self.nhood_kernel[None, :]) > 0.5
-
 def make_circle_masks(n, h, w):
         x = np.linspace(-1.0, 1.0, w)[None, None, :]
         y = np.linspace(-1.0, 1.0, h)[None, :, None]

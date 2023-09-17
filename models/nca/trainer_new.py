@@ -4,19 +4,19 @@ from AgentTorch.helpers import read_config
 import argparse
 
 if __name__ == "__main__":
-    try:
-        # Parsing command line arguments
-        parser = argparse.ArgumentParser(
-            description="AgentTorch: design, simulate and optimize agent-based models"
-        )
-        parser.add_argument(
-            "-c", "--config", help="Name of the yaml config file with the parameters."
-        )
-        # *************************************************************************
-        args = parser.parse_args()
+    # Parsing command line arguments
+    parser = argparse.ArgumentParser(
+        description="AgentTorch: design, simulate and optimize agent-based models"
+    )
+    parser.add_argument(
+        "-c", "--config", help="Name of the yaml config file with the parameters."
+    )
+    # *************************************************************************
+    args = parser.parse_args()
+    if not args:
         config_file = args.config
     
-    except:
+    else:
         config_file = "/Users/shashankkumar/Documents/GitHub/NCA/AgentTorch/models/nca/config.yaml"
     
     config = read_config(config_file)

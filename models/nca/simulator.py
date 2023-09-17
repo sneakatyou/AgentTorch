@@ -2,8 +2,31 @@ import torch
 import numpy as np
 import sys
 sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorch/')
-from AgentTorch import Configurator, Runner
+from AgentTorch import Configurator, Runner, Registry
 from AgentTorch.helpers import read_config
+
+def get_registry():
+    reg = Registry()
+
+    from substeps.evolve_cell.transition import IsoNCAEvolve
+    # reg.register(NCAEvolve, "NCAEvolve", key="transition")
+    reg.register(IsoNCAEvolve, "IsoNCAEvolve", key="transition")
+
+    from substeps.evolve_cell.action import GenerateStateVector, GenerateAliveMask
+    reg.register(GenerateStateVector, "GenerateStateVector", key="policy")
+    reg.register(GenerateAliveMask, "GenerateAliveMask", key="policy")
+    
+    from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
+    reg.register(ObserveAliveState, "ObserveAliveState", key="observation")
+    reg.register(ObserveNeighborsState, "ObserveNeighborsState", key="observation")
+    
+    from AgentTorch.helpers.environment import grid_network
+    reg.register(grid_network, "grid", key="network")
+    
+    from substeps.utils import nca_initialize_state
+    reg.register(nca_initialize_state, "nca_initialize_state", key="initialization")
+    
+    return reg
 
 def configure_nca(config_path):
     conf = Configurator()

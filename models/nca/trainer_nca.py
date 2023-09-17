@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pylab as pl
 import sys
 sys.path.append("/Users/shashankkumar/Documents/AgentTorch/")
-sys.path.append("/Users/shashankkumar/Documents/AgentTorch/models/nca/")
 from IPython.display import clear_output
 from tqdm import tqdm_notebook, tnrange
 import torchvision.models as models
@@ -16,8 +15,7 @@ from functools import partial
 from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 
-
-# from simulator import NCARunner, get_registry
+from simulator import NCARunner, get_registry
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, IsoNcaConfig, make_circle_masks
 import torcheck
@@ -36,7 +34,7 @@ class TrainIsoNca:
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
         self.AUX_L_TYPE = config['simulation_metadata']['aux_l_type']
         self.TARGET_P = config['simulation_metadata']['target']
-        self.MODEL_TYPE = config['simulation_metadata']['MODEL_TYPE']
+        self.MODEL_TYPE = config['simulation_metadata']['model_type']
         
         self.H = config['simulation_metadata']['h']
         self.W = config['simulation_metadata']['w']
@@ -171,7 +169,7 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/Users/shashankkumar/Documents/GitHub/NCA/AgentTorch/models/nca/config.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config_iso.yaml"
     
     config = read_config(config_file)
     registry = get_registry()

@@ -17,7 +17,7 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/Users/shashankkumar/Documents/GitHub/NCA/AgentTorch/models/nca/config.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config_iso.yaml"
     
     config = read_config(config_file)
     registry = get_registry()

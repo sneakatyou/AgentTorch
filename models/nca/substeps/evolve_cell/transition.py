@@ -10,55 +10,32 @@ from substeps.utils import IsoNcaOps, IsoNcaConfig
 class IsoNCAEvolve(SubstepTransition):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.cfg = IsoNcaConfig()
-        self.ops = IsoNcaOps(self.cfg)
-        
-        self.perchannel_conv = self.ops.perchannel_conv
-        
-        #need to replace with metadata
-        self.chn = self.cfg.CHN
-        self.ANGLE_CHN = self.cfg.ANGLE_CHN
-        self.SCALAR_CHN = self.cfg.CHN-self.cfg.ANGLE_CHN
-        self.hidden_n = self.cfg.hidden_n
-        self.perception = self.ops.get_perception(self.cfg.model_type)
-        self.nhood_kernel = self.cfg.nhood_kernel
+        self.ops = IsoNcaOps()
+        self.CHN = self.config['simulation_metadata']['chn']
+        self.ANGLE_CHN = self.config['simulation_metadata']['angle_chn']
+        self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
+        self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'])
         
         # determene the number of perceived channels
-        perc_n = self.perception(torch.zeros([1, self.chn, 8, 8])).shape[1]
+        perc_n = self.perception(torch.zeros([1, self.CHN, 8, 8])).shape[1]
         # approximately equalize the param number btw model variants
-        hidden_n = 8*1024//(perc_n+self.chn)
+        hidden_n = 8*1024//(perc_n+self.CHN)
         hidden_n = (hidden_n+31)//32*32
         print('perc_n:', perc_n, 'hidden_n:', hidden_n)
         self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
-        self.w2 = torch.nn.Conv2d(hidden_n, self.chn, 1, bias=False)
+        self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False)
         self.w2.weight.data.zero_()
-        
-        # self.device = torch.device(self.config['simulation_metadata']['device'])
-        # self.channel_n = self.config['simulation_metadata']['n_channels']
-        # hidden_size = self.config['simulation_metadata']['hidden_size']
-        # self.fire_rate = self.config['simulation_metadata']['fire_rate']
-        # self.angle = self.config['simulation_metadata']['angle']
 
-        # self.fc0 = nn.Linear(self.channel_n*3, hidden_size)
-        # self.fc1 = nn.Linear(hidden_size, self.channel_n, bias=False)
-        # with torch.no_grad():
-        #     self.fc1.weight.zero_()
-
-        # self.to(self.device)
     def forward(self, state, action, update_rate=0.5):
         x = state['agents']['automata']['cell_state']
         x = x.transpose(1,3)
         alive = action['automata']['AliveMask']
-        # alive = self.input_variables['AliveMask']
-        # x = x*alive
-        # x = x.transpose(1,3)
-        # x = self.perchannel_conv(x, self.nhood_kernel)']
         y = action['automata']['StateVector']
         y = self.w2(torch.relu(self.w1(y)))
         b, c, h, w = y.shape
         update_mask = (torch.rand(b, 1, h, w)+update_rate).floor()
         x = x + y*update_mask
-        if self.SCALAR_CHN==self.chn:
+        if self.SCALAR_CHN==self.CHN:
             x = x*alive
         else:
             x = torch.cat([x[:,:self.SCALAR_CHN]*alive, x[:,self.SCALAR_CHN:]%(np.pi*2.0)], 1)
@@ -66,8 +43,8 @@ class IsoNCAEvolve(SubstepTransition):
         return {self.output_variables[0]: new_state}
 
     def seed(self, n, sz=128, angle=None, seed_size=1):
-        x = torch.zeros(n, self.chn, sz, sz)
-        if self.SCALAR_CHN != self.chn:
+        x = torch.zeros(n, self.CHN, sz, sz)
+        if self.SCALAR_CHN != self.CHN:
             x[:,-1] = torch.rand(n, sz, sz)*np.pi*2.0
         r, s = sz//2, seed_size
         x[:,3:self.SCALAR_CHN,r:r+s, r:r+s] = 1.0

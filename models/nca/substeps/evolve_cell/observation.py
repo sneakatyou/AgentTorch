@@ -19,9 +19,8 @@ class ObserveNeighborsState(SubstepObservation):
         super().__init__(*args, **kwargs)
 
     def forward(self, state):
-        cfg = IsoNcaConfig()
-        ops = IsoNcaOps(cfg)
-        perception = ops.get_perception(cfg.model_type)
+        ops = IsoNcaOps()
+        perception = ops.get_perception(self.config['simulation_metadata']['model_type'])
         x = state['agents']['automata']['cell_state']
         x = x.transpose(1,3)
         observed_neigbors_state = perception(x)        

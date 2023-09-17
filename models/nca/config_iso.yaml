@@ -17,6 +17,19 @@ simulation_metadata:
             - 0.5
         lr_gamma:  0.9999
         model_path: "saved_model.pth"
+    angle_chn: 0
+    chn: 16
+    update_rate: 0.5
+    # ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
+    target: "lizard"
+    # ['noaux', 'binary', 'minimal', 'extended']
+    aux_l_type: "binary"
+    # ['laplacian', 'lap6', 'lap_gradnorm', 'steerable', 'gradient', 'steerable_nolap']
+    model_type: steerable
+    mirror: False
+    alive_threshold_value: 0.1
+    
+
 state:
     environment: null
     agents:

@@ -42,9 +42,31 @@ def nca_initialize_state(shape, params):
 
 
 class IsoNcaOps():
-    def __init__(self, cfg):
-        self.cfg = cfg
+    def __init__(self, cfg = None):
+        
+        self.ident = torch.tensor(
+            [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
+        self.sobel_x = torch.tensor(
+            [[-1.0, 0.0, 1.0], [-2.0, 0.0, 2.0], [-1.0, 0.0, 1.0]])
+        self.lap = torch.tensor(
+            [[1.0, 2.0, 1.0], [2.0, -12.0, 2.0], [1.0, 2.0, 1.0]])
+        self.lap6 = torch.tensor(
+            [[0.0, 2.0, 2.0], [2.0, -12.0, 2.0], [2.0, 2.0, 0.0]])
+        self.gauss = torch.tensor(
+            [[1.0, 2.0, 1.0], [2.0, 4.0, 2.0], [1.0, 2.0, 1.0]])/16.0
 
+    def get_xy_grid(self,W):
+        s = np.sqrt(3)/2.0
+        hex2xy = np.float32([[1.0, 0.0],
+                                    [0.5, s]])
+        xy2hex = torch.tensor(np.linalg.inv(hex2xy))
+        x = torch.linspace(-1, 1, W)
+        y, x = torch.meshgrid(x,x)
+        xy_grid = torch.stack([x, y], -1)
+        # This grid will be needed later on, in the step functions.
+        xy_grid = (xy_grid@xy2hex+1.0) % 2.0-1.
+        return xy_grid
+        
     def imread(self, url, max_size=None, mode=None):
         if url.startswith(('http:', 'https:')):
             # wikimedia requires a user agent
@@ -180,12 +202,12 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.cfg.sobel_x, self.cfg.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]))
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
                 rot_grad = torch.cat([gx*c+gy*s, gy*c-gx*s], 1)
-                state_lap = self.perchannel_conv(state, self.cfg.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :])
                 return torch.cat([state, rot_grad, state_lap], 1)
 
         elif model_type == 'steerable_nolap':
@@ -201,7 +223,7 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.cfg.sobel_x, self.cfg.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]))
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
@@ -211,7 +233,7 @@ class IsoNcaOps():
         elif model_type == 'gradient':
             def perception(state):
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.cfg.sobel_x, self.cfg.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]))
                 # gradient of the last channel determines the cell direction
                 grad, dir = grad[:, :-2], grad[:, -2:]
                 dir = dir/dir.norm(dim=1, keepdim=True).clip(1.0)
@@ -219,29 +241,29 @@ class IsoNcaOps():
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
                 rot_grad = torch.cat([gx*c+gy*s, gy*c-gx*s], 1)
-                state_lap = self.perchannel_conv(state, self.cfg.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :])
                 return torch.cat([state, state_lap, rot_grad], 1)
 
         elif model_type == 'lap_gradnorm':
             def perception(state):
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.cfg.sobel_x, self.cfg.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]))
                 gx, gy = grad[:, ::2], grad[:, 1::2]
-                state_lap = self.perchannel_conv(state, self.cfg.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :])
                 return torch.cat([state, state_lap, (gx*gx+gy*gy+1e-8).sqrt()], 1)
 
         elif model_type == 'laplacian':
             def perception(state):
-                state_lap = self.perchannel_conv(state, self.cfg.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :])
                 return torch.cat([state, state_lap], 1)
 
         # add norm of gradients
 
         elif model_type == 'lap6':
-            nhood_kernel = (self.cfg.lap6 != 0.0).to(torch.float32)
+            nhood_kernel = (self.lap6 != 0.0).to(torch.float32)
 
             def perception(state):
-                state_lap = self.perchannel_conv(state, self.cfg.lap6[None, :])
+                state_lap = self.perchannel_conv(state, self.lap6[None, :])
                 return torch.cat([state, state_lap], 1)
 
         else:
@@ -251,8 +273,8 @@ class IsoNcaOps():
 
 
 class InvariantLoss:
-    def __init__(self, cfg, target, mirror=False, sharpen=True, hex_grid=False):
-        self.ops = IsoNcaOps(cfg)
+    def __init__(self, target, mirror=False, sharpen=True, hex_grid=False):
+        self.ops = IsoNcaOps()
         self.sharpen = sharpen
         self.mirror = mirror
         self.channel_n = target.shape[0]
@@ -320,16 +342,14 @@ class InvariantLoss:
 
 
 class AddAuxilaryChannel():
-    def __init__(self, cfg):
-        self.cfg = (cfg)
-
-        self.TARGET_P = self.cfg.TARGET_P
-        self.AUX_L_TYPE = self.cfg.AUX_L_TYPE
-        self.H = self.cfg.H
-        self.model_type = self.cfg.model_type
-        self.W = self.cfg.W
+    def __init__(self, target_p, aux_l_type, h, w, model_type  ):
+        self.TARGET_P = target_p
+        self.AUX_L_TYPE = aux_l_type
+        self.H = h
+        self.model_type = model_type
+        self.W = w
         self.mask = self.make_circle_masks(self.H, self.W)
-        self.ops = IsoNcaOps(cfg)
+        self.ops = IsoNcaOps()
         self.model_suffix = self.model_type + "_" + \
             self.TARGET_P + "_" + self.AUX_L_TYPE
 
@@ -407,9 +427,8 @@ class AddAuxilaryChannel():
             return target, aux_target
         return target, -1
 
-
 class IsoNcaConfig():
-    def __init__(self):
+    def __init__(self,config):
         self.ident = torch.tensor(
             [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
         self.sobel_x = torch.tensor(
@@ -421,42 +440,42 @@ class IsoNcaConfig():
         self.gauss = torch.tensor(
             [[1.0, 2.0, 1.0], [2.0, 4.0, 2.0], [1.0, 2.0, 1.0]])/16.0
 
-        self.ANGLE_CHN = 0
+        self.ANGLE_CHN = config['simulation_metadata']['angle_chn']
         self.nhood_kernel = (self.lap != 0.0).to(torch.float32)
-        self.CHN = 16
+        self.CHN = config['simulation_metadata']['chn']
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
-        self.DEFAULT_UPDATE_RATE = 0.5
+        self.DEFAULT_UPDATE_RATE = config['simulation_metadata']['update_rate']
 
         # @param ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
-        self.TARGET_P = "lizard"
+        self.TARGET_P = config['simulation_metadata']['target']
         # @param ['noaux', 'binary', 'minimal', 'extended']
-        self.AUX_L_TYPE = "binary"
-        self.H = self.W = 48
+        self.AUX_L_TYPE = config['simulation_metadata']['aux_l_type']
+        self.H = self.W = config['simulation_metadata']['w']
         # @param ['laplacian', 'lap6', 'lap_gradnorm', 'steerable', 'gradient', 'steerable_nolap']
-        self.model_type = "steerable"
-        self.sharpen = "sharpen"
-        self.mirror = "False"
+        self.model_type = config['simulation_metadata']['model_type']
+        self.sharpen = config['simulation_metadata']['n_channels']
+        self.mirror = config['simulation_metadata']['mirror']
         self.hex_grid = self.model_type == "lap6"
         self.model_suffix = "model"
-        self.hidden_n = 128
+        self.hidden_n = config['simulation_metadata']['hidden_n']
 
 
 class CA(torch.nn.Module):
-    def __init__(self, cfg):
+    def __init__(self,):
         super().__init__()
 
-        self.cfg = cfg
-        self.isoOps = IsoNcaOps(cfg)
-        self.chn = self.cfg.CHN
-        self.ANGLE_CHN = self.cfg.ANGLE_CHN
-        self.SCALAR_CHN = self.cfg.CHN-self.cfg.ANGLE_CHN
-        # self.model_type = self.cfg.model_type
-        self.hidden_n = self.cfg.hidden_n
+        self =
+        self.isoOps = IsoNcaOps)
+        self.chn = self.CHN
+        self.ANGLE_CHN = self.ANGLE_CHN
+        self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
+        # self.model_type = self.model_type
+        self.hidden_n = self.hidden_n
 
         # self.perception = perception
 
-        self.perception = self.isoOps.get_perception(self.cfg.model_type)
-        self.nhood_kernel = self.cfg.nhood_kernel
+        self.perception = self.isoOps.get_perception(self.model_type)
+        self.nhood_kernel = self.nhood_kernel
         self.perchannel_conv = self.isoOps.perchannel_conv
         # determene the number of perceived channels
         perc_n = self.perception(torch.zeros([1, self.chn, 8, 8])).shape[1]

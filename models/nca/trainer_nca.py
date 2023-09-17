@@ -71,7 +71,7 @@ class TrainIsoNca:
         torcheck.verbose_on()
 
     def train(self):
-        
+
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             
             step_n = np.random.randint(64, 96)
@@ -153,18 +153,23 @@ class TrainIsoNca:
 
 
 # *************************************************************************
-# Parsing command line arguments
-# parser = argparse.ArgumentParser(
-#     description="AgentTorch: design, simulate and optimize agent-based models"
-# )
-# parser.add_argument(
-#     "-c", "--config", help="Name of the yaml config file with the parameters."
-# )
-# # *************************************************************************
-# args = parser.parse_args()
-# config_file = args.config
+
 if __name__ == "__main__":
-    config_file = "/Users/shashankkumar/Documents/GitHub/NCA/AgentTorch/models/nca/config.yaml"
+    try:
+        # Parsing command line arguments
+        parser = argparse.ArgumentParser(
+            description="AgentTorch: design, simulate and optimize agent-based models"
+        )
+        parser.add_argument(
+            "-c", "--config", help="Name of the yaml config file with the parameters."
+        )
+        # *************************************************************************
+        args = parser.parse_args()
+        config_file = args.config
+    
+    except:
+        config_file = "/Users/shashankkumar/Documents/GitHub/NCA/AgentTorch/models/nca/config.yaml"
+    
     config = read_config(config_file)
     registry = get_registry()
     runner = NCARunner(config, registry)

@@ -25,7 +25,7 @@ from functools import partial
 
 from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
-
+import imageio
 
 def nca_initialize_state(shape, params):
     device = torch.device(params['device'])
@@ -84,6 +84,12 @@ class IsoNcaOps():
             img = img.convert(mode)
         img = np.float32(img)/255.0
         return img
+    
+    def load_emoji(self,index, path="/Users/shashankkumar/Documents/AgentTorch/models/nca/data/emoji.png"):
+        im = imageio.imread(path)
+        emoji = np.array(im[:, index*40:(index+1)*40].astype(np.float32))
+        emoji /= 255.0
+        return emoji
 
     def np2pil(self, a):
         if a.dtype in [np.float32, np.float64]:
@@ -391,7 +397,8 @@ class AddAuxilaryChannel():
 
             code = hex(ord(emoji))[2:].lower()
             url = 'https://github.com/googlefonts/noto-emoji/blob/main/png/128/emoji_u%s.png?raw=true' % code
-            target = self.ops.imread(url, 48)
+            # target = self.ops.imread(url, 48)
+            target = self.ops.load_emoji(index=0)
             # imshow(target)
             target[:, :, :3] *= target[:, :, 3:]
 

@@ -74,7 +74,8 @@ class TrainIsoNca:
 
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             
-            step_n = np.random.randint(64, 96)
+            # step_n = np.random.randint(64, 96)
+            step_n = 5
             overflow_loss = 0.0
             diff_loss = 0.0
             target_loss = 0.0
@@ -83,13 +84,22 @@ class TrainIsoNca:
             self.opt.zero_grad()
 
             self.runner.step(step_n)  # its is sampled randomly right now
-            output = self.runner.state_trajectory[-1][-1]
-            x = output['agents']['automata']['cell_state']
+            print(self.runner.state_trajectory[-1])
+            outputs = self.runner.state_trajectory[-1][:step_n+1]
+            list_outputs = [outputs[i]['agents']['automata']['cell_state'] for i in range(step_n+1)]
+            x_intermediate_steps = torch.stack(list_outputs,dim=0)
+            x_intermediate_steps = x_intermediate_steps.permute([1,0,4,2,3])
+            # x = output['agents']['automata']['cell_state']
+            # y = x[:,:, :self.SCALAR_CHN]
+            # z = x[:,:, :self.target.shape[0]]
+            overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
+                                )[:,:,:self.SCALAR_CHN].square().sum()
 
-            overflow_loss += (x-x.clamp(-2.0, 2.0)
-                                )[:, :self.SCALAR_CHN].square().sum()
-
-            target_loss += self.target_loss_f(x[:, :self.target.shape[0]])
+            final_step_output = runner.state_trajectory[-1][-1]
+            
+            x_final_step = final_step_output['agents']['automata']['cell_state']
+            x_final_step = x_final_step.permute([0,3,1,2])
+            target_loss += self.target_loss_f(x_final_step[:,:self.target.shape[0]])
 
             target_loss /= 2.
             aux_target_loss /= 2.

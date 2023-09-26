@@ -23,6 +23,7 @@ class IsoNCAEvolve(SubstepTransition):
         hidden_n = (hidden_n+31)//32*32
         print('perc_n:', perc_n, 'hidden_n:', hidden_n)
         self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
+        self.w1.weight.data.zero_()
         self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False)
         self.w2.weight.data.zero_()
 

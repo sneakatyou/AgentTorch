@@ -136,10 +136,10 @@ class TrainIsoNca:
                         self.ops.tile2d(imgs, 4), 2))  # zoom
 
                     if self.AUX_L_TYPE != "noaux":
-                        alphas = x[:, 3].cpu()
+                        alphas = x_final_step[:, 3].cpu()
                         for extra_i in range(self.aux_target.shape[-3]):
                             imgs = 1. - alphas + alphas * \
-                                (x[:, 4+extra_i].cpu() + 0.5)
+                                (x_final_step[:, 4+extra_i].cpu() + 0.5)
 
                         if self.hex_grid:
                             imgs = F.grid_sample(

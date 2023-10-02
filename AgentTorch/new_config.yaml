@@ -27,7 +27,6 @@ state:
           name: cell_state
           shape:
           - 16
-          - 5184
           initialization_function:
             generator: nca_initialize_state
             arguments:
@@ -72,33 +71,11 @@ substeps:
     active_agents:
     - automata
     observation:
-    - generator: ObserveAliveState
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - AliveState
-      arguments: null
-    - generator: ObserveNeighborsState
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - NeighborsState
-      arguments: null
+      automata: null
     policy:
-    - generator: GenerateStateVector
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - StateVector
-      arguments: null
-    - generator: GenerateAliveMask
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - AliveMask
-      arguments: null
+      automata: null
     transition:
-    - generator: NCAEvolve
+      generator: NCAEvolve
       input_variables:
         cell_state: agents/automata/cell_state
       output_variables:

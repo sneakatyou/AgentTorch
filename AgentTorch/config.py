@@ -136,7 +136,7 @@ class Configurator(nn.Module):
                 observation_fn_obj.update({agent: None})
             _created_substep.update({'observation': observation_fn_obj})
         else:
-            _created_substep.update({'observation': OmegaConf.merge(*observation_fn)})
+            _created_substep.update({'observation': OmegaConf.merge(*[observation_fn])})
 
         if policy_fn is None:
             policy_fn_obj = OmegaConf.create()
@@ -144,13 +144,13 @@ class Configurator(nn.Module):
                 policy_fn_obj.update({agent: None})
             _created_substep.update({'policy': policy_fn_obj})
         else:
-            _created_substep.update({'policy': OmegaConf.merge(*policy_fn)})
+            _created_substep.update({'policy': OmegaConf.merge(*[policy_fn])})
         
         if transition_fn is None:
             transition_fn_obj = OmegaConf.create()
             _created_substep.update({'transition': transition_fn_obj})
         else:
-            _created_substep.update({'transition': OmegaConf.merge(*transition_fn)})
+            _created_substep.update({'transition': OmegaConf.merge(*[transition_fn])})
 
         self.config['substeps'].update({str(self.substep_counter): _created_substep})
         self.substep_counter += 1

@@ -1,4 +1,5 @@
 import argparse
+import cv2
 import numpy as np
 import torch
 import torch.optim as optim
@@ -7,6 +8,7 @@ import imageio
 
 from simulator import NCARunner, configure_nca
 from AgentTorch.helpers import read_config
+from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, IsoNcaConfig, make_circle_masks
 import torcheck
 # *************************************************************************
 # Parsing command line arguments
@@ -62,6 +64,7 @@ num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_epis
 #     torcheck.verbose_on()
 # except torcheck.TorcheckError as e:
 #     print(e)
+ops = IsoNcaOps()
 for ix in range(runner.config['simulation_metadata']['num_episodes']):
     runner.reset()
     optimizer.zero_grad()
@@ -76,6 +79,11 @@ for ix in range(runner.config['simulation_metadata']['num_episodes']):
         import ipdb; ipdb.set_trace()
     optimizer.step()
     scheduler.step()
+    # x = x.permute([0,3,1,2])
+    # imgs = ops.to_rgb(x.detach().cpu())
+    # imgs = imgs.permute([0, 2, 3, 1]).cpu()
+    # cv2.imshow(ops.zoom(
+    #     ops.tile2d(imgs, 4), 2))
     loss_log.append(loss.item())
     print(f"Episode {ix} | Loss: {loss.item()}")
 

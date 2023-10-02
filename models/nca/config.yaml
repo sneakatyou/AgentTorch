@@ -6,7 +6,7 @@ simulation_metadata:
   w: 72
   n_channels: 16
   batch_size: 8
-  device: cpu
+  device: mps
   hidden_size: 128
   fire_rate: 0.5
   angle: 0.0
@@ -54,7 +54,7 @@ state:
                 initialization_function: null
                 learnable: false
                 dtype: str
-                value: cpu
+                value: mps
           learnable: true
           dtype: float
   objects: {}

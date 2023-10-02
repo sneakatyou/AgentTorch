@@ -17,7 +17,7 @@ def configure_nca(config_path):
     conf.add_metadata('w', 72)
     conf.add_metadata('n_channels', 16)
     conf.add_metadata('batch_size', 8)
-    conf.add_metadata('device', 'cpu')
+    conf.add_metadata('device', 'mps')
     conf.add_metadata('hidden_size', 128)
     conf.add_metadata('fire_rate', 0.5)
     conf.add_metadata('angle', 0.0)

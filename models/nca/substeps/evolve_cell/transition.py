@@ -102,6 +102,7 @@ class NCAEvolve(SubstepTransition):
 
     def forward(self, state, action):
         x = state['agents']['automata']['cell_state']
+        
         x = x.transpose(1,3)
         pre_life_mask = action['automata']['AliveMask']
 

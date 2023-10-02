@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import sys
-sys.path.insert(0, '../../')
+sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/')
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
 

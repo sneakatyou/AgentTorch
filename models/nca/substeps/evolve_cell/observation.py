@@ -24,6 +24,5 @@ class ObserveNeighborsState(SubstepObservation):
         
         x = state['agents']['automata']['cell_state']
         x = x.transpose(1,3)
-        observed_neigbors_state = self.perception(x) 
-        observed_neigbors_state = x       
+        observed_neigbors_state = self.perception(x)     
         return {self.output_variables[0] : observed_neigbors_state}

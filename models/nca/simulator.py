@@ -48,8 +48,11 @@ def configure_nca(config_path):
     conf.add_network('evolution_network', grid_network, arguments={'shape': [w, h]})
 
     # add substep
-    from substeps.evolve_cell.transition import NCAEvolve
-    evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
+    # from substeps.evolve_cell.transition import NCAEvolve
+    # evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
+    
+    from substeps.evolve_cell.transition import IsoNCAEvolve
+    evolve_transition = conf.create_function(IsoNCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
     
     from substeps.evolve_cell.action import GenerateStateVector, GenerateAliveMask
     generate_state_vector = conf.create_function(GenerateStateVector, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['StateVector'], fn_type="policy")

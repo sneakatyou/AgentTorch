@@ -1,3 +1,4 @@
+import cv2
 from AgentTorch.helpers import *
 
 import os
@@ -113,7 +114,15 @@ class IsoNcaOps():
         return 'data:image/' + fmt.upper() + ';base64,' + base64_byte_string
 
     def imshow(self, a, fmt='jpeg'):
-        display(Image(data=self.imencode(a, fmt)))
+        try:
+            display(Image(data=self.imencode(a, fmt)))
+        except:
+            cv2.imshow("image",a)
+            # img = Image(data=self.imencode(a, fmt))
+            # img.show()
+            
+            
+        
 
     def tile2d(self, a, w=None):
         a = np.asarray(a)
@@ -391,9 +400,9 @@ class AddAuxilaryChannel():
 
             code = hex(ord(emoji))[2:].lower()
             url = 'https://github.com/googlefonts/noto-emoji/blob/main/png/128/emoji_u%s.png?raw=true' % code
-            # target = self.ops.imread(url, 48)
-            target = self.ops.load_emoji(index=0)
-            # imshow(target)
+            target = self.ops.imread(url, 48)
+            # target = self.ops.load_emoji(index=0)
+            self.ops.imshow(target)
             target[:, :, :3] *= target[:, :, 3:]
 
         p = 12

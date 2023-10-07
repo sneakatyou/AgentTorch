@@ -21,11 +21,11 @@ simulation_metadata:
     chn: 16
     update_rate: 0.5
     # ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
-    target: "lizard"
+    target: "smiley"
     # ['noaux', 'binary', 'minimal', 'extended']
     aux_l_type: "binary"
     # ['laplacian', 'lap6', 'lap_gradnorm', 'steerable', 'gradient', 'steerable_nolap']
-    model_type: steerable
+    model_type: laplacian
     mirror: False
     alive_threshold_value: 0.1
     
@@ -124,19 +124,19 @@ substeps:
                     output_variables:
                             - StateVector
         transition:
-            # IsoNCAEvolve:
-            #     generator: "IsoNCAEvolve"
-            #     arguments: null
-            #     input_variables:
-            #         AliveMask: "AliveMask"
-            #         cell_state: "agents/automata/cell_state"
-            #     output_variables:
-            #         - cell_state
-            NCAEvolve:
-                generator: "NCAEvolve"
+            IsoNCAEvolve:
+                generator: "IsoNCAEvolve"
                 arguments: null
                 input_variables:
+                    AliveMask: "AliveMask"
                     cell_state: "agents/automata/cell_state"
                 output_variables:
                     - cell_state
+            # NCAEvolve:
+            #     generator: "NCAEvolve"
+            #     arguments: null
+            #     input_variables:
+            #         cell_state: "agents/automata/cell_state"
+            #     output_variables:
+            #         - cell_state
         reward: null

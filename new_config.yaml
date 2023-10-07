@@ -6,7 +6,7 @@ simulation_metadata:
   w: 72
   n_channels: 16
   batch_size: 8
-  device: mps
+  device: cpu
   hidden_size: 128
   fire_rate: 0.5
   angle: 0.0
@@ -27,7 +27,6 @@ state:
           name: cell_state
           shape:
           - 16
-          - 5184
           initialization_function:
             generator: nca_initialize_state
             arguments:
@@ -54,7 +53,7 @@ state:
                 initialization_function: null
                 learnable: false
                 dtype: str
-                value: mps
+                value: cpu
           learnable: true
           dtype: float
   objects: {}
@@ -72,33 +71,11 @@ substeps:
     active_agents:
     - automata
     observation:
-    - generator: ObserveAliveState
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - AliveState
-      arguments: null
-    - generator: ObserveNeighborsState
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - NeighborsState
-      arguments: null
+      automata: null
     policy:
-    - generator: GenerateStateVector
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - StateVector
-      arguments: null
-    - generator: GenerateAliveMask
-      input_variables:
-        cell_state: agents/automata/cell_state
-      output_variables:
-      - AliveMask
-      arguments: null
+      automata: null
     transition:
-    - generator: NCAEvolve
+      generator: NCAEvolve
       input_variables:
         cell_state: agents/automata/cell_state
       output_variables:

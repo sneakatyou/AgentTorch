@@ -15,7 +15,10 @@ class Controller(nn.Module):
         try:
             for obs in self.config["substeps"][substep]['observation'][agent_type].keys():
                 observation = {**observation_function[substep][agent_type][obs](state), **observation}
-        except:
+        except Exception as e:
+            print(e)
+            print(state)
+            print(observation_function[substep][agent_type][obs])
             observation = None
 
         return observation

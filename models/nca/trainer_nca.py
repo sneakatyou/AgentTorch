@@ -20,7 +20,7 @@ from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, make_ci
 import torcheck
 import wandb
 
-def log_image_table(images,loss):
+def log_preds_table(images,loss):
     "Log a wandb.Table with (img, pred, target, scores)"
     # 🐝 Create a wandb Table to log images, labels and predictions to
     table = wandb.Table(columns=["image","loss"])
@@ -28,6 +28,7 @@ def log_image_table(images,loss):
         table.add_data(wandb.Image(img[0].numpy()*255),loss )
     wandb.log({"predictions_table":table}, commit=False)
     
+
 class TrainIsoNca:
     def __init__(self,runner):
         # fill values in cfg
@@ -154,6 +155,7 @@ class TrainIsoNca:
                     #     self.ops.tile2d(imgs, 4), 2))
                     self.ops.imshow(self.ops.zoom(
                         self.ops.tile2d(imgs, 4), 2))  # zoom
+                    log_preds_table(imgs,loss)
 
                     if self.AUX_L_TYPE != "noaux":
                         alphas = x_final_step[:, 3].cpu()
@@ -168,7 +170,7 @@ class TrainIsoNca:
                                 mode='bicubic')[:, 0]
                         self.ops.imshow(self.ops.zoom(
                             self.ops.tile2d(imgs, 8), 1))
-
+                        wandb.log({"aux layers": [wandb.Image(im) for im in imgs]})
                 if i % 10 == 0:
                     print('\rstep_n:', len(self.loss_log),
                         ' loss:', loss.item(),

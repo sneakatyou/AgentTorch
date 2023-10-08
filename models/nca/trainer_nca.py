@@ -146,6 +146,7 @@ class TrainIsoNca:
                     pl.yscale('log')
                     pl.ylim(np.min(self.loss_log), self.loss_log[0])
                     pl.show()
+                    pl.savefig('loss_curve.png')
                     imgs = self.ops.to_rgb(x_final_step)
                     if self.hex_grid:
                         imgs = F.grid_sample(imgs, self.xy_grid[None, :].repeat(
@@ -155,6 +156,7 @@ class TrainIsoNca:
                     #     self.ops.tile2d(imgs, 4), 2))
                     self.ops.imshow(self.ops.zoom(
                         self.ops.tile2d(imgs, 4), 2))  # zoom
+                    wandb.log({"loss curve":[wandb.Image('loss_curve.png',caption=f"loss for the episode {i}")]})
                     log_preds_table(imgs,loss)
 
                     if self.AUX_L_TYPE != "noaux":

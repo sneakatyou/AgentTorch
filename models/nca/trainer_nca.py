@@ -18,7 +18,16 @@ from simulator import NCARunner, configure_nca
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, make_circle_masks
 import torcheck
+import wandb
 
+def log_image_table(images,loss):
+    "Log a wandb.Table with (img, pred, target, scores)"
+    # 🐝 Create a wandb Table to log images, labels and predictions to
+    table = wandb.Table(columns=["image","loss"])
+    for img, pred, targ, prob in zip(images.to("cpu"),loss.to("cpu")):
+        table.add_data(wandb.Image(img[0].numpy()*255),loss )
+    wandb.log({"predictions_table":table}, commit=False)
+    
 class TrainIsoNca:
     def __init__(self,runner):
         # fill values in cfg
@@ -64,6 +73,18 @@ class TrainIsoNca:
         self.lr_sched = optim.lr_scheduler.ExponentialLR(self.opt,
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
+        wandb.init(
+        # Set the project where this run will be logged
+        project="basic-intro", 
+        # We pass a run name (otherwise it’ll be randomly assigned, like sunshine-lollypop-10)
+        name=f"{self.model_suffix}", 
+        # Track hyperparameters and run metadata
+        config={
+        "learning_rate": 0.02,
+        "architecture": "CNN",
+        "dataset": "CIFAR-100",
+        "epochs": 10,
+        })
         
     def train(self):
         print("Starting training...")
@@ -100,8 +121,8 @@ class TrainIsoNca:
             target_loss /= 2.
             aux_target_loss /= 2.
             diff_loss = diff_loss*10.0
-            loss = target_loss+overflow_loss+diff_loss + aux_target_loss
-
+            loss = target_loss + overflow_loss+diff_loss + aux_target_loss
+            wandb.log({"loss": loss})
             with torch.no_grad():
                 # loss.backward()
                 try:
@@ -164,7 +185,7 @@ class TrainIsoNca:
 # *************************************************************************
 
 if __name__ == "__main__":
-    
+    wandb.login()
     # Parsing command line arguments
     parser = argparse.ArgumentParser(
         description="AgentTorch: design, simulate and optimize agent-based models"

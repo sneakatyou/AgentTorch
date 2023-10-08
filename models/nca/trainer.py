@@ -3,6 +3,7 @@ from simulator import NCARunner, configure_nca, configure_nca_with_multiple_expe
 from AgentTorch.helpers import read_config
 import argparse
 import torch
+import wandb
 
 # class NcaConfig():
 #     def __init__(self):
@@ -20,7 +21,7 @@ import torch
 #         self.hidden_n=[128]
 
 if __name__ == "__main__":
-    
+    wandb.login()
     # Parsing command line arguments
     parser = argparse.ArgumentParser(
         description="AgentTorch: design, simulate and optimize agent-based models"
@@ -51,3 +52,4 @@ if __name__ == "__main__":
     #         runner.init()
     #         trainer = TrainIsoNca(config, runner)
     #         trainer.train()
+    wandb.finish()

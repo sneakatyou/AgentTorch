@@ -57,17 +57,17 @@ def configure_nca_with_multiple_experiments(config_path,args,exp_no):
     
     from substeps.evolve_cell.action import GenerateStateVector, GenerateAliveMask
     generate_state_vector = conf.create_function(GenerateStateVector, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['StateVector'], fn_type="policy")
-    # conf.add_substep(name="Evolution", active_agents=["automata"], policy_fn=[generate_state_vector])
+
     
     generate_alive_mask = conf.create_function(GenerateAliveMask, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveMask'], fn_type="policy")
-    # conf.add_substep(name="Evolution", active_agents=["automata"], policy_fn=[generate_alive_mask])
+
  
     from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
     alive_state_observation = conf.create_function(ObserveAliveState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveState'], fn_type="observation") 
-    # conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation])
+    
     
     neighbors_state_observation = conf.create_function(ObserveNeighborsState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['NeighborsState'], fn_type="observation")
-    # conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[neighbors_state_observation])
+    
     conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation,neighbors_state_observation],policy_fn=[generate_state_vector,generate_alive_mask],transition_fn=[evolve_transition])
     
     conf.render(config_path)

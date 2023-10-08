@@ -54,13 +54,14 @@ class TrainIsoNca:
             self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE)
         
         self.loss_log = []
+        
         try:
             self.model_suffix = self.MODEL_TYPE + "_" + \
             self.TARGET_P + "_" + self.AUX_L_TYPE + "_" + runner.config['simulation_metadata']['exp_no']
         except:
             self.model_suffix = self.MODEL_TYPE + "_" + \
             self.TARGET_P + "_" + self.AUX_L_TYPE
-        # This grid will be needed later on, in the step functions.
+        
         if self.hex_grid:
             self.xy_grid = self.ops.get_xy_grid(self.W)
         
@@ -75,11 +76,8 @@ class TrainIsoNca:
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
         wandb.init(
-        # Set the project where this run will be logged
-        project="basic-intro", 
-        # We pass a run name (otherwise it’ll be randomly assigned, like sunshine-lollypop-10)
+        project="NCA",         
         name=f"{self.model_suffix}", 
-        # Track hyperparameters and run metadata
         config={
         "learning_rate": 0.02,
         "architecture": "CNN",

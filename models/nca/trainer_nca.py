@@ -44,7 +44,11 @@ class TrainIsoNca:
             self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE)
         
         self.loss_log = []
-        self.model_suffix = self.MODEL_TYPE + "_" + \
+        try:
+            self.model_suffix = self.MODEL_TYPE + "_" + \
+            self.TARGET_P + "_" + self.AUX_L_TYPE + "_" + runner.config['simulation_metadata']['exp_no']
+        except:
+            self.model_suffix = self.MODEL_TYPE + "_" + \
             self.TARGET_P + "_" + self.AUX_L_TYPE
         # This grid will be needed later on, in the step functions.
         if self.hex_grid:
@@ -60,15 +64,7 @@ class TrainIsoNca:
         self.lr_sched = optim.lr_scheduler.ExponentialLR(self.opt,
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
-        # with torch.no_grad():
-        #     self.pool = self.ca.seed(256, self.W)
-        # torcheck.register(self.opt)
-        # torcheck.add_module_changing_check(self.runner, module_name="runner")
-        # # torcheck.add_module_unchanging_check(runner.initializer, module_name="runner_initializer")
-        # torcheck.add_module_nan_check(self.runner)
-        # torcheck.add_module_inf_check(self.runner)
-        # torcheck.verbose_on()
-
+        
     def train(self):
         print("Starting training...")
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
@@ -92,8 +88,8 @@ class TrainIsoNca:
             # x = output['agents']['automata']['cell_state']
             # y = x[:,:, :self.SCALAR_CHN]
             # z = x[:,:, :self.target.shape[0]]
-            # overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
-            #                     )[:,:,:self.SCALAR_CHN].square().sum()
+            overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
+                                )[:,:,:self.SCALAR_CHN].square().sum()
 
             final_step_output = outputs[-1]
             

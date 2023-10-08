@@ -6,6 +6,74 @@ sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorch-original/AgentTorc
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
 
+def configure_nca_with_multiple_experiments(config_path,args,exp_no):
+    conf = Configurator()
+
+    # add metadata
+    conf.add_metadata('exp_no', exp_no)
+    conf.add_metadata('num_episodes', args.num_episodes[exp_no])
+    conf.add_metadata('num_steps_per_episode', args.num_steps_per_episode[exp_no])
+    conf.add_metadata('num_substeps_per_step', args.num_substeps_per_step[exp_no])
+    conf.add_metadata('h', args.h[exp_no])
+    conf.add_metadata('w', args.w[exp_no])
+    conf.add_metadata('n_channels', args.n_channels)[exp_no]
+    conf.add_metadata('batch_size', args.batch_size[exp_no])
+    conf.add_metadata('device', args.device[exp_no])
+    conf.add_metadata('hidden_size', args.hidden_size[exp_no])
+    conf.add_metadata('fire_rate', args.fire_rate[exp_no])
+    conf.add_metadata('angle', args.angle[exp_no])
+    conf.add_metadata('learning_params', args.learning_params[exp_no])
+
+    # create agent
+    w, h = conf.get('simulation_metadata.w'), conf.get('simulation_metadata.h')    
+    automata_number = h*w
+    automata = conf.add_agents(key="automata", number=automata_number)
+
+    # add agent properties
+    n_channels = conf.get('simulation_metadata.n_channels')
+    batch_size = conf.get('simulation_metadata.batch_size')
+    device = conf.get('simulation_metadata.device')
+
+    from substeps.utils import nca_initialize_state
+
+    arguments_list = [conf.create_variable(key='n_channels', name="n_channels", learnable=False, shape=(1,), initialization_function=None, value=n_channels, dtype="int"),
+                    conf.create_variable(key='batch_size', name="batch_size", learnable=False, shape=(1,), initialization_function=None, value=batch_size, dtype="int"),
+                    conf.create_variable(key='device', name="device", learnable=False, shape=(1,), initialization_function=None, value=device, dtype="str")]
+
+    cell_state_initializer = conf.create_initializer(generator = nca_initialize_state, arguments=arguments_list)
+
+    conf.add_property(root='state.agents.automata', key='cell_state', name="cell_state", learnable=True, shape=(n_channels,5184), initialization_function=cell_state_initializer, dtype="float")
+
+    # add environment network
+    from AgentTorch.helpers import grid_network
+    conf.add_network('evolution_network', grid_network, arguments={'shape': [w, h]})
+
+    # add substep
+    # from substeps.evolve_cell.transition import NCAEvolve
+    # evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
+    
+    from substeps.evolve_cell.transition import IsoNCAEvolve
+    evolve_transition = conf.create_function(IsoNCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
+    
+    from substeps.evolve_cell.action import GenerateStateVector, GenerateAliveMask
+    generate_state_vector = conf.create_function(GenerateStateVector, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['StateVector'], fn_type="policy")
+    # conf.add_substep(name="Evolution", active_agents=["automata"], policy_fn=[generate_state_vector])
+    
+    generate_alive_mask = conf.create_function(GenerateAliveMask, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveMask'], fn_type="policy")
+    # conf.add_substep(name="Evolution", active_agents=["automata"], policy_fn=[generate_alive_mask])
+ 
+    from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
+    alive_state_observation = conf.create_function(ObserveAliveState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveState'], fn_type="observation") 
+    # conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation])
+    
+    neighbors_state_observation = conf.create_function(ObserveNeighborsState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['NeighborsState'], fn_type="observation")
+    # conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[neighbors_state_observation])
+    conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation,neighbors_state_observation],policy_fn=[generate_state_vector,generate_alive_mask],transition_fn=[evolve_transition])
+    
+    conf.render(config_path)
+
+    return read_config(config_path), conf.reg
+
 def configure_nca(config_path):
     conf = Configurator()
 

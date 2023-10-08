@@ -1,9 +1,10 @@
 from trainer_nca import TrainIsoNca
-from simulator import NCARunner, get_registry
+from simulator import NCARunner, configure_nca, get_registry
 from AgentTorch.helpers import read_config
 import argparse
 
 if __name__ == "__main__":
+    
     # Parsing command line arguments
     parser = argparse.ArgumentParser(
         description="AgentTorch: design, simulate and optimize agent-based models"
@@ -17,11 +18,10 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config_iso.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/new_config.yaml"
     
-    config = read_config(config_file)
-    registry = get_registry()
-    runner = NCARunner(config, registry)
+    config, registry = configure_nca(config_file)
+    runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml'), registry)
     runner.init()
     trainer = TrainIsoNca(config, runner)
     trainer.train()

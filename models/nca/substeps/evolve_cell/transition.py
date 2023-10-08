@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
-from substeps.utils import IsoNcaOps, IsoNcaConfig
+from substeps.utils import IsoNcaOps
 
 class IsoNCAEvolve(SubstepTransition):
     def __init__(self, *args, **kwargs):
@@ -96,7 +96,7 @@ class NCAEvolve(SubstepTransition):
     def forward(self, state, action=None):
         x = state['agents']['automata']['cell_state']
         x = x.transpose(1,3)
-        pre_life_mask = self.alive(x)
+        pre_life_mask = action['automata']['AliveMask']
 
         dx = self.perceive(x, self.angle)
         dx = dx.transpose(1,3)

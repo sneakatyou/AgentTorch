@@ -19,10 +19,12 @@ from AgentTorch.helpers import read_config
 # # # *************************************************************************
 # args = parser.parse_args()
 # config_path = args.config
-config_path = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
-config, registry = configure_nca('new_config.yaml')
+# config_path = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
+config_path = "/Users/shashankkumar/Documents/AgentTorch/models/nca/new_config.yaml"
+config, registry = configure_nca(config_path)
 
-runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch/models/nca/config_iso.yaml'), registry)
+# runner = NCARunner(config, registry)
+runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml'), registry)
 runner.init()
 
 device = torch.device(runner.config['simulation_metadata']['device'])

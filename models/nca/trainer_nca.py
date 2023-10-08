@@ -15,7 +15,7 @@ from functools import partial
 from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 
-from simulator import NCARunner, get_registry
+from simulator import NCARunner, configure_nca, get_registry
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, IsoNcaConfig, make_circle_masks
 import torcheck
@@ -179,11 +179,10 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config_iso.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/new_config.yaml"
     
-    config = read_config(config_file)
-    registry = get_registry()
-    runner = NCARunner(config, registry)
+    config, registry = configure_nca(config_file)
+    runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml'), registry)
     runner.init()
     trainer = TrainIsoNca(config, runner)
     trainer.train()

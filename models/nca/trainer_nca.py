@@ -76,15 +76,16 @@ class TrainIsoNca:
         self.lr_sched = optim.lr_scheduler.ExponentialLR(self.opt,
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
+        self.normalize_gradient =  False
         wandb.init(
         entity="blankpoint",
         project="NCA",         
         name=f"{self.model_suffix}", 
         config={
-        "learning_rate": 0.02,
+        "learning_rate" : self.runner.config['simulation_metadata']['learning_params']['lr'],
         "architecture": "CNN",
-        "dataset": "CIFAR-100",
-        "epochs": 10,
+        "target": self.TARGET_P,
+        "epochs": self.runner.config['simulation_metadata']['num_episodes'],
         })
         
     def train(self):
@@ -107,9 +108,7 @@ class TrainIsoNca:
             list_outputs = [outputs[i]['agents']['automata']['cell_state'] for i in range(step_n)]
             x_intermediate_steps = torch.stack(list_outputs,dim=0)
             x_intermediate_steps = x_intermediate_steps.permute([1,0,4,2,3])
-            # x = output['agents']['automata']['cell_state']
-            # y = x[:,:, :self.SCALAR_CHN]
-            # z = x[:,:, :self.target.shape[0]]
+            
             overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
                                 )[:,:,:self.SCALAR_CHN].square().sum()
 
@@ -124,16 +123,18 @@ class TrainIsoNca:
             diff_loss = diff_loss*10.0
             loss = target_loss + overflow_loss+diff_loss + aux_target_loss
             wandb.log({"loss": loss})
+            wandb.log({' lr:', self.lr_sched.get_lr()[0]})
             with torch.no_grad():
-                # loss.backward()
                 try:
                     loss.backward()
                 except Exception as e:
                     print(e)
-                    # import ipdb
-                    # ipdb.set_trace()
-                # for p in self.ca.parameters():
-                #     p.grad /= (p.grad.norm()+1e-8)   # normalize gradients
+                    import ipdb
+                    ipdb.set_trace()
+                
+                if self.normalize_gradients:
+                    for p in self.runner.parameters():
+                        p.grad /= (p.grad.norm()+1e-8)   # normalize gradients
                 self.opt.step()
                 self.lr_sched.step()
 
@@ -157,8 +158,7 @@ class TrainIsoNca:
                     # self.ops.imshow(self.ops.zoom(
                     #     self.ops.tile2d(imgs, 4), 2))  # zoom
                     wandb.log({"loss curve":[wandb.Image('loss_curve.png',caption=f"loss for the episode {i}")]})
-                    wandb.log({"output_result_image": [wandb.Image(im) for im in self.ops.zoom(
-                        self.ops.tile2d(imgs, 4), 2)]})
+                    wandb.log({"output_result_image": [wandb.Image(im) for im in imgs]})
                     # log_preds_table(imgs,loss)
 
                     if self.AUX_L_TYPE != "noaux":

@@ -107,7 +107,7 @@ class TrainIsoNca:
             outputs = self.runner.state_trajectory[-1][-step_n:]
             list_outputs = [outputs[i]['agents']['automata']['cell_state'] for i in range(step_n)]
             x_intermediate_steps = torch.stack(list_outputs,dim=0)
-            x_intermediate_steps = x_intermediate_steps.permute([1,0,4,2,3])
+            # x_intermediate_steps = x_intermediate_steps.permute([1,0,4,2,3])
             
             overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
                                 )[:,:,:self.SCALAR_CHN].square().sum()
@@ -115,7 +115,7 @@ class TrainIsoNca:
             final_step_output = outputs[-1]
             
             x_final_step = final_step_output['agents']['automata']['cell_state']
-            x_final_step = x_final_step.permute([0,3,1,2])
+            # x_final_step = x_final_step.permute([0,3,1,2])
             target_loss = self.target_loss_f(x_final_step[:,:self.target.shape[0]])
 
             target_loss /= 2.

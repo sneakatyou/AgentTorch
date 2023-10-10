@@ -145,7 +145,7 @@ class TrainIsoNca:
                     pl.plot(self.loss_log, '.', alpha=0.1)
                     pl.yscale('log')
                     pl.ylim(np.min(self.loss_log), self.loss_log[0])
-                    # pl.show()
+                    pl.show()
                     pl.savefig('loss_curve.png')
                     imgs = self.ops.to_rgb(x_final_step)
                     if self.hex_grid:
@@ -174,8 +174,8 @@ class TrainIsoNca:
                                 mode='bicubic')[:, 0]
                         # self.ops.imshow(self.ops.zoom(
                         #     self.ops.tile2d(imgs, 8), 1))
-                        # wandb.log({"aux layers": [wandb.Image(im) for im in self.ops.zoom(
-                        #     self.ops.tile2d(imgs, 8), 1)]})
+                        wandb.log({"aux layers": [wandb.Image(im) for im in self.ops.zoom(
+                            self.ops.tile2d(imgs, 8), 1)]})
                 if i % 10 == 0:
                     print('\rstep_n:', len(self.loss_log),
                         ' loss:', loss.item(),

@@ -1,0 +1,1 @@
+{"loss": 17.463491439819336, "_timestamp": 1696881111.752255, "_runtime": 21.91626286506653, "_step": 1, "loss curve": {"_type": "images/separated", "width": 640, "height": 480, "format": "png", "count": 1, "filenames": ["media/images/loss curve_1_0742cdbb634f6d7c574b.png"], "captions": ["loss for the episode 0"]}}

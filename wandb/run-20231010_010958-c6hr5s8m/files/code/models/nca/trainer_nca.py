@@ -24,7 +24,7 @@ def log_preds_table(images,loss):
     "Log a wandb.Table with (img, pred, target, scores)"
     # 🐝 Create a wandb Table to log images, labels and predictions to
     table = wandb.Table(columns=["image","loss"])
-    for img, loss in zip(images.to("cpu"),loss.to("cpu")):
+    for img, pred, targ, prob in zip(images.to("cpu"),loss.to("cpu")):
         table.add_data(wandb.Image(img[0].numpy()*255),loss )
     wandb.log({"predictions_table":table}, commit=False)
     
@@ -77,7 +77,6 @@ class TrainIsoNca:
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
         wandb.init(
-        entity="blankpoint",
         project="NCA",         
         name=f"{self.model_suffix}", 
         config={
@@ -145,7 +144,7 @@ class TrainIsoNca:
                     pl.plot(self.loss_log, '.', alpha=0.1)
                     pl.yscale('log')
                     pl.ylim(np.min(self.loss_log), self.loss_log[0])
-                    # pl.show()
+                    pl.show()
                     pl.savefig('loss_curve.png')
                     imgs = self.ops.to_rgb(x_final_step)
                     if self.hex_grid:
@@ -154,12 +153,10 @@ class TrainIsoNca:
                     imgs = imgs.permute([0, 2, 3, 1]).cpu()
                     # cv2.imshow(self.ops.zoom(
                     #     self.ops.tile2d(imgs, 4), 2))
-                    # self.ops.imshow(self.ops.zoom(
-                    #     self.ops.tile2d(imgs, 4), 2))  # zoom
+                    self.ops.imshow(self.ops.zoom(
+                        self.ops.tile2d(imgs, 4), 2))  # zoom
                     wandb.log({"loss curve":[wandb.Image('loss_curve.png',caption=f"loss for the episode {i}")]})
-                    wandb.log({"output_result_image": [wandb.Image(im) for im in self.ops.zoom(
-                        self.ops.tile2d(imgs, 4), 2)]})
-                    # log_preds_table(imgs,loss)
+                    log_preds_table(imgs,loss)
 
                     if self.AUX_L_TYPE != "noaux":
                         alphas = x_final_step[:, 3].cpu()
@@ -172,10 +169,9 @@ class TrainIsoNca:
                                 imgs[:, None], self.xy_grid[None, :].repeat(
                                     [len(imgs), 1, 1, 1]).cpu(),
                                 mode='bicubic')[:, 0]
-                        # self.ops.imshow(self.ops.zoom(
-                        #     self.ops.tile2d(imgs, 8), 1))
-                        # wandb.log({"aux layers": [wandb.Image(im) for im in self.ops.zoom(
-                        #     self.ops.tile2d(imgs, 8), 1)]})
+                        self.ops.imshow(self.ops.zoom(
+                            self.ops.tile2d(imgs, 8), 1))
+                        wandb.log({"aux layers": [wandb.Image(im) for im in imgs]})
                 if i % 10 == 0:
                     print('\rstep_n:', len(self.loss_log),
                         ' loss:', loss.item(),

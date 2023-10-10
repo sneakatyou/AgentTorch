@@ -68,7 +68,7 @@ class IsoNcaOps():
             headers = {
                 "User-Agent": "Requests in Colab/0.0 (https://colab.research.google.com/; no-reply@google.com) requests/0.0"
             }
-            r = requests.get(url, headers=headers)
+            r = requests.get(url, headers=headers,timeout=3)
             f = io.BytesIO(r.content)
         else:
             f = url
@@ -400,8 +400,10 @@ class AddAuxilaryChannel():
 
             code = hex(ord(emoji))[2:].lower()
             url = 'https://github.com/googlefonts/noto-emoji/blob/main/png/128/emoji_u%s.png?raw=true' % code
-            target = self.ops.imread(url, 48)
-            # target = self.ops.load_emoji(index=0)
+            try:
+                target = self.ops.imread(url, 48)
+            except:
+                target = self.ops.load_emoji(index=0)
             self.ops.imshow(target)
             target[:, :, :3] *= target[:, :, 3:]
 

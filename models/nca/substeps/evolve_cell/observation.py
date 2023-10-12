@@ -1,9 +1,6 @@
-
 from AgentTorch.substep import SubstepObservation
 import torch.nn.functional as F
 from substeps.utils import IsoNcaOps, IsoNcaConfig
-
-
 
 class ObserveAliveState(SubstepObservation):
     def __init__(self, *args, **kwargs):

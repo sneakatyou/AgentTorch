@@ -36,7 +36,7 @@ def configure_nca_with_multiple_experiments(config_path,args,exp_no):
     angle = conf.get('simulation_metadata.angle')
     seed_size = conf.get('simulation_metadata.seed_size')
 
-    from substeps.utils import nca_initialize_state
+    from substeps.utils import nca_initialize_state, nca_initialize_state_pool
 
     arguments_list = [conf.create_variable(key='n_channels', name="n_channels", learnable=False, shape=(1,), initialization_function=None, value=n_channels, dtype="int"),
                     conf.create_variable(key='batch_size', name="batch_size", learnable=False, shape=(1,), initialization_function=None, value=batch_size, dtype="int"),
@@ -65,7 +65,7 @@ def configure_nca_with_multiple_experiments(config_path,args,exp_no):
     
     generate_alive_mask = conf.create_function(GenerateAliveMask, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveMask'], fn_type="policy")
 
- 
+
     from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
     alive_state_observation = conf.create_function(ObserveAliveState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveState'], fn_type="observation") 
     
@@ -95,6 +95,10 @@ def configure_nca(config_path):
     conf.add_metadata('angle', 0.0)
     conf.add_metadata('learning_params', {'lr': 2e-3, 'betas': [0.5, 0.5], 'lr_gamma': 0.9999, 'model_path': 'saved_model.pth'})
     conf.add_metadata('seed_size', 1)
+    conf.add_metadata('pool_size', 128)
+    conf.add_metadata('scalar_chn', 128)
+    conf.add_metadata('chn', 128)
+    conf.add_metadata('angle', 128)
     # create agent
     w, h = conf.get('simulation_metadata.w'), conf.get('simulation_metadata.h')    
     automata_number = h*w
@@ -103,16 +107,25 @@ def configure_nca(config_path):
     # add agent properties
     angle = conf.get('simulation_metadata.angle')
     seed_size = conf.get('simulation_metadata.seed_size')
-
-    from substeps.utils import nca_initialize_state
+    n_channels = conf.get('simulation_metadata.n_channels')
+    batch_size = conf.get('simulation_metadata.batch_size')
+    scalar_chn = conf.get('simulation_metadata.scalar_chn')
+    chn = conf.get('simulation_metadata.chn')
+    angle = conf.get('simulation_metadata.angle')
+    device = conf.get('simulation_metadata.device')
+    from substeps.utils import nca_initialize_state,nca_initialize_state_pool
 
     arguments_list = [conf.create_variable(key='n_channels', name="n_channels", learnable=False, shape=(1,), initialization_function=None, value=n_channels, dtype="int"),
                     conf.create_variable(key='batch_size', name="batch_size", learnable=False, shape=(1,), initialization_function=None, value=batch_size, dtype="int"),
                     conf.create_variable(key='angle', name="angle", learnable=False, shape=(1,), initialization_function=None, value=angle, dtype="float"),
-                    conf.create_variable(key='seed_size', name="seed_size", learnable=False, shape=(1,), initialization_function=None, value=seed_size, dtype="int")
+                    conf.create_variable(key='seed_size', name="seed_size", learnable=False, shape=(1,), initialization_function=None, value=seed_size, dtype="int"),
+                    conf.create_variable(key='pool_size', name="pool_size", learnable=False, shape=(1,), initialization_function=None, value=128, dtype="int"),
+                    conf.create_variable(key='scalar_chn', name="scalar_chn", learnable=False, shape=(1,), initialization_function=None, value=scalar_chn, dtype="int"),
+                    conf.create_variable(key='chn', name="chn", learnable=False, shape=(1,), initialization_function=None, value=chn, dtype="int"), 
+                    conf.create_variable(key='device', name="device", learnable=False, shape=(1,), initialization_function=None, value=device, dtype="str") 
                     ]
-    cell_state_initializer = conf.create_initializer(generator = nca_initialize_state, arguments=arguments_list)
-
+    # cell_state_initializer = conf.create_initializer(generator = nca_initialize_state, arguments=arguments_list)
+    cell_state_initializer = conf.create_initializer(generator = nca_initialize_state_pool, arguments=arguments_list)
     conf.add_property(root='state.agents.automata', key='cell_state', name="cell_state", learnable=True, shape=(n_channels,5184), initialization_function=cell_state_initializer, dtype="float")
 
     # add environment network
@@ -132,7 +145,7 @@ def configure_nca(config_path):
     
     generate_alive_mask = conf.create_function(GenerateAliveMask, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveMask'], fn_type="policy")
     # conf.add_substep(name="Evolution", active_agents=["automata"], policy_fn=[generate_alive_mask])
- 
+
     from substeps.evolve_cell.observation import ObserveAliveState, ObserveNeighborsState
     alive_state_observation = conf.create_function(ObserveAliveState, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['AliveState'], fn_type="observation") 
     # conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation])
@@ -149,29 +162,49 @@ class NCARunner(Runner):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    # def _nca_initialize_state(self, shape, params):
-    #     device = torch.device(params['device'])
-    #     batch_size = params['batch_size']
-    #     n_channels = int(params['n_channels'].item())
-    #     processed_shape = shape #[process_shape_omega(s) for s in shape]
-    #     grid_shape = [np.sqrt(processed_shape[0]).astype(int), np.sqrt(processed_shape[0]).astype(int), processed_shape[1]]
-    #     seed_x = np.zeros(grid_shape, np.float32)
-    #     seed_x[grid_shape[0]//2, grid_shape[1]//2, 3:] = 1.0
-    #     x0 = np.repeat(seed_x[None, ...], batch_size, 0)
-    #     x0 = torch.from_numpy(x0.astype(np.float32)).to(device)
-    #     return x0
+    def _nca_initialize_state(self, shape, params):
+        device = torch.device(params['device'])
+        batch_size = params['batch_size']
+        n_channels = int(params['n_channels'].item())
+        processed_shape = shape #[process_shape_omega(s) for s in shape]
+        grid_shape = [np.sqrt(processed_shape[0]).astype(int), np.sqrt(processed_shape[0]).astype(int), processed_shape[1]]
+        seed_x = np.zeros(grid_shape, np.float32)
+        seed_x[grid_shape[0]//2, grid_shape[1]//2, 3:] = 1.0
+        x0 = np.repeat(seed_x[None, ...], batch_size, 0)
+        x0 = torch.from_numpy(x0.astype(np.float32)).to(device)
+        return x0
+    
+
+    def reset(self,seed_size=1):
+        x0 = self._nca_initialize_state(seed_size)
+        self.state = self.initializer.state
+        self.state['agents']['automata']['cell_state'] = x0
+    
+    
+        
+
+class NCARunnerWithPool(Runner):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def _nca_initialize_state(self,seed_size):
-        x = torch.zeros(self.config['simulation_metadata']['batch_size'], self.config['simulation_metadata']['chn'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])
-        if self.SCALAR_CHN != self.CHN:
-            x[:,-1] = torch.rand(self.config['simulation_metadata']['batch_size'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
+        x = torch.zeros(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['chn'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])
+        if self.config['simulation_metadata']['scalar_chn'] != self.config['simulation_metadata']['chn']:
+            x[:,-1] = torch.rand(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
         r, s = self.config['simulation_metadata']['w']//2, seed_size
-        x[:,3:self.SCALAR_CHN,r:r+s, r:r+s] = 1.0
+        x[:,3:self.config['simulation_metadata']['scalar_chn'],r:r+s, r:r+s] = 1.0
         if self.config['simulation_metadata']['angle'] is not None:
             x[:,-1,r:r+s, r:r+s] = self.config['simulation_metadata']['angle']
         x.to(self.config['simulation_metadata']['device'])
+        
         return x
 
     def reset(self,seed_size=1):
         x0 = self._nca_initialize_state(seed_size)
         self.state = self.initializer.state
         self.state['agents']['automata']['cell_state'] = x0
+    
+    def update_pool(x,batch_idx,pool):
+        pool[batch_idx] = x
+        return pool
+  

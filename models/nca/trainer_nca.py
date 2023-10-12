@@ -14,7 +14,7 @@ import cv2
 from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 
-from simulator import NCARunner, configure_nca
+from simulator import NCARunner, configure_nca, NCARunnerWithPool
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, make_circle_masks
 import torcheck
@@ -77,6 +77,7 @@ class TrainIsoNca:
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
         self.normalize_gradient =  False
+        self.pool_size = self.runner.config["simulation_metadata"]["pool_size"]
         wandb.init(
         entity="blankpoint",
         project="NCA",         
@@ -92,7 +93,36 @@ class TrainIsoNca:
         print("Starting training...")
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
-            
+            with torch.no_grad():
+                batch_idx = np.random.choice(len(self.pool_size), 8, replace=False)
+                print(batch_idx)
+                x = self.pool[batch_idx]
+                print(x.shape)
+                if len(self.loss_log) < 4000:
+                    seed_rate = 1
+                else:
+                    # exp because of decrease of step_n
+                    #seed_rate = 3
+                    seed_rate = 6
+                if i%seed_rate==0:
+                    x[:1] = self.ca.seed(1, self.W)
+
+                    #damage_rate = 3 # for spiderweb and heart
+                damage_rate = 6  # for lizard?
+                if i%damage_rate==0:
+                    mask = torch.from_numpy(self.make_circle_masks(1, self.W, self.W)[:,None]).to("cuda")
+                    if self.hex_grid:
+                        mask = F.grid_sample(mask, self.xy_grid[None,:].repeat([len(mask), 1, 1, 1]), mode='bicubic')
+                    x[-1:] *= (1.0 - mask)
+
+                # EXTRA:
+                # if all the cells have died, reset the sample.
+                if len(self.loss_log) % 10 == 0:
+                    all_cells_dead_mask = (torch.sum(x[1:, 3:4],(1,2,3)) < 1e-6).float()[:,None,None,None]
+                    if all_cells_dead_mask.sum() > 1e-6:
+                        
+                        x[1:] = all_cells_dead_mask * self.ca.seed(7, self.W) + (1. - all_cells_dead_mask) * x[1:]
+
             # step_n = np.random.randint(64, 96)
             step_n = 5
             overflow_loss = 0.0
@@ -209,7 +239,7 @@ if __name__ == "__main__":
         config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
     
     config, registry = configure_nca(config_file)
-    runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config_nca.yaml'), registry)
+    runner = NCARunnerWithPool(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config_nca.yaml'), registry)
     runner.init()
     trainer = TrainIsoNca(runner)
     trainer.train()

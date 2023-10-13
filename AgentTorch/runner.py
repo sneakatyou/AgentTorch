@@ -21,10 +21,10 @@ class Runner(nn.Module):
         self.config = config
         self.registry = registry
         assert self.config["simulation_metadata"]["num_substeps_per_step"] == len(list(self.config['substeps'].keys()))
-        
+        self.batch_idx = None
         self.initializer = Initializer(self.config, self.registry)
         self.controller = Controller(self.config)
-
+        self.pool = None
         self.state = None
                 
         self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }

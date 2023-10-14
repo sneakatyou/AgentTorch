@@ -124,19 +124,11 @@ substeps:
                     output_variables:
                             - StateVector
         transition:
-            IsoNCAEvolve:
-                generator: "IsoNCAEvolve"
+            NCAEvolve:
+                generator: "NCAEvolve"
                 arguments: null
                 input_variables:
-                    AliveMask: "AliveMask"
                     cell_state: "agents/automata/cell_state"
                 output_variables:
                     - cell_state
-            # NCAEvolve:
-            #     generator: "NCAEvolve"
-            #     arguments: null
-            #     input_variables:
-            #         cell_state: "agents/automata/cell_state"
-            #     output_variables:
-            #         - cell_state
         reward: null

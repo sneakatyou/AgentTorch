@@ -1,10 +1,6 @@
-
 from AgentTorch.substep import SubstepObservation
 import torch.nn.functional as F
-from substeps.utils import IsoNcaOps, IsoNcaConfig
-
-
-
+from substeps.utils import IsoNcaOps
 class ObserveAliveState(SubstepObservation):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,8 +16,8 @@ class ObserveNeighborsState(SubstepObservation):
         super().__init__(*args, **kwargs)
         ops = IsoNcaOps()
         self.perception = ops.get_perception(self.config['simulation_metadata']['model_type'])
-    def forward(self, state):
-        
+    
+    def forward(self, state):        
         x = state['agents']['automata']['cell_state']
         x = x.transpose(1,3)
         observed_neigbors_state = self.perception(x)     

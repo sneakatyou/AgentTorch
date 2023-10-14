@@ -477,7 +477,3 @@ def make_circle_masks(n, h, w):
         x, y = (x-center[0])/r, (y-center[1])/r
         mask = (x*x+y*y < 1.0).astype(np.float32)
         return mask
-    
-def get_parameter_count(self):
-        param_n = sum(p.numel() for p in self.ca().parameters())
-        return param_n

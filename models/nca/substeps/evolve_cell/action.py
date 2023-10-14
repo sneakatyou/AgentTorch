@@ -21,7 +21,7 @@ class GenerateStateVector(SubstepAction):
     def forward(self, state, observation):
         
         observation_grid = observation['NeighborsState']
-        state_vector = observation_grid #need not do anything right now
+        state_vector = observation_grid 
         
         return {self.output_variables[0] : state_vector}
         

@@ -1,26 +1,15 @@
 import cv2
 from AgentTorch.helpers import *
-
-import os
 import io
 import PIL.Image
 import PIL.ImageDraw
 import base64
-import zipfile
-import json
 import requests
 import numpy as np
 import matplotlib.pylab as pl
-import glob
-
-from IPython.display import Image, HTML, clear_output
-from tqdm import tqdm_notebook, tnrange
+from IPython.display import Image
 import torch
 import torch.nn.functional as F
-import torchvision.models as models
-from functools import partial
-
-from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 import imageio
 

@@ -27,7 +27,7 @@ def nca_initialize_state(shape, params):
 
 class IsoNcaOps():
     def __init__(self, cfg = None):
-        
+        self.cfg = cfg
         self.ident = torch.tensor(
             [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
         self.sobel_x = torch.tensor(
@@ -188,7 +188,7 @@ class IsoNcaOps():
 
     def get_perception(self, model_type):
         if model_type == 'steerable':
-            ANGLE_CHN = 1  # last state channel is angle and should be treated
+            self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
 
             def perception(state):
@@ -209,7 +209,7 @@ class IsoNcaOps():
                 return torch.cat([state, rot_grad, state_lap], 1)
 
         elif model_type == 'steerable_nolap':
-            ANGLE_CHN = 1  # last state channel is angle and should be treated
+            self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
 
             def perception(state):

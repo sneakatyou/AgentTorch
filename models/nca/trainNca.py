@@ -14,7 +14,7 @@ from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps
 class TrainNca:
     def __init__(self, runner):
         
-        self.ops = IsoNcaOps()
+        self.ops = IsoNcaOps(runner.config)
         self.runner = runner
         self.device = torch.device(
             runner.config['simulation_metadata']['device'])

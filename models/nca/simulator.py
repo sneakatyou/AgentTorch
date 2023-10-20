@@ -10,18 +10,7 @@ def configure_nca(config_path):
     conf = Configurator()
 
     # add metadata
-    conf.add_metadata('num_episodes', 3)
-    conf.add_metadata('num_steps_per_episode', 20)
-    conf.add_metadata('num_substeps_per_step', 1)
-    conf.add_metadata('h', 72)
-    conf.add_metadata('w', 72)
-    conf.add_metadata('n_channels', 16)
-    conf.add_metadata('batch_size', 8)
-    conf.add_metadata('device', 'mps')
-    conf.add_metadata('hidden_size', 128)
-    conf.add_metadata('fire_rate', 0.5)
-    conf.add_metadata('angle', 0.0)
-    conf.add_metadata('learning_params', {'lr': 2e-3, 'betas': [0.5, 0.5], 'lr_gamma': 0.9999, 'model_path': 'saved_model.pth'})
+    add_metadata(conf)
 
     # create agent
     w, h = conf.get('simulation_metadata.w'), conf.get('simulation_metadata.h')    
@@ -34,20 +23,16 @@ def configure_nca(config_path):
     device = conf.get('simulation_metadata.device')
 
     from substeps.utils import nca_initialize_state
-
     arguments_list = [conf.create_variable(key='n_channels', name="n_channels", learnable=False, shape=(1,), initialization_function=None, value=n_channels, dtype="int"),
                     conf.create_variable(key='batch_size', name="batch_size", learnable=False, shape=(1,), initialization_function=None, value=batch_size, dtype="int"),
                     conf.create_variable(key='device', name="device", learnable=False, shape=(1,), initialization_function=None, value=device, dtype="str")]
-
     cell_state_initializer = conf.create_initializer(generator = nca_initialize_state, arguments=arguments_list)
-
     conf.add_property(root='state.agents.automata', key='cell_state', name="cell_state", learnable=True, shape=(n_channels,5184), initialization_function=cell_state_initializer, dtype="float")
 
     # add environment network
     from AgentTorch.helpers import grid_network
     conf.add_network('evolution_network', grid_network, arguments={'shape': [w, h]})
 
-    
     from substeps.evolve_cell.transition import NCAEvolve
     evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state':'agents/automata/cell_state'}, output_variables=['cell_state'], fn_type="transition")
 
@@ -63,6 +48,20 @@ def configure_nca(config_path):
     conf.add_substep(name="Evolution", active_agents=["automata"], observation_fn=[alive_state_observation,neighbors_state_observation],policy_fn=[generate_state_vector,generate_alive_mask],transition_fn=[evolve_transition])    
     conf.render(config_path)
     return read_config(config_path), conf.reg
+
+def add_metadata(conf):
+    conf.add_metadata('num_episodes', 3)
+    conf.add_metadata('num_steps_per_episode', 20)
+    conf.add_metadata('num_substeps_per_step', 1)
+    conf.add_metadata('h', 72)
+    conf.add_metadata('w', 72)
+    conf.add_metadata('n_channels', 16)
+    conf.add_metadata('batch_size', 8)
+    conf.add_metadata('device', 'mps')
+    conf.add_metadata('hidden_size', 128)
+    conf.add_metadata('fire_rate', 0.5)
+    conf.add_metadata('angle', 0.0)
+    conf.add_metadata('learning_params', {'lr': 2e-3, 'betas': [0.5, 0.5], 'lr_gamma': 0.9999, 'model_path': 'saved_model.pth'})
 
 class NCARunner(Runner):
     def __init__(self, *args, **kwargs):

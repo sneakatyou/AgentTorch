@@ -1,26 +1,15 @@
 import cv2
 from AgentTorch.helpers import *
-
-import os
 import io
 import PIL.Image
 import PIL.ImageDraw
 import base64
-import zipfile
-import json
 import requests
 import numpy as np
 import matplotlib.pylab as pl
-import glob
-
-from IPython.display import Image, HTML, clear_output
-from tqdm import tqdm_notebook, tnrange
+from IPython.display import Image
 import torch
 import torch.nn.functional as F
-import torchvision.models as models
-from functools import partial
-
-from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 import imageio
 
@@ -38,7 +27,7 @@ def nca_initialize_state(shape, params):
 
 class IsoNcaOps():
     def __init__(self, cfg = None):
-        
+        self.cfg = cfg
         self.ident = torch.tensor(
             [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
         self.sobel_x = torch.tensor(
@@ -199,7 +188,7 @@ class IsoNcaOps():
 
     def get_perception(self, model_type):
         if model_type == 'steerable':
-            ANGLE_CHN = 1  # last state channel is angle and should be treated
+            self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
 
             def perception(state):
@@ -220,7 +209,7 @@ class IsoNcaOps():
                 return torch.cat([state, rot_grad, state_lap], 1)
 
         elif model_type == 'steerable_nolap':
-            ANGLE_CHN = 1  # last state channel is angle and should be treated
+            self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
 
             def perception(state):

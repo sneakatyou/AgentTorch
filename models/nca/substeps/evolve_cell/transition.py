@@ -18,7 +18,7 @@ class NCAEvolve(SubstepTransition):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ops = IsoNcaOps()
-        self.CHN = self.config['simulation_metadata']['chn']
+        self.CHN = self.config['simulation_metadata']['chn']  #add out channels here instead
         self.ANGLE_CHN = self.config['simulation_metadata']['angle_chn']
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
         self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'])
@@ -30,7 +30,6 @@ class NCAEvolve(SubstepTransition):
         hidden_n = (hidden_n+31)//32*32
         print('perc_n:', perc_n, 'hidden_n:', hidden_n)
         self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
-        self.w1.weight.data.zero_()
         self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False)
         self.w2.weight.data.zero_()
 

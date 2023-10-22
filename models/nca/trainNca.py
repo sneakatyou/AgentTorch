@@ -93,30 +93,7 @@ class TrainNca:
                 self.loss_log.append(loss.item())
                 
                 if i % 32 == 0:
-                    clear_output(True)
-                    pl.plot(self.loss_log, '.', alpha=0.1)
-                    pl.yscale('log')
-                    pl.ylim(np.min(self.loss_log), self.loss_log[0])
-                    pl.show()
-                    imgs = self.ops.to_rgb(x_final_step)
-                    if self.hex_grid:
-                        imgs = F.grid_sample(imgs, self.xy_grid[None, :].repeat(
-                            [len(imgs), 1, 1, 1]), mode='bicubic')
-                    imgs = imgs.permute([0, 2, 3, 1]).cpu()
-                    self.ops.imshow(self.ops.zoom(
-                        self.ops.tile2d(imgs, 4), 2))  # zoom
-                    if self.AUX_L_TYPE != "noaux":
-                        alphas = x_final_step[:, 3].cpu()
-                        for extra_i in range(self.aux_target.shape[-3]):
-                            imgs = 1. - alphas + alphas * \
-                                (x_final_step[:, 4+extra_i].cpu() + 0.5)
-                        if self.hex_grid:
-                            imgs = F.grid_sample(
-                                imgs[:, None], self.xy_grid[None, :].repeat(
-                                    [len(imgs), 1, 1, 1]).cpu(),
-                                mode='bicubic')[:, 0]
-                        self.ops.imshow(self.ops.zoom(
-                            self.ops.tile2d(imgs, 8), 1))
+                    self.display_loss_and_output(x_final_step)
 
                 if i % 10 == 0:
                     print('\rstep_n:', len(self.loss_log),
@@ -132,6 +109,32 @@ class TrainNca:
         print("Training complete")
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
+
+    def display_loss_and_output(self, x_final_step):
+        clear_output(True)
+        pl.plot(self.loss_log, '.', alpha=0.1)
+        pl.yscale('log')
+        pl.ylim(np.min(self.loss_log), self.loss_log[0])
+        pl.show()
+        imgs = self.ops.to_rgb(x_final_step)
+        if self.hex_grid:
+            imgs = F.grid_sample(imgs, self.xy_grid[None, :].repeat(
+                            [len(imgs), 1, 1, 1]), mode='bicubic')
+        imgs = imgs.permute([0, 2, 3, 1]).cpu()
+        self.ops.imshow(self.ops.zoom(
+                        self.ops.tile2d(imgs, 4), 2))  # zoom
+        if self.AUX_L_TYPE != "noaux":
+            alphas = x_final_step[:, 3].cpu()
+            for extra_i in range(self.aux_target.shape[-3]):
+                imgs = 1. - alphas + alphas * \
+                                (x_final_step[:, 4+extra_i].cpu() + 0.5)
+            if self.hex_grid:
+                imgs = F.grid_sample(
+                                imgs[:, None], self.xy_grid[None, :].repeat(
+                                    [len(imgs), 1, 1, 1]).cpu(),
+                                mode='bicubic')[:, 0]
+            self.ops.imshow(self.ops.zoom(
+                            self.ops.tile2d(imgs, 8), 1))
 
 
 if __name__ == "__main__":

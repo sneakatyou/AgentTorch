@@ -134,12 +134,12 @@ class IsoNcaOps():
         rgb, a = x[:, :3], x[:, 3:4]
         return 1.0-a+rgb
 
-    def perchannel_conv(self, x, filters):
+    def perchannel_conv(self, x, filters,device):
         '''filters: [filter_n, h, w]'''
         b, ch, h, w = x.shape
         y = x.reshape(b*ch, 1, h, w)
         y = F.pad(y, [1, 1, 1, 1], 'circular')
-        y = F.conv2d(y, filters[:, None])
+        y = F.conv2d(y, filters[:, None]).to(device)
         return y.reshape(b, -1, h, w)
 
     def make_concentric_discrete(self, h, w, n):
@@ -186,7 +186,7 @@ class IsoNcaOps():
             y_period * y_grad / grad_start
         return x_mask.astype(np.float32) * 0.5, y_mask.astype(np.float32) * 0.5
 
-    def get_perception(self, model_type):
+    def get_perception(self, model_type,device):
         if model_type == 'steerable':
             self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
@@ -200,7 +200,7 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]),device)
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
@@ -221,7 +221,7 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]),device)
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
@@ -231,7 +231,7 @@ class IsoNcaOps():
         elif model_type == 'gradient':
             def perception(state):
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]),device)
                 # gradient of the last channel determines the cell direction
                 grad, dir = grad[:, :-2], grad[:, -2:]
                 dir = dir/dir.norm(dim=1, keepdim=True).clip(1.0)
@@ -247,12 +247,13 @@ class IsoNcaOps():
                 grad = self.perchannel_conv(state, torch.stack(
                     [self.sobel_x, self.sobel_x.T]))
                 gx, gy = grad[:, ::2], grad[:, 1::2]
-                state_lap = self.perchannel_conv(state, self.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :],device)
                 return torch.cat([state, state_lap, (gx*gx+gy*gy+1e-8).sqrt()], 1)
 
         elif model_type == 'laplacian':
             def perception(state):
-                state_lap = self.perchannel_conv(state, self.lap[None, :])
+                # state = state.to(device)
+                state_lap = self.perchannel_conv(state, self.lap[None, :].to(device),device)
                 return torch.cat([state, state_lap], 1)
 
         # add norm of gradients
@@ -261,7 +262,7 @@ class IsoNcaOps():
             nhood_kernel = (self.lap6 != 0.0).to(torch.float32)
 
             def perception(state):
-                state_lap = self.perchannel_conv(state, self.lap6[None, :])
+                state_lap = self.perchannel_conv(state, self.lap6[None, :],device)
                 return torch.cat([state, state_lap], 1)
 
         else:

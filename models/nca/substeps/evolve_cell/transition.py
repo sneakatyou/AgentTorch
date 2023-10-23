@@ -21,16 +21,16 @@ class NCAEvolve(SubstepTransition):
         self.CHN = self.config['simulation_metadata']['chn']  #add out channels here instead
         self.ANGLE_CHN = self.config['simulation_metadata']['angle_chn']
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
-        self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'])
+        self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'],self.config['simulation_metadata']['device'])
         
         # determene the number of perceived channels
-        perc_n = self.perception(torch.zeros([1, self.CHN, 8, 8])).shape[1]
+        perc_n = self.perception(torch.zeros([1, self.CHN, 8, 8]).to(self.config['simulation_metadata']['device'])).shape[1]
         # approximately equalize the param number btw model variants
         hidden_n = 8*1024//(perc_n+self.CHN)
         hidden_n = (hidden_n+31)//32*32
         print('perc_n:', perc_n, 'hidden_n:', hidden_n)
-        self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
-        self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False)
+        self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1,device=self.config['simulation_metadata']['device'])
+        self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False,device = self.config['simulation_metadata']['device'])
         self.w2.weight.data.zero_()
 
     def forward(self, state, action, update_rate=0.5):
@@ -40,7 +40,7 @@ class NCAEvolve(SubstepTransition):
         y = action['automata']['StateVector']
         y = self.w2(torch.relu(self.w1(y)))
         b, c, h, w = y.shape
-        update_mask = (torch.rand(b, 1, h, w)+update_rate).floor()
+        update_mask = (torch.rand(b, 1, h, w,device=self.config['simulation_metadata']['device'])+update_rate).floor()
         x = x + y*update_mask
         if self.SCALAR_CHN==self.CHN:
             x = x*alive

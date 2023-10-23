@@ -402,7 +402,7 @@ class AddAuxilaryChannel():
 
         p = 12
         # target = F.pad(torch.tensor(target).permute(2, 0, 1), [p, p, p, p, 0, 2])
-        target = F.pad(torch.tensor(target).permute(
+        target = F.pad(torch.tensor(target,device=self.device).permute(
             2, 0, 1), [p, p, p, p, 0, 0])
         W = target.shape[1]
 

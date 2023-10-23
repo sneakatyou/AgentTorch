@@ -26,25 +26,26 @@ def nca_initialize_state(shape, params):
     return x0
 
 class IsoNcaOps():
-    def __init__(self, cfg = None):
+    def __init__(self, cfg = None,device="cpu"):
         self.cfg = cfg
+        self.device = device
         self.ident = torch.tensor(
-            [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
+            [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]]).to(device)
         self.sobel_x = torch.tensor(
-            [[-1.0, 0.0, 1.0], [-2.0, 0.0, 2.0], [-1.0, 0.0, 1.0]])
+            [[-1.0, 0.0, 1.0], [-2.0, 0.0, 2.0], [-1.0, 0.0, 1.0]]).to(device)
         self.lap = torch.tensor(
-            [[1.0, 2.0, 1.0], [2.0, -12.0, 2.0], [1.0, 2.0, 1.0]])
+            [[1.0, 2.0, 1.0], [2.0, -12.0, 2.0], [1.0, 2.0, 1.0]]).to(device)
         self.lap6 = torch.tensor(
-            [[0.0, 2.0, 2.0], [2.0, -12.0, 2.0], [2.0, 2.0, 0.0]])
-        self.gauss = torch.tensor(
-            [[1.0, 2.0, 1.0], [2.0, 4.0, 2.0], [1.0, 2.0, 1.0]])/16.0
+            [[0.0, 2.0, 2.0], [2.0, -12.0, 2.0], [2.0, 2.0, 0.0]]).to(device)
+        self.gauss = (torch.tensor(
+            [[1.0, 2.0, 1.0], [2.0, 4.0, 2.0], [1.0, 2.0, 1.0]])/16.0).to(device)
 
     def get_xy_grid(self,W):
         s = np.sqrt(3)/2.0
         hex2xy = np.float32([[1.0, 0.0],
                                     [0.5, s]])
-        xy2hex = torch.tensor(np.linalg.inv(hex2xy))
-        x = torch.linspace(-1, 1, W)
+        xy2hex = torch.tensor(np.linalg.inv(hex2xy),device=self.device)
+        x = torch.linspace(-1, 1, W,device=self.device)
         y, x = torch.meshgrid(x,x)
         xy_grid = torch.stack([x, y], -1)
         # This grid will be needed later on, in the step functions.
@@ -134,12 +135,12 @@ class IsoNcaOps():
         rgb, a = x[:, :3], x[:, 3:4]
         return 1.0-a+rgb
 
-    def perchannel_conv(self, x, filters,device):
+    def perchannel_conv(self, x, filters,device=None):
         '''filters: [filter_n, h, w]'''
         b, ch, h, w = x.shape
         y = x.reshape(b*ch, 1, h, w)
         y = F.pad(y, [1, 1, 1, 1], 'circular')
-        y = F.conv2d(y, filters[:, None]).to(device)
+        y = F.conv2d(y, filters[:, None])
         return y.reshape(b, -1, h, w)
 
     def make_concentric_discrete(self, h, w, n):
@@ -186,7 +187,7 @@ class IsoNcaOps():
             y_period * y_grad / grad_start
         return x_mask.astype(np.float32) * 0.5, y_mask.astype(np.float32) * 0.5
 
-    def get_perception(self, model_type,device):
+    def get_perception(self, model_type):
         if model_type == 'steerable':
             self.cfg['simulation_metadata']['angle_chn'] = 1  # last state channel is angle and should be treated
             # differently
@@ -200,12 +201,12 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]),device)
+                    [self.sobel_x, self.sobel_x.T]),self.device)
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
                 rot_grad = torch.cat([gx*c+gy*s, gy*c-gx*s], 1)
-                state_lap = self.perchannel_conv(state, self.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :],self.device)
                 return torch.cat([state, rot_grad, state_lap], 1)
 
         elif model_type == 'steerable_nolap':
@@ -221,7 +222,7 @@ class IsoNcaOps():
                 # dir = torch.cat([c, s], 1)*alpha  # only
                 # avg_dir = perchannel_conv(dir, gauss[None,:])
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]),device)
+                    [self.sobel_x, self.sobel_x.T]),self.device)
                 # grad = torch.cat([grad, avg_dir], 1)
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
@@ -231,7 +232,7 @@ class IsoNcaOps():
         elif model_type == 'gradient':
             def perception(state):
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]),device)
+                    [self.sobel_x, self.sobel_x.T]),self.device)
                 # gradient of the last channel determines the cell direction
                 grad, dir = grad[:, :-2], grad[:, -2:]
                 dir = dir/dir.norm(dim=1, keepdim=True).clip(1.0)
@@ -239,21 +240,21 @@ class IsoNcaOps():
                 # transform percieved vectors into local coords
                 gx, gy = grad[:, ::2], grad[:, 1::2]
                 rot_grad = torch.cat([gx*c+gy*s, gy*c-gx*s], 1)
-                state_lap = self.perchannel_conv(state, self.lap[None, :])
+                state_lap = self.perchannel_conv(state, self.lap[None, :],self.device)
                 return torch.cat([state, state_lap, rot_grad], 1)
 
         elif model_type == 'lap_gradnorm':
             def perception(state):
                 grad = self.perchannel_conv(state, torch.stack(
-                    [self.sobel_x, self.sobel_x.T]))
+                    [self.sobel_x, self.sobel_x.T]),self.device)
                 gx, gy = grad[:, ::2], grad[:, 1::2]
-                state_lap = self.perchannel_conv(state, self.lap[None, :],device)
+                state_lap = self.perchannel_conv(state, self.lap[None, :],self.device)
                 return torch.cat([state, state_lap, (gx*gx+gy*gy+1e-8).sqrt()], 1)
 
         elif model_type == 'laplacian':
             def perception(state):
                 # state = state.to(device)
-                state_lap = self.perchannel_conv(state, self.lap[None, :].to(device),device)
+                state_lap = self.perchannel_conv(state, self.lap[None, :].to(self.device),self.device)
                 return torch.cat([state, state_lap], 1)
 
         # add norm of gradients
@@ -262,7 +263,7 @@ class IsoNcaOps():
             nhood_kernel = (self.lap6 != 0.0).to(torch.float32)
 
             def perception(state):
-                state_lap = self.perchannel_conv(state, self.lap6[None, :],device)
+                state_lap = self.perchannel_conv(state, self.lap6[None, :],self.device)
                 return torch.cat([state, state_lap], 1)
 
         else:
@@ -272,15 +273,16 @@ class IsoNcaOps():
 
 
 class InvariantLoss:
-    def __init__(self, target, mirror=False, sharpen=True, hex_grid=False):
+    def __init__(self, target, mirror=False, sharpen=True, hex_grid=False,device='cpu'):
+        self.device = device
         self.ops = IsoNcaOps()
         self.sharpen = sharpen
         self.mirror = mirror
         self.channel_n = target.shape[0]
         self.hex_grid = hex_grid
         self.W = target.shape[-1]
-        self.r = r = torch.linspace(0.5/self.W, 1, self.W//2)[:, None]
-        self.angle = a = torch.range(0, self.W*np.pi)/(self.W/2)
+        self.r = r = torch.linspace(0.5/self.W, 1, self.W//2,device=device)[:, None]
+        self.angle = a = torch.range(0, self.W*np.pi,device=device)/(self.W/2)
         self.polar_xy = torch.stack([r*a.cos(), r*a.sin()], -1)[None, :]
 
         # also make an x
@@ -341,7 +343,8 @@ class InvariantLoss:
 
 
 class AddAuxilaryChannel():
-    def __init__(self, target_p, aux_l_type, h, w, model_type  ):
+    def __init__(self, target_p, aux_l_type, h, w, model_type , device='cpu'):
+        self.device = device
         self.TARGET_P = target_p
         self.AUX_L_TYPE = aux_l_type
         self.H = h
@@ -412,19 +415,19 @@ class AddAuxilaryChannel():
             # aux_target_l += [torch.tensor(y_mask)]
 
             print(target[3:].shape)
-            y_mask = torch.linspace(-1, 1, W)[:, None].sign()*target[3]*0.5
+            y_mask = torch.linspace(-1, 1, W,device=self.device)[:, None].sign()*target[3]*0.5
             aux_target_l += [y_mask]
 
             if self.AUX_L_TYPE == "extended":
-                x_mask = torch.linspace(-1, 1, W)[None, :].sign()*target[3]*0.5
+                x_mask = torch.linspace(-1, 1, W,device=self.device)[None, :].sign()*target[3]*0.5
                 aux_target_l += [torch.tensor(x_mask)]
-                aux_target_l += [torch.tensor(self.ops.make_concentric(Hp, Wp, 2)),
+                aux_target_l += [torch.tensor(self.ops.make_concentric(Hp, Wp, 2),device=self.device),
                                     torch.tensor(
-                                        self.ops.make_concentric(Hp, Wp, 3)),
-                                    torch.tensor(self.ops.make_concentric(Hp, Wp, 4))]
+                                        self.ops.make_concentric(Hp, Wp, 3),device=self.device),
+                                    torch.tensor(self.ops.make_concentric(Hp, Wp, 4),device=self.device)]
             if self.AUX_L_TYPE == "minimal":
                 aux_target_l += [torch.tensor(
-                    self.ops.make_concentric(Hp, Wp, 4))]
+                    self.ops.make_concentric(Hp, Wp, 4),device=self.device)]
             aux_target = torch.stack(aux_target_l)*target[3:4]
             return target, aux_target
         return target, -1

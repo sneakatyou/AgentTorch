@@ -35,10 +35,10 @@ class TrainNca:
             self.xy_grid = self.ops.get_xy_grid(self.W)
 
         self.aux = AddAuxilaryChannel(
-            self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE)
+            self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE,device=self.device)
         self.target, self.aux_target = self.aux.get_targets()
         self.target_loss_f = InvariantLoss(
-            self.target, mirror=self.mirror, sharpen=True, hex_grid=self.hex_grid)
+            self.target, mirror=self.mirror, sharpen=True, hex_grid=self.hex_grid,device=self.device)
         self.opt = optim.Adam(self.runner.parameters(),
                                 lr=self.runner.config['simulation_metadata']['learning_params']['lr'],
                                 betas=self.runner.config['simulation_metadata']['learning_params']['betas'])
@@ -51,8 +51,8 @@ class TrainNca:
             f"Target is: {self.runner.config['simulation_metadata']['target']}",)
 
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
-            step_n = np.random.randint(64, 96)
-            #step_n = 5
+            # step_n = np.random.randint(64, 96)
+            step_n = 5
             overflow_loss = 0.0
             diff_loss = 0.0
             target_loss = 0.0

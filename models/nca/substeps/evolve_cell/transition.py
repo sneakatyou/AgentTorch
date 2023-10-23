@@ -17,11 +17,11 @@ from substeps.utils import IsoNcaOps
 class NCAEvolve(SubstepTransition):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.ops = IsoNcaOps()
+        self.ops = IsoNcaOps(device=self.config['simulation_metadata']['device'])
         self.CHN = self.config['simulation_metadata']['chn']  #add out channels here instead
         self.ANGLE_CHN = self.config['simulation_metadata']['angle_chn']
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
-        self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'],self.config['simulation_metadata']['device'])
+        self.perception = self.ops.get_perception(self.config['simulation_metadata']['model_type'])
         
         # determene the number of perceived channels
         perc_n = self.perception(torch.zeros([1, self.CHN, 8, 8]).to(self.config['simulation_metadata']['device'])).shape[1]

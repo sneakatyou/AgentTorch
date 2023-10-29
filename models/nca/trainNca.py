@@ -53,15 +53,11 @@ class TrainNca:
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             # step_n = np.random.randint(64, 96)
             step_n = 5
-            overflow_loss = 0.0
-            diff_loss = 0.0
-            target_loss = 0.0
-            aux_target_loss = 0.0
             self.runner.reset()
             self.opt.zero_grad()
 
             self.runner.step(step_n)  # its is sampled randomly right now
-            x_final_step, loss = self.calculate_loss(step_n, diff_loss, aux_target_loss)
+            x_final_step, loss = self.calculate_loss(step_n)
 
             with torch.no_grad():
                 # loss.backward()
@@ -71,7 +67,11 @@ class TrainNca:
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
 
-    def calculate_loss(self, step_n, diff_loss, aux_target_loss):
+    def calculate_loss(self, step_n):
+        overflow_loss = 0.0
+        diff_loss = 0.0
+        target_loss = 0.0
+        aux_target_loss = 0.0
         outputs = self.runner.state_trajectory[-1][-step_n:]
             
         list_outputs = [outputs[i]['agents']['automata']

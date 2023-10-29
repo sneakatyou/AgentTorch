@@ -52,7 +52,8 @@ class Runner(nn.Module):
         r"""
             Execute a single episode of the simulation
         """
-
+        self.state_trajectory = []
+        self.state_trajectory.append([self.state])
         assert self.state is not None
 
         for traj_var in self.trajectory.keys():

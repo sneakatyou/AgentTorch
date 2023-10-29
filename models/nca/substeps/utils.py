@@ -53,12 +53,10 @@ class IsoNcaOps():
         return xy_grid
         
     def imread(self, url, max_size=None, mode=None):
+        timeout_seconds = 10
         if url.startswith(('http:', 'https:')):
             # wikimedia requires a user agent
-            headers = {
-                "User-Agent": "Requests in Colab/0.0 (https://colab.research.google.com/; no-reply@google.com) requests/0.0"
-            }
-            r = requests.get(url, headers=headers)
+            r = requests.get(url,timeout=timeout_seconds)
             f = io.BytesIO(r.content)
         else:
             f = url

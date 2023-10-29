@@ -28,7 +28,7 @@ state:
           shape:
           - 16
           initialization_function:
-            generator: nca_initialize_state
+            generator: nca_initialize_state_pool
             arguments:
               n_channels:
                 name: n_channels

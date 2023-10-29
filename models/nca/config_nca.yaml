@@ -43,7 +43,7 @@ state:
                         - ${state.agents.automata.number}
                         - ${simulation_metadata.n_channels}
                     initialization_function:
-                        generator: "nca_initialize_state"
+                        generator: "nca_initialize_state_pool"
                         arguments:
                             n_channels: 
                                 name: "n_channels"

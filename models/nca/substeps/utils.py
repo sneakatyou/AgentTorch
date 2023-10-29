@@ -36,7 +36,7 @@ def nca_initialize_state(shape, params):
     x0 = torch.from_numpy(x0.astype(np.float32)).to(device)
     return x0
 
-def nca_initialize_state_pool(self,params):
+def nca_initialize_state_pool(shape, params):
         x = torch.zeros(params.pool_size, params.chn, params.w, params.h)
         if params.scalar_chn != params.chn:
             x[:,-1] = torch.rand(params.pool_size, self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0

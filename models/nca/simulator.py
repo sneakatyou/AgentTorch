@@ -1,11 +1,10 @@
 import torch
 import numpy as np
 import sys
-import sys
 import torch.nn.functional as F
-
-from models.nca.substeps.utils import make_circle_masks
 sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/')
+from models.nca.substeps.utils import make_circle_masks
+
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
 
@@ -108,6 +107,7 @@ def configure_nca(config_path):
     chn = conf.get('simulation_metadata.chn')
     angle = conf.get('simulation_metadata.angle')
     device = conf.get('simulation_metadata.device')
+    pool_size = conf.get('simulation_metadata.pool_size')
     from substeps.utils import nca_initialize_state,nca_initialize_state_pool
 
     arguments_list = [conf.create_variable(key='n_channels', name="n_channels", learnable=False, shape=(1,), initialization_function=None, value=n_channels, dtype="int"),

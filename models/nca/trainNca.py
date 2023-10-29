@@ -61,54 +61,61 @@ class TrainNca:
             self.opt.zero_grad()
 
             self.runner.step(step_n)  # its is sampled randomly right now
-            outputs = self.runner.state_trajectory[-1][-step_n:]
-            
-            list_outputs = [outputs[i]['agents']['automata']
-                            ['cell_state'] for i in range(step_n)]
-            x_intermediate_steps = torch.stack(list_outputs, dim=0)
-            x_intermediate_steps = x_intermediate_steps.permute(
-                [1, 0, 4, 2, 3])
-            overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
-                                )[:,:,:self.SCALAR_CHN].square().sum()
-
-            final_step_output = outputs[-1]
-            x_final_step = final_step_output['agents']['automata']['cell_state']
-            x_final_step = x_final_step.permute([0, 3, 1, 2])
-            target_loss = self.target_loss_f(
-                x_final_step[:, :self.target.shape[0]])
-
-            target_loss /= 2.
-            aux_target_loss /= 2.
-            diff_loss = diff_loss*10.0
-            loss = target_loss+overflow_loss+diff_loss + aux_target_loss
+            x_final_step, loss = self.calculate_loss(step_n, diff_loss, aux_target_loss)
 
             with torch.no_grad():
                 # loss.backward()
-                try:
-                    loss.backward()
-                except Exception as e:
-                    print(e)
-                self.opt.step()
-                self.lr_sched.step()
-                self.loss_log.append(loss.item())
-                
-                if i % 32 == 0:
-                    self.display_loss_and_output(x_final_step)
-
-                if i % 10 == 0:
-                    print('\rstep_n:', len(self.loss_log),
-                            ' loss:', loss.item(),
-                            ' lr:', self.lr_sched.get_lr()[0], end='')
-                
-                if len(self.loss_log) % 500 == 0:
-                    model_name = self.model_suffix + \
-                        "_{:07d}.pt".format(len(self.loss_log))
-                    print(model_name)
-                    torch.save(self.ca.state_dict(), model_name)
+                self.train_step(i, x_final_step, loss)
         
         print("Training complete")
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
+
+    def calculate_loss(self, step_n, diff_loss, aux_target_loss):
+        outputs = self.runner.state_trajectory[-1][-step_n:]
+            
+        list_outputs = [outputs[i]['agents']['automata']
+                            ['cell_state'] for i in range(step_n)]
+        x_intermediate_steps = torch.stack(list_outputs, dim=0)
+        x_intermediate_steps = x_intermediate_steps.permute(
+                [1, 0, 4, 2, 3])
+        overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
+                                )[:,:,:self.SCALAR_CHN].square().sum()
+
+        final_step_output = outputs[-1]
+        x_final_step = final_step_output['agents']['automata']['cell_state']
+        x_final_step = x_final_step.permute([0, 3, 1, 2])
+        target_loss = self.target_loss_f(
+                x_final_step[:, :self.target.shape[0]])
+
+        target_loss /= 2.
+        aux_target_loss /= 2.
+        diff_loss = diff_loss*10.0
+        loss = target_loss+overflow_loss+diff_loss + aux_target_loss
+        return x_final_step,loss
+
+    def train_step(self, i, x_final_step, loss):
+        try:
+            loss.backward()
+        except Exception as e:
+            print(e)
+        self.opt.step()
+        self.lr_sched.step()
+        self.loss_log.append(loss.item())
+                
+        if i % 32 == 0:
+            self.display_loss_and_output(x_final_step)
+
+        if i % 10 == 0:
+            print('\rstep_n:', len(self.loss_log),
+                            ' loss:', loss.item(),
+                            ' lr:', self.lr_sched.get_lr()[0], end='')
+                
+        if len(self.loss_log) % 500 == 0:
+            model_name = self.model_suffix + \
+                        "_{:07d}.pt".format(len(self.loss_log))
+            print(model_name)
+            torch.save(self.ca.state_dict(), model_name)
 
     def display_loss_and_output(self, x_final_step):
         clear_output(True)

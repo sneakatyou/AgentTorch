@@ -21,10 +21,13 @@ parser.add_argument(
 args = parser.parse_args()
 config_path = args.config
 
-config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
 
-runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
-runner.init()
+config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
+prof = profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True)
+prof.start()
+with record_function("runner init"):
+    runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
+    runner.init()
 
 device = torch.device(runner.config['simulation_metadata']['device'])
 
@@ -54,28 +57,32 @@ scheduler = optim.lr_scheduler.ExponentialLR(optimizer,
 loss_log = []
 
 num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
-with profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True) as prof:
-    with record_function("model_inference"):
-        for ix in range(runner.config['simulation_metadata']['num_episodes']):
-            print(gc.get_stats())
-            gc.collect()
-            runner.reset()
-            optimizer.zero_grad()
-            runner.step(num_steps_per_episode)
-            output = runner.state_trajectory[-1][-1]
-            x = output['agents']['automata']['cell_state']
-            loss = F.mse_loss(x[:, :, :, :4], pad_target)
-            try:
-                loss.backward()
-            except:
-                import ipdb; ipdb.set_trace()
-            optimizer.step()
-            scheduler.step()
-            loss_log.append(loss.item())
-            del loss
-            del output
-            prof.step()
+# with profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True) as prof:
+
+for ix in range(runner.config['simulation_metadata']['num_episodes']):
+    prof.step()
+    print(gc.get_stats())
+    gc.collect()
+    with record_function("runner reset"):
+        runner.reset()
+    optimizer.zero_grad()
+    with record_function("runner step"):                
+        runner.step(num_steps_per_episode)
+    output = runner.state_trajectory[-1]
+    x = output['agents']['automata']['cell_state']
+    loss = F.mse_loss(x[:, :, :, :4], pad_target)
+    try:
+        loss.backward()
+    except:
+        import ipdb; ipdb.set_trace()
+    optimizer.step()
+    scheduler.step()
+    loss_log.append(loss.item())
+    del loss
+    del output
+
 # print(prof.key_averages().table(sort_by="cpu_time_total"))
+prof.stop()
 print(prof.key_averages(group_by_stack_n=5).table(
     sort_by="cpu_time_total"))
 prof.export_chrome_trace("trace_file.json")

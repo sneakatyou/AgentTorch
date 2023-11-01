@@ -11,7 +11,7 @@ from abc import ABC, abstractmethod
 from AgentTorch.controller import Controller
 from AgentTorch.registry import Registry
 from AgentTorch.initializer import Initializer
-
+from torch.profiler import record_function
 from AgentTorch.helpers import set_by_path
 
 class Runner(nn.Module):
@@ -37,7 +37,7 @@ class Runner(nn.Module):
         self.state = self.initializer.state
 
         self.state_trajectory = []
-        self.state_trajectory.append([self.state])
+        self.state_trajectory.append(self.state)
         for traj_var in self.trajectory.keys():
             self.trajectory[traj_var].append(deque())
 
@@ -52,7 +52,7 @@ class Runner(nn.Module):
         r"""
             Execute a single episode of the simulation
         """
-
+        self.state_trajectory = []
         assert self.state is not None
 
         for traj_var in self.trajectory.keys():
@@ -80,10 +80,11 @@ class Runner(nn.Module):
                 self.trajectory["observations"][-1][-1].append(observation_profile)
                 self.trajectory["actions"][-1][-1].append(action_profile)
 
-                next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
-                self.state = next_state
+                with record_function("runner progress"):
+                    next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
+                    self.state = next_state
 
-                self.state_trajectory[-1].append(self.state)
+                self.state_trajectory.append(self.state)
 
     def _set_parameters(self, params):
         for param in params:

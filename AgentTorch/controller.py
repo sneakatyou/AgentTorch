@@ -46,7 +46,7 @@ class Controller(nn.Module):
                 
                 source_path =  self.config["substeps"][substep]["transition"][trans_func]["input_variables"][var_name]
                 set_by_path(next_state, re.split("/", source_path), updated_vals[var_name])
-             
+        del state
         return next_state
     
     def learn_after_episode(self, episode_traj, initializer, optimizer):

@@ -72,6 +72,7 @@ class NCARunner(Runner):
         return x0
 
     def reset(self):
+        self.init()
         shape = [5184, 16]
         params = {'n_channels': torch.tensor([16.]), 'batch_size': torch.tensor([8.]), 'device': 'cpu'}
         x0 = self._nca_initialize_state(shape, params)

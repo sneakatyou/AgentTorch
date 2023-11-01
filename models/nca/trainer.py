@@ -4,10 +4,11 @@ import torch
 import torch.optim as optim
 import torch.nn.functional as F
 import imageio
-
+import gc
 from simulator import NCARunner, configure_nca
 from AgentTorch.helpers import read_config
 import torcheck
+from torch.profiler import profile, record_function, ProfilerActivity
 # *************************************************************************
 # Parsing command line arguments
 parser = argparse.ArgumentParser(
@@ -53,30 +54,31 @@ scheduler = optim.lr_scheduler.ExponentialLR(optimizer,
 loss_log = []
 
 num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
-try:
-    torcheck.register(optimizer)
-    torcheck.add_module_changing_check(runner, module_name="runner")
-    # torcheck.add_module_unchanging_check(runner.initializer, module_name="runner_initializer")
-    torcheck.add_module_nan_check(runner)
-    torcheck.add_module_inf_check(runner)
-    torcheck.verbose_on()
-except torcheck.TorcheckError as e:
-    print(e)
-for ix in range(runner.config['simulation_metadata']['num_episodes']):
-    runner.reset()
-    optimizer.zero_grad()
-    runner.step(num_steps_per_episode)
-    output = runner.state_trajectory[-1][-1]
-    x = output['agents']['automata']['cell_state']
-    loss = F.mse_loss(x[:, :, :, :4], pad_target)
-    try:
-        loss.backward()
-    except:
-        import ipdb; ipdb.set_trace()
-    optimizer.step()
-    scheduler.step()
-    loss_log.append(loss.item())
-
+with profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True) as prof:
+    with record_function("model_inference"):
+        for ix in range(runner.config['simulation_metadata']['num_episodes']):
+            print(gc.get_stats())
+            gc.collect()
+            runner.reset()
+            optimizer.zero_grad()
+            runner.step(num_steps_per_episode)
+            output = runner.state_trajectory[-1][-1]
+            x = output['agents']['automata']['cell_state']
+            loss = F.mse_loss(x[:, :, :, :4], pad_target)
+            try:
+                loss.backward()
+            except:
+                import ipdb; ipdb.set_trace()
+            optimizer.step()
+            scheduler.step()
+            loss_log.append(loss.item())
+            del loss
+            del output
+            prof.step()
+# print(prof.key_averages().table(sort_by="cpu_time_total"))
+print(prof.key_averages(group_by_stack_n=5).table(
+    sort_by="cpu_time_total"))
+prof.export_chrome_trace("trace_file.json")
 torch.save(runner.state_dict(), runner.config['simulation_metadata']['learning_params']['model_path'])
 
 print("Execution complete")

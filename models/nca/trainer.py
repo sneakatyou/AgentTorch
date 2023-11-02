@@ -9,6 +9,10 @@ from simulator import NCARunner, configure_nca
 from AgentTorch.helpers import read_config
 import torcheck
 from torch.profiler import profile, record_function, ProfilerActivity
+from torch.utils.tensorboard import SummaryWriter
+
+# default `log_dir` is "runs" - we'll be more specific here
+# writer = SummaryWriter('runs/trainer_1')
 # *************************************************************************
 # Parsing command line arguments
 parser = argparse.ArgumentParser(
@@ -23,7 +27,7 @@ config_path = args.config
 
 
 config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
-prof = profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True)
+prof = profile(with_stack=True, on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/nca'),record_shapes=True,profile_memory=True)
 prof.start()
 with record_function("runner init"):
     runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
@@ -58,6 +62,8 @@ loss_log = []
 
 num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
 # with profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True) as prof:
+# writer.add_graph(runner, images)
+# writer.close()
 
 for ix in range(runner.config['simulation_metadata']['num_episodes']):
     prof.step()
@@ -85,7 +91,6 @@ for ix in range(runner.config['simulation_metadata']['num_episodes']):
 prof.stop()
 print(prof.key_averages(group_by_stack_n=5).table(
     sort_by="cpu_time_total"))
-prof.export_chrome_trace("trace_file.json")
+# prof.export_chrome_trace("trace_file.json")
 torch.save(runner.state_dict(), runner.config['simulation_metadata']['learning_params']['model_path'])
-
 print("Execution complete")

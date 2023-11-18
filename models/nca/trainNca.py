@@ -51,8 +51,8 @@ class TrainNca:
             f"Target is: {self.runner.config['simulation_metadata']['target']}",)
 
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
-            # step_n = np.random.randint(64, 96)
-            step_n = 5
+            step_n = np.random.randint(64, 96)
+            # step_n = 5
             self.runner.reset()
             self.opt.zero_grad()
 
@@ -62,6 +62,10 @@ class TrainNca:
             with torch.no_grad():
                 # loss.backward()
                 self.train_step(i, x_final_step, loss)
+            
+            if len(self.loss_log) % 500 == 0:
+                torch.save(self.runner.state_dict(
+                        ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
         
         print("Training complete")
         torch.save(self.runner.state_dict(

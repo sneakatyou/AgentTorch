@@ -37,6 +37,7 @@ class Runner(nn.Module):
         self.state = self.initializer.state
 
         self.state_trajectory = []
+        self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
         self.state_trajectory.append([self.state])
         for traj_var in self.trajectory.keys():
             self.trajectory[traj_var].append(deque())
@@ -54,6 +55,9 @@ class Runner(nn.Module):
         """
         self.state_trajectory = []
         self.state_trajectory.append([self.state])
+        self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
+        for traj_var in self.trajectory.keys():
+            self.trajectory[traj_var].append(deque())
         assert self.state is not None
 
         for traj_var in self.trajectory.keys():

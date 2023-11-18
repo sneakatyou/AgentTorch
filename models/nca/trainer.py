@@ -15,25 +15,25 @@ from torch.utils.tensorboard import SummaryWriter
 # writer = SummaryWriter('runs/trainer_1')
 # *************************************************************************
 # Parsing command line arguments
-parser = argparse.ArgumentParser(
-    description="AgentTorch: design, simulate and optimize agent-based models"
-)
-parser.add_argument(
-    "-c", "--config", help="Name of the yaml config file with the parameters."
-)
-# # *************************************************************************
-args = parser.parse_args()
-config_path = args.config
+# parser = argparse.ArgumentParser(
+#     description="AgentTorch: design, simulate and optimize agent-based models"
+# )
+# parser.add_argument(
+#     "-c", "--config", help="Name of the yaml config file with the parameters."
+# )
+# # # *************************************************************************
+# args = parser.parse_args()
+# config_path = args.config
 
 
-config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
-prof = profile(with_stack=True, on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/nca'),record_shapes=True,profile_memory=True)
-prof.start()
-with record_function("runner init"):
-    runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
-    runner.init()
+# config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
+# prof = profile(with_stack=True, on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/nca'),record_shapes=True,profile_memory=True)
+# prof.start()
+# with record_function("runner init"):
+#     runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
+#     runner.init()
 
-device = torch.device(runner.config['simulation_metadata']['device'])
+# device = torch.device(runner.config['simulation_metadata']['device'])
 
 # *************************************************************************
 # Generating target
@@ -42,55 +42,80 @@ def load_emoji(index, path="/Users/shashankkumar/Documents/AgentTorch-original/A
     emoji = np.array(im[:, index*40:(index+1)*40].astype(np.float32))
     emoji /= 255.0
     return emoji
-TARGET_EMOJI = 0
-TARGET_PADDING = 16
-target_img = load_emoji(TARGET_EMOJI)
-p = TARGET_PADDING
-pad_target = np.pad(target_img, [(p, p), (p, p), (0, 0)])
-h, w = pad_target.shape[:2]
-pad_target = np.expand_dims(pad_target, axis=0)
-pad_target = torch.from_numpy(pad_target.astype(np.float32)).to(device)
+
 
 # *************************************************************************
+def train():
+    
+    
+    parser = argparse.ArgumentParser(
+    description="AgentTorch: design, simulate and optimize agent-based models"
+    )
+    parser.add_argument(
+        "-c", "--config", help="Name of the yaml config file with the parameters."
+    )
+    # # *************************************************************************
+    args = parser.parse_args()
+    config_path = args.config
 
-optimizer = optim.Adam(runner.parameters(), 
-                lr=runner.config['simulation_metadata']['learning_params']['lr'], 
-                betas=runner.config['simulation_metadata']['learning_params']['betas'])
-scheduler = optim.lr_scheduler.ExponentialLR(optimizer, 
-                runner.config['simulation_metadata']['learning_params']['lr_gamma'])
-loss_log = []
 
-num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
-# with profile(activities=[ProfilerActivity.CPU],with_stack=True, record_shapes=True,profile_memory=True) as prof:
-# writer.add_graph(runner, images)
-# writer.close()
+    config, registry = configure_nca('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/new_config.yaml')
+    # prof = profile(with_stack=True, on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/nca'),record_shapes=True,profile_memory=True)
+    prof = profile(activities=[ProfilerActivity.CPU],profile_memory=True)
+    prof.start()
+    
+    with record_function("runner init"):
+        runner = NCARunner(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config.yaml'), registry)
+        runner.init()
+    device = torch.device(runner.config['simulation_metadata']['device'])
+    TARGET_EMOJI = 0
+    TARGET_PADDING = 16
+    target_img = load_emoji(TARGET_EMOJI)
+    p = TARGET_PADDING
+    pad_target = np.pad(target_img, [(p, p), (p, p), (0, 0)])
+    h, w = pad_target.shape[:2]
+    pad_target = np.expand_dims(pad_target, axis=0)
+    pad_target = torch.from_numpy(pad_target.astype(np.float32)).to(device)
+    
+    optimizer = optim.Adam(runner.parameters(), 
+                    lr=runner.config['simulation_metadata']['learning_params']['lr'], 
+                    betas=runner.config['simulation_metadata']['learning_params']['betas'])
+    scheduler = optim.lr_scheduler.ExponentialLR(optimizer, 
+                    runner.config['simulation_metadata']['learning_params']['lr_gamma'])
+    loss_log = []
 
-for ix in range(runner.config['simulation_metadata']['num_episodes']):
-    prof.step()
-    print(gc.get_stats())
-    gc.collect()
+    num_steps_per_episode = runner.config["simulation_metadata"]["num_steps_per_episode"]
+    with record_function("training loop"):
+        for ix in range(runner.config['simulation_metadata']['num_episodes']):    
+            print(gc.get_stats())
+            gc.collect()
+            with record_function("training loop"):
+                train_step(optimizer, scheduler,num_steps_per_episode,runner,pad_target,loss_log)
+            prof.step()
+    prof.stop()
+    torch.save(runner.state_dict(), runner.config['simulation_metadata']['learning_params']['model_path'])
+    print("Execution complete")
+    print(prof.key_averages().table(sort_by="cpu_time_total"))
+
+def train_step(optimizer, scheduler,num_steps_per_episode,runner,pad_target,loss_log):
     with record_function("runner reset"):
         runner.reset()
-    optimizer.zero_grad()
-    with record_function("runner step"):                
-        runner.step(num_steps_per_episode)
-    output = runner.state_trajectory[-1]
-    x = output['agents']['automata']['cell_state']
-    loss = F.mse_loss(x[:, :, :, :4], pad_target)
-    try:
-        loss.backward()
-    except:
-        import ipdb; ipdb.set_trace()
-    optimizer.step()
-    scheduler.step()
-    loss_log.append(loss.item())
-    del loss
-    del output
-
+        optimizer.zero_grad()
+        with record_function("runner step"):                
+            runner.step(num_steps_per_episode)
+        output = runner.state_trajectory[-1]
+        x = output['agents']['automata']['cell_state']
+        loss = F.mse_loss(x[:, :, :, :4], pad_target)
+        try:
+            loss.backward()
+        except:
+            import ipdb; ipdb.set_trace()
+        optimizer.step()
+        scheduler.step()
+        loss_log.append(loss.item())
 # print(prof.key_averages().table(sort_by="cpu_time_total"))
-prof.stop()
-print(prof.key_averages(group_by_stack_n=5).table(
-    sort_by="cpu_time_total"))
+# print(prof.key_averages(group_by_stack_n=5).table(
+#     sort_by="cpu_time_total"))
 # prof.export_chrome_trace("trace_file.json")
-torch.save(runner.state_dict(), runner.config['simulation_metadata']['learning_params']['model_path'])
-print("Execution complete")
+
+train()

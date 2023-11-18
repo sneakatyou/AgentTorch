@@ -52,7 +52,9 @@ class Runner(nn.Module):
         r"""
             Execute a single episode of the simulation
         """
-        self.state_trajectory = []
+        with record_function("relieving memory from state trajectory"):
+            self.state_trajectory = []
+            self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
         assert self.state is not None
 
         for traj_var in self.trajectory.keys():

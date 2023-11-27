@@ -48,6 +48,11 @@ class Runner(nn.Module):
             reinitialize the simulator at the beginning of an episode
         """
         self.init()
+    
+    def setup_episode(self):
+        self.state_trajectory = []
+        self.state_trajectory.append([self.state])
+        self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
 
     def step(self, num_steps=None):
         r"""

@@ -92,7 +92,7 @@ class TrainNca:
                 self.lr_sched.step()
                 self.loss_log.append(loss.item())
                 
-                if i % 32 == 0:
+                if i % 10 == 0:
                     clear_output(True)
                     pl.plot(self.loss_log, '.', alpha=0.1)
                     pl.yscale('log')
@@ -147,11 +147,11 @@ if __name__ == "__main__":
     if not args:
         config_file = args.config
     else:
-        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch/models/nca/config.yaml"
 
     config, registry = configure_nca(config_file)
     runner = NCARunner(read_config(
-        '/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config_nca.yaml'), registry)
+        '/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch/models/nca/config_nca.yaml'), registry)
     runner.init()
     trainer = TrainNca(runner)
     trainer.train()

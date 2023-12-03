@@ -2,8 +2,8 @@ simulation_metadata:
     num_episodes: 1000
     num_steps_per_episode: 20
     num_substeps_per_step: 1
-    w: 72
-    h: 72
+    w: 48
+    h: 48
     n_channels: 16
     batch_size: 8
     hidden_size: 128
@@ -19,6 +19,7 @@ simulation_metadata:
         model_path: "saved_model.pth"
     angle_chn: 0
     chn: 16
+    scalar_chn: 16
     update_rate: 0.5
     # ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
     target: "smiley"
@@ -28,6 +29,8 @@ simulation_metadata:
     model_type: laplacian
     mirror: False
     alive_threshold_value: 0.1
+    pool_size : 128
+    hex_grid : False
     
 
 state:
@@ -45,31 +48,88 @@ state:
                     initialization_function:
                         generator: "nca_initialize_state_pool"
                         arguments:
-                            n_channels: 
-                                name: "n_channels"
-                                learnable: False
+                            n_channels:
+                                name: n_channels
                                 shape:
-                                    - 1
+                                - 1
                                 initialization_function: null
-                                value: ${simulation_metadata.n_channels}
-                                dtype: "int"
-                            batch_size: 
-                                name: "batch_size"
-                                learnable: False
+                                learnable: false
+                                dtype: int
+                                value: 16
+                            batch_size:
+                                name: batch_size
                                 shape:
-                                    - 1
+                                - 1
                                 initialization_function: null
-                                value: ${simulation_metadata.batch_size}
-                                dtype: "int"
-                            device: 
-                                name: "device"
-                                learnable: False
+                                learnable: false
+                                dtype: int
+                                value: 8
+                            device:
+                                name: device
                                 shape:
-                                    - 1
+                                - 1
                                 initialization_function: null
+                                learnable: false
+                                dtype: str
                                 value: ${simulation_metadata.device}
-                                dtype: "str"
-                    dtype: "float"   
+                            angle:
+                                name: angle
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                dtype: float
+                                value: 0.0
+                            seed_size:
+                                name: seed_size
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                dtype: int
+                                value: 1
+                            pool_size:
+                                name: pool_size
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                dtype: int
+                                value: ${simulation_metadata.pool_size}
+                            scalar_chn:
+                                name: scalar_chn
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                dtype: int
+                                value: 16
+                            chn:
+                                name: chn
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                value: 16
+                                dtype: int
+                            w:
+                                name: w
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                value: 48
+                                dtype: int 
+                            h:
+                                name: h
+                                shape:
+                                - 1
+                                initialization_function: null
+                                learnable: false
+                                value: 48
+                                dtype: int    
+                    dtype: "float"  
+                    
     objects: null
     network:
         agent_agent:

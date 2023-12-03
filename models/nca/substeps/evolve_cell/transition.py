@@ -32,11 +32,11 @@ class IsoNCAEvolve(SubstepTransition):
         self.w1 = torch.nn.Conv2d(perc_n, hidden_n, 1)
         self.w1.weight.data.zero_()
         self.w2 = torch.nn.Conv2d(hidden_n, self.CHN, 1, bias=False)
-        self.w2.weight.data.zero_()
+        
 
     def forward(self, state, action, update_rate=0.5):
         x = state['agents']['automata']['cell_state']
-        x = x.transpose(1,3)
+        # x = x.transpose(1,3)
         alive = action['automata']['AliveMask']
         y = action['automata']['StateVector']
         y = self.w2(torch.relu(self.w1(y)))
@@ -47,18 +47,9 @@ class IsoNCAEvolve(SubstepTransition):
             x = x*alive
         else:
             x = torch.cat([x[:,:self.SCALAR_CHN]*alive, x[:,self.SCALAR_CHN:]%(np.pi*2.0)], 1)
-        new_state = x.transpose(1,3)
+        new_state = x
         return {self.output_variables[0]: new_state}
 
-    def seed(self, n, sz=128, angle=None, seed_size=1):
-        x = torch.zeros(n, self.CHN, sz, sz)
-        if self.SCALAR_CHN != self.CHN:
-            x[:,-1] = torch.rand(n, sz, sz)*np.pi*2.0
-        r, s = sz//2, seed_size
-        x[:,3:self.SCALAR_CHN,r:r+s, r:r+s] = 1.0
-        if angle is not None:
-            x[:,-1,r:r+s, r:r+s] = angle
-        return x
 
 
 class NCAEvolve(SubstepTransition):
@@ -103,7 +94,7 @@ class NCAEvolve(SubstepTransition):
     def forward(self, state, action):
         x = state['agents']['automata']['cell_state']
         
-        x = x.transpose(1,3)
+        # x = x.transpose(1,3)
         pre_life_mask = action['automata']['AliveMask']
 
         dx = self.perceive(x, self.angle)

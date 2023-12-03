@@ -44,7 +44,7 @@ class TrainIsoNca:
         self.AUX_L_TYPE = runner.config['simulation_metadata']['aux_l_type']
         self.TARGET_P = runner.config['simulation_metadata']['target']
         self.MODEL_TYPE = runner.config['simulation_metadata']['model_type']
-        self.normalize_gradients = True
+        
         self.H = runner.config['simulation_metadata']['h']
         self.W = runner.config['simulation_metadata']['w']
         self.mirror = self.MODEL_TYPE in ['gradnorm', 'laplacian', 'lap6']
@@ -99,7 +99,7 @@ class TrainIsoNca:
             diff_loss = 0.0
             target_loss = 0.0
             aux_target_loss = 0.0
-            self.runner.reset(1,i,len(self.loss_log))
+            self.runner.reset()
             self.opt.zero_grad()
 
             self.runner.step(step_n)  # its is sampled randomly right now
@@ -121,7 +121,7 @@ class TrainIsoNca:
             diff_loss = diff_loss*10.0
             loss = target_loss + overflow_loss+diff_loss + aux_target_loss
             wandb.log({"loss": loss})
-            wandb.log({' lr:': self.lr_sched.get_lr()[0]})
+            wandb.log({' lr:', self.lr_sched.get_lr()[0]})
             
             with torch.no_grad():
                 try:
@@ -133,7 +133,7 @@ class TrainIsoNca:
                 
                 if self.normalize_gradients:
                     for p in self.runner.parameters():
-                        p.grad = p.grad/(p.grad.norm()+1e-8) if p.grad is not None else p.grad   # normalize gradients
+                        p.grad /= (p.grad.norm()+1e-8)   # normalize gradients
                 self.opt.step()
                 self.lr_sched.step()
                 runner.update_pool(x_final_step)
@@ -150,7 +150,7 @@ class TrainIsoNca:
                     if self.hex_grid:
                         imgs = F.grid_sample(imgs, self.xy_grid[None, :].repeat(
                             [len(imgs), 1, 1, 1]), mode='bicubic')
-                    imgs = imgs.cpu()
+                    imgs = imgs.permute([0, 2, 3, 1]).cpu()
                     # cv2.imshow(self.ops.zoom(
                     #     self.ops.tile2d(imgs, 4), 2))
                     # self.ops.imshow(self.ops.zoom(
@@ -182,8 +182,7 @@ class TrainIsoNca:
                     model_name = self.model_suffix + \
                         "_{:07d}.pt".format(len(self.loss_log))
                     print(model_name)
-                    torch.save(self.runner.state_dict(
-        ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
+                    torch.save(self.ca.state_dict(), model_name)
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
 

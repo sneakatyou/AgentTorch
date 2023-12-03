@@ -37,14 +37,15 @@ def nca_initialize_state(shape, params):
     return x0
 
 def nca_initialize_state_pool(shape, params):
-        x = torch.zeros(params.pool_size, params.chn, params.w, params.h)
-        if params.scalar_chn != params.chn:
-            x[:,-1] = torch.rand(params.pool_size, self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
-        r, s = params.w//2, params.seed_size
-        x[:,3:params.scalar_chn,r:r+s, r:r+s] = 1.0
-        if params.angle is not None:
-            x[:,-1,r:r+s, r:r+s] = params.angle
-        x.to(params.device)
+        x = torch.zeros((int(params["pool_size"].item()), int(params["chn"].item()), 48,48))
+        if params["scalar_chn"] != params["chn"]:
+            x[:,-1] = torch.rand(params["pool_size"], 48, 48)*np.pi*2.0
+        r, s = (params["w"]//2).int(),( params["seed_size"]).int()
+        scalar_chn = int(params["scalar_chn"].item())
+        x[:,3:scalar_chn,r:r+s, r:r+s] = 1.0
+        if params["angle"].item() != 0.0:
+            x[:,-1,r:r+s, r:r+s] = params["angle"]
+        x.to(params["device"])
         return x
 
 class IsoNcaOps():

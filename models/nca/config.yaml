@@ -32,29 +32,70 @@ state:
             generator: nca_initialize_state
             arguments:
               n_channels:
-                name: n_channels
-                shape:
-                - 1
-                initialization_function: null
-                learnable: false
-                dtype: int
-                value: 16
+                  name: n_channels
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: int
+                  value: 16
               batch_size:
-                name: batch_size
-                shape:
-                - 1
-                initialization_function: null
-                learnable: false
-                dtype: int
-                value: 8
+                  name: batch_size
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: int
+                  value: 8
               device:
-                name: device
-                shape:
-                - 1
-                initialization_function: null
-                learnable: false
-                dtype: str
-                value: mps
+                  name: device
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: str
+                  value: mps
+              angle:
+                  name: angle
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: float
+                  value: 0.0
+              seed_size:
+                  name: seed_size
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: int
+                  value: 1
+              pool_size:
+                  name: pool_size
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: int
+                  value: 128
+              scalar_chn:
+                  name: scalar_chn
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: int
+                  value: 16
+              chn:
+                  name: chn
+                  shape:
+                  - 1
+                  initialization_function: null
+                  learnable: false
+                  dtype: str
+                  value: 16
+                  dtype: int
           learnable: true
           dtype: float
   objects: {}

@@ -181,10 +181,10 @@ class NCARunnerWithPool(Runner):
 
     def _nca_initialize_state(self,seed_size,i,len_loss):
         if (self.pool is None):            
-            x = self.seed(seed_size)           
+            x = self.seed(self.config['simulation_metadata']['pool_size'],seed_size)           
             self.pool = x
         
-        self.batch_idx = np.random.choice(len(self.config['simulation_metadata']['pool_size']), self.config['simulation_metadata']['batch_size'], replace=False)
+        self.batch_idx = np.random.choice(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['batch_size'], replace=False)
         x0 = self.pool[self.batch_idx]        
         x0 = self.augment_input(i, len_loss, x0)
         return x0
@@ -197,20 +197,21 @@ class NCARunnerWithPool(Runner):
             #seed_rate = 3
             seed_rate = 6
         if i%seed_rate==0:
-            x0[:1] = self.seed(1, self.W)
+            x0[:1] = self.seed(1,1)
         #damage_rate = 3 # for spiderweb and heart
         damage_rate = 6  # for lizard?
+        device = self.config['simulation_metadata']['device']
         if i%damage_rate==0:
-            mask = torch.from_numpy(make_circle_masks(1, self.W, self.W)[:,None]).to("cuda")
-            if self.hex_grid:
-                mask = F.grid_sample(mask, self.xy_grid[None,:].repeat([len(mask), 1, 1, 1]), mode='bicubic')
+            mask = torch.from_numpy(make_circle_masks(1, self.config['simulation_metadata']['w'], self.config['simulation_metadata']['w'])[:,None]).to(device)
+            if self.config['simulation_metadata']['hex_grid']:
+                mask = F.grid_sample(mask, self.xy_grid[None,:].repeat([len(mask), 1, 1, 1]), mode='bicubic').to(device)
             x0[-1:] *= (1.0 - mask)
         return x0
 
-    def seed(self, seed_size):
-        x = torch.zeros(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['chn'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])
+    def seed(self, pool_size, seed_size):
+        x = torch.zeros(pool_size, self.config['simulation_metadata']['chn'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])
         if self.config['simulation_metadata']['scalar_chn'] != self.config['simulation_metadata']['chn']:
-            x[:,-1] = torch.rand(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
+            x[:,-1] = torch.rand(pool_size, self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
         r, s = self.config['simulation_metadata']['w']//2, seed_size
         x[:,3:self.config['simulation_metadata']['scalar_chn'],r:r+s, r:r+s] = 1.0
         if self.config['simulation_metadata']['angle'] is not None:
@@ -219,7 +220,7 @@ class NCARunnerWithPool(Runner):
         return x
 
     def reset(self,seed_size=1,i=0,len_loss=0):
-        x0 = self._nca_initialize_state(seed_size)
+        x0 = self._nca_initialize_state(seed_size,i,len_loss)
         self.state = self.initializer.state
         self.state['agents']['automata']['cell_state'] = x0
     

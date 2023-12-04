@@ -28,7 +28,9 @@ class Runner(nn.Module):
         self.state = None
                 
         self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
-
+        self.batch_idx = None
+        self.pool = None
+        
     def init(self):
         r"""
             initialize the state of the simulation

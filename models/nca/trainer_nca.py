@@ -75,9 +75,11 @@ class TrainIsoNca:
                                 betas=self.runner.config['simulation_metadata']['learning_params']['betas'])
         self.lr_sched = optim.lr_scheduler.ExponentialLR(self.opt,
                                                             self.runner.config['simulation_metadata']['learning_params']['lr_gamma'])
+        
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
         self.normalize_gradient =  False
         self.pool_size = self.runner.config["simulation_metadata"]["pool_size"]
+        
         wandb.init(
         entity="blankpoint",
         project="NCA",         

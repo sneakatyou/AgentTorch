@@ -48,13 +48,23 @@ class Runner(nn.Module):
         """
         self.init()
 
+    def reset_state_before_episode(self):
+        r"""
+            reinitialize the state of the simulator at the beginning of an episode
+        """
+        self.state_trajectory = []
+        self.state_trajectory.append([self.state])
+        self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
+    
     def step(self, num_steps=None):
         r"""
             Execute a single episode of the simulation
         """
-        self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
-        self.state_trajectory = []
-        self.state_trajectory.append([self.state])
+        # self.trajectory = { 'states': deque(), 'observations': deque(), 'actions': deque(),'rewards': deque() }
+        # self.state_trajectory = []
+        # self.state_trajectory.append([self.state])
+        
+        self.reset_state_before_episode()
         assert self.state is not None
 
         for traj_var in self.trajectory.keys():

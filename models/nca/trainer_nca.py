@@ -94,7 +94,7 @@ class TrainIsoNca:
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             # step_n = np.random.randint(64, 96)
-            step_n = 5
+            step_n = 20
             overflow_loss = 0.0
             diff_loss = 0.0
             target_loss = 0.0

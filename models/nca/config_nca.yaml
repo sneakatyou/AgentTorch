@@ -1,6 +1,6 @@
 simulation_metadata:
-    num_episodes: 1000
-    num_steps_per_episode: 20
+    num_episodes: 50000
+    num_steps_per_episode: 5
     num_substeps_per_step: 1
     w: 48
     h: 48
@@ -22,7 +22,7 @@ simulation_metadata:
     scalar_chn: 16
     update_rate: 0.5
     # ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
-    target: "smiley"
+    target: "lizard"
     # ['noaux', 'binary', 'minimal', 'extended']
     aux_l_type: "binary"
     # ['laplacian', 'lap6', 'lap_gradnorm', 'steerable', 'gradient', 'steerable_nolap']

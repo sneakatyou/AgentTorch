@@ -1,4 +1,4 @@
-import cv2
+
 from AgentTorch.helpers import *
 
 import os
@@ -19,8 +19,6 @@ import torch
 import torch.nn.functional as F
 import torchvision.models as models
 from functools import partial
-
-from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 import imageio
 
@@ -129,7 +127,8 @@ class IsoNcaOps():
         try:
             display(Image(data=self.imencode(a, fmt)))
         except:
-            cv2.imshow("image",a)
+            pass
+#             cv2.imshow("image",a)
             # img = Image(data=self.imencode(a, fmt))
             # img.show()
             
@@ -294,17 +293,18 @@ class IsoNcaOps():
 
 
 class InvariantLoss:
-    def __init__(self, target, mirror=False, sharpen=True, hex_grid=False):
+    def __init__(self, target, mirror=False, sharpen=True, hex_grid=False, device = "cpu"):
         self.ops = IsoNcaOps()
+        self.device = device
         self.sharpen = sharpen
         self.mirror = mirror
         self.channel_n = target.shape[0]
         self.hex_grid = hex_grid
         self.W = target.shape[-1]
-        self.r = r = torch.linspace(0.5/self.W, 1, self.W//2)[:, None]
-        self.angle = a = torch.range(0, self.W*np.pi)/(self.W/2)
+        self.r = r = torch.linspace(0.5/self.W, 1, self.W//2,device=self.device)[:, None]
+        self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
         self.polar_xy = torch.stack([r*a.cos(), r*a.sin()], -1)[None, :]
-
+        
         # also make an x
         target = target[None, :]
         if self.sharpen:
@@ -363,7 +363,7 @@ class InvariantLoss:
 
 
 class AddAuxilaryChannel():
-    def __init__(self, target_p, aux_l_type, h, w, model_type  ):
+    def __init__(self, target_p, aux_l_type, h, w, model_type, device):
         self.TARGET_P = target_p
         self.AUX_L_TYPE = aux_l_type
         self.H = h
@@ -371,6 +371,7 @@ class AddAuxilaryChannel():
         self.W = w
         self.mask = self.make_circle_masks(self.H, self.W)
         self.ops = IsoNcaOps()
+        self.device = device
         self.model_suffix = self.model_type + "_" + \
             self.TARGET_P + "_" + self.AUX_L_TYPE
 
@@ -448,8 +449,10 @@ class AddAuxilaryChannel():
                 aux_target_l += [torch.tensor(
                     self.ops.make_concentric(Hp, Wp, 4))]
             aux_target = torch.stack(aux_target_l)*target[3:4]
+            target = target.to(self.device)
+            aux_target = target.to(self.device)
             return target, aux_target
-        return target, -1
+        return target, None
 
 class IsoNcaConfig():
     def __init__(self,config):

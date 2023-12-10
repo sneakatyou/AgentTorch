@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import sys
 import torch.nn.functional as F
-sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/')
+sys.path.insert(0, '/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/')
 from models.nca.substeps.utils import make_circle_masks
 
 from AgentTorch import Configurator, Runner
@@ -181,11 +181,13 @@ class NCARunnerWithPool(Runner):
 
     def _nca_initialize_state(self,seed_size,i,len_loss):
         if (self.pool is None):            
-            x = self.seed(self.config['simulation_metadata']['pool_size'],seed_size)           
+            x = self.seed(self.config['simulation_metadata']['pool_size'],seed_size)
             self.pool = x
+            
         
         self.batch_idx = np.random.choice(self.config['simulation_metadata']['pool_size'], self.config['simulation_metadata']['batch_size'], replace=False)
-        x0 = self.pool[self.batch_idx]        
+        x0 = self.pool[self.batch_idx] 
+        
         x0 = self.augment_input(i, len_loss, x0)
         return x0
 
@@ -216,7 +218,8 @@ class NCARunnerWithPool(Runner):
         x[:,3:self.config['simulation_metadata']['scalar_chn'],r:r+s, r:r+s] = 1.0
         if self.config['simulation_metadata']['angle'] is not None:
             x[:,-1,r:r+s, r:r+s] = self.config['simulation_metadata']['angle']
-        x.to(self.config['simulation_metadata']['device'])
+        x = x.to(self.config['simulation_metadata']['device'])
+        
         return x
 
     def reset(self,seed_size=1,i=0,len_loss=0):

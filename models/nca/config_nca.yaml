@@ -1,5 +1,5 @@
 simulation_metadata:
-    num_episodes: 50000
+    num_episodes: 150000
     num_steps_per_episode: 5
     num_substeps_per_step: 1
     w: 48
@@ -7,7 +7,7 @@ simulation_metadata:
     n_channels: 16
     batch_size: 8
     hidden_size: 128
-    device: "cpu"
+    device: "cuda:3"
     fire_rate: 0.5
     angle: 0.0
     learning_params:
@@ -22,7 +22,7 @@ simulation_metadata:
     scalar_chn: 16
     update_rate: 0.5
     # ['circle','lizard', 'heart', 'smiley', 'lollipop', 'unicorn', 'spiderweb']
-    target: "lizard"
+    target: "heart"
     # ['noaux', 'binary', 'minimal', 'extended']
     aux_l_type: "binary"
     # ['laplacian', 'lap6', 'lap_gradnorm', 'steerable', 'gradient', 'steerable_nolap']

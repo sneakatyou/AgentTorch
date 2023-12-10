@@ -11,14 +11,14 @@ from tqdm import tqdm_notebook, tnrange
 import torchvision.models as models
 from functools import partial
 import cv2
-from einops import rearrange
 from torchvision.transforms.functional_tensor import gaussian_blur
 
 from simulator import NCARunner, configure_nca, NCARunnerWithPool
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, make_circle_masks
-import torcheck
 import wandb
+torch.cuda.set_device(3)
+torch.set_default_tensor_type('torch.cuda.FloatTensor')
 
 def log_preds_table(images,loss):
     "Log a wandb.Table with (img, pred, target, scores)"
@@ -29,7 +29,7 @@ def log_preds_table(images,loss):
     wandb.log({"predictions_table":table}, commit=False)
     
 
-class TrainIsoNca:
+class TrainNca:
     def __init__(self,runner):
         # fill values in cfg
         self.ops = IsoNcaOps()
@@ -37,6 +37,7 @@ class TrainIsoNca:
         self.runner = runner
         self.device = torch.device(
             runner.config['simulation_metadata']['device'])
+        self.runner.to(self.device)
         
         self.CHN = runner.config['simulation_metadata']['chn']
         self.ANGLE_CHN = runner.config['simulation_metadata']['angle_chn']
@@ -51,7 +52,7 @@ class TrainIsoNca:
         self.hex_grid = self.MODEL_TYPE == "lap6"
         
         self.aux = AddAuxilaryChannel(
-            self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE)
+            self.TARGET_P, self.AUX_L_TYPE, self.H, self.W, self.MODEL_TYPE,self.device)
         
         self.loss_log = []
         
@@ -68,7 +69,7 @@ class TrainIsoNca:
         
         self.target, self.aux_target = self.aux.get_targets() #Can Define your own target here
         self.target_loss_f = InvariantLoss(
-            self.target, mirror=self.mirror, sharpen=True,hex_grid=self.hex_grid) #Can define your own loss function here
+            self.target, mirror=self.mirror, sharpen=True,hex_grid=self.hex_grid,device = self.device) #Can define your own loss function here
 
         self.opt = optim.Adam(self.runner.parameters(),
                                 lr=self.runner.config['simulation_metadata']['learning_params']['lr'],
@@ -96,7 +97,7 @@ class TrainIsoNca:
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             # step_n = np.random.randint(64, 96)
-            step_n = 20
+            step_n = 50
             self.train_step(i, step_n)
         
         torch.save(self.runner.state_dict(
@@ -124,7 +125,7 @@ class TrainIsoNca:
             
             self.opt.step()
             self.lr_sched.step()
-            runner.update_pool(x_final_step)
+            self.runner.update_pool(x_final_step)
                 
             self.loss_log.append(loss.item())
             self.save_output(i, x_final_step)
@@ -156,7 +157,7 @@ class TrainIsoNca:
         return x_final_step,loss
 
     def save_output(self, i, x_final_step):
-            if i % 100 == 0:
+            if i % 500 == 0:
                 clear_output(True)
                 pl.plot(self.loss_log, '.', alpha=0.1)
                 pl.yscale('log')
@@ -208,10 +209,10 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/Users/shashankkumar/Documents/AgentTorch/models/nca/config.yaml"
+        config_file = "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/config.yaml"
     
     config, registry = configure_nca(config_file)
-    runner = NCARunnerWithPool(read_config('/Users/shashankkumar/Documents/AgentTorch-original/AgentTorch/models/nca/config_nca.yaml'), registry)
+    runner = NCARunnerWithPool(read_config('/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/config_nca.yaml'), registry)
     runner.init()
-    trainer = TrainIsoNca(runner)
+    trainer = TrainNca(runner)
     trainer.train()

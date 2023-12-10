@@ -9,7 +9,7 @@ simulation_metadata:
   device: mps
   hidden_size: 128
   fire_rate: 0.5
-  angle: 0.0
+  angle: 128
   learning_params:
     lr: 0.002
     betas:
@@ -17,6 +17,10 @@ simulation_metadata:
     - 0.5
     lr_gamma: 0.9999
     model_path: saved_model.pth
+  seed_size: 1
+  pool_size: 128
+  scalar_chn: 128
+  chn: 128
 state:
   environment: {}
   agents:
@@ -29,73 +33,72 @@ state:
           - 16
           - 5184
           initialization_function:
-            generator: nca_initialize_state
+            generator: nca_initialize_state_pool
             arguments:
               n_channels:
-                  name: n_channels
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: int
-                  value: 16
+                name: n_channels
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 16
               batch_size:
-                  name: batch_size
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: int
-                  value: 8
-              device:
-                  name: device
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: str
-                  value: mps
+                name: batch_size
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 8
               angle:
-                  name: angle
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: float
-                  value: 0.0
+                name: angle
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: float
+                value: 128
               seed_size:
-                  name: seed_size
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: int
-                  value: 1
+                name: seed_size
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 1
               pool_size:
-                  name: pool_size
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: int
-                  value: 128
+                name: pool_size
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 128
               scalar_chn:
-                  name: scalar_chn
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: int
-                  value: 16
+                name: scalar_chn
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 128
               chn:
-                  name: chn
-                  shape:
-                  - 1
-                  initialization_function: null
-                  learnable: false
-                  dtype: str
-                  value: 16
-                  dtype: int
+                name: chn
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: int
+                value: 128
+              device:
+                name: device
+                shape:
+                - 1
+                initialization_function: null
+                learnable: false
+                dtype: str
+                value: mps
           learnable: true
           dtype: float
   objects: {}
@@ -139,7 +142,7 @@ substeps:
       - AliveMask
       arguments: null
     transition:
-    - generator: NCAEvolve
+    - generator: IsoNCAEvolve
       input_variables:
         cell_state: agents/automata/cell_state
       output_variables:

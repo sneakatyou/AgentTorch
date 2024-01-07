@@ -1,26 +1,17 @@
-
-from AgentTorch.helpers import *
-
-import os
+import base64
 import io
+import types
+import imageio
+import matplotlib.pylab as pl
+import numpy as np
 import PIL.Image
 import PIL.ImageDraw
-import base64
-import zipfile
-import json
 import requests
-import numpy as np
-import matplotlib.pylab as pl
-import glob
-
-from IPython.display import Image, HTML, clear_output
-from tqdm import tqdm_notebook, tnrange
 import torch
 import torch.nn.functional as F
-import torchvision.models as models
-from functools import partial
+from IPython.display import HTML, Image, clear_output
 from torchvision.transforms.functional_tensor import gaussian_blur
-import imageio
+from AgentTorch.helpers import *
 
 def nca_initialize_state(shape, params):
     device = torch.device(params['device'])
@@ -45,6 +36,10 @@ def nca_initialize_state_pool(shape, params):
             x[:,-1,r:r+s, r:r+s] = params["angle"]
         x.to(params["device"])
         return x
+    
+
+def assign_method(runner, method_name, method):
+        setattr(runner, method_name, types.MethodType(method, runner))
 
 class IsoNcaOps():
     def __init__(self, cfg = None):

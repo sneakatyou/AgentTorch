@@ -80,7 +80,7 @@ class Configurator(nn.Module):
         substep_function.update({'output_variables': output_variables})
         substep_function.update({'arguments': arguments_dict})
 
-        return substep_function
+        return OmegaConf.create( {generator_name : substep_function})
 
     def add_property(self, root, key, name, shape, dtype, initialization_function, learnable=False, value=None):
         root_object = self.get(root)
@@ -136,7 +136,8 @@ class Configurator(nn.Module):
                 observation_fn_obj.update({agent: None})
             _created_substep.update({'observation': observation_fn_obj})
         else:
-            _created_substep.update({'observation': OmegaConf.merge(*[observation_fn])})
+            for agent in active_agents:
+                _created_substep.update({'observation': {agent: OmegaConf.merge(*observation_fn)}})
 
         if policy_fn is None:
             policy_fn_obj = OmegaConf.create()
@@ -144,13 +145,15 @@ class Configurator(nn.Module):
                 policy_fn_obj.update({agent: None})
             _created_substep.update({'policy': policy_fn_obj})
         else:
-            _created_substep.update({'policy': OmegaConf.merge(*[policy_fn])})
+            for agent in active_agents:
+                _created_substep.update({'policy': {agent:OmegaConf.merge(*policy_fn)}})
         
         if transition_fn is None:
             transition_fn_obj = OmegaConf.create()
             _created_substep.update({'transition': transition_fn_obj})
         else:
-            _created_substep.update({'transition': OmegaConf.merge(*[transition_fn])})
+            for agent in active_agents:
+                _created_substep.update({'transition': {agent:OmegaConf.merge(*transition_fn)}})
 
         self.config['substeps'].update({str(self.substep_counter): _created_substep})
         self.substep_counter += 1

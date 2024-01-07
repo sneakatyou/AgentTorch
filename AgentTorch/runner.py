@@ -92,7 +92,7 @@ class Runner(nn.Module):
                 self.trajectory["observations"][-1][-1].append(observation_profile)
                 self.trajectory["actions"][-1][-1].append(action_profile)
 
-                next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
+                next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function, agent_type)
                 self.state = next_state
 
                 self.state_trajectory[-1].append(self.state)

@@ -12,13 +12,14 @@ import torchvision.models as models
 from functools import partial
 import cv2
 from torchvision.transforms.functional_tensor import gaussian_blur
+from AgentTorch.AgentTorch.utils import initialise_wandb
 
-from simulator import NCARunner, configure_nca, NCARunnerWithPool
+from simulator import configure_nca, NCARunnerWithPool
 from AgentTorch.helpers import read_config
-from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, make_circle_masks
+from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, assign_method, make_circle_masks
 import wandb
-torch.cuda.set_device(3)
-torch.set_default_tensor_type('torch.cuda.FloatTensor')
+# torch.cuda.set_device(3)
+# torch.set_default_tensor_type('torch.cuda.FloatTensor')
 
 def log_preds_table(images,loss):
     "Log a wandb.Table with (img, pred, target, scores)"
@@ -30,7 +31,7 @@ def log_preds_table(images,loss):
     
 
 class TrainNca:
-    def __init__(self,runner):
+    def __init__(self,runner,custom_loss_fn = None, target = None, aux_target = None):
         # fill values in cfg
         self.ops = IsoNcaOps()
 
@@ -38,7 +39,7 @@ class TrainNca:
         self.device = torch.device(
             runner.config['simulation_metadata']['device'])
         self.runner.to(self.device)
-        
+        self.custom_loss_fn = custom_loss_fn
         self.CHN = runner.config['simulation_metadata']['chn']
         self.ANGLE_CHN = runner.config['simulation_metadata']['angle_chn']
         self.SCALAR_CHN = self.CHN-self.ANGLE_CHN
@@ -66,9 +67,15 @@ class TrainNca:
         if self.hex_grid:
             self.xy_grid = self.ops.get_xy_grid(self.W)
         
+        if target is None:
+            self.target, self.aux_target = self.aux.get_targets() #Can Define your own target here
+        else:
+            self.target = target
+            if aux_target is not None:
+                self.aux_target = aux_target
         
-        self.target, self.aux_target = self.aux.get_targets() #Can Define your own target here
-        self.target_loss_f = InvariantLoss(
+        if custom_loss_fn is None:
+            self.target_loss_f = InvariantLoss(
             self.target, mirror=self.mirror, sharpen=True,hex_grid=self.hex_grid,device = self.device) #Can define your own loss function here
 
         self.opt = optim.Adam(self.runner.parameters(),
@@ -81,8 +88,7 @@ class TrainNca:
         self.normalize_gradient =  False
         self.pool_size = self.runner.config["simulation_metadata"]["pool_size"]
         
-        wandb.init(
-        entity="blankpoint",
+        initialise_wandb(entity="blankpoint",
         project="NCA",         
         name=f"{self.model_suffix}", 
         config={
@@ -106,7 +112,7 @@ class TrainNca:
     def train_step(self, i, step_n):
         self.runner.reset(1,i,len(self.loss_log))
         self.opt.zero_grad()
-        self.runner.step(step_n)  # its is sampled randomly right now
+        self.runner.step(step_n) 
         x_final_step, loss = self.calculate_loss(step_n)
         self.wandb_log("loss",loss.item())
         self.wandb_log("lr",self.lr_sched.get_lr()[0])
@@ -134,27 +140,31 @@ class TrainNca:
         wandb.log({name: value})
 
     def calculate_loss(self, step_n):
-        overflow_loss = 0.0
-        diff_loss = 0.0
-        target_loss = 0.0
-        aux_target_loss = 0.0
-        outputs = self.runner.state_trajectory[-1][-step_n:]
-        list_outputs = [outputs[i]['agents']['automata']['cell_state'] for i in range(step_n)]
-        x_intermediate_steps = torch.stack(list_outputs,dim=0)
+        if self.custom_loss_fn is not None:
+            return self.custom_loss_fn(self.runner.state_trajectory[-1][-step_n:])
+        else:
+            outputs = self.runner.state_trajectory[-1][-step_n:]
+            list_outputs = [outputs[i]['agents']['automata']['cell_state'] for i in range(step_n)]
+            x_intermediate_steps = torch.stack(list_outputs,dim=0)
             
-        overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
-                                )[:,:,:self.SCALAR_CHN].square().sum()
-
-        final_step_output = outputs[-1]
+            overflow_loss = 0.0
+            diff_loss = 0.0
+            target_loss = 0.0
+            aux_target_loss = 0.0
             
-        x_final_step = final_step_output['agents']['automata']['cell_state']
-        target_loss = self.target_loss_f(x_final_step[:,:self.target.shape[0]])
+            overflow_loss = (x_intermediate_steps-x_intermediate_steps.clamp(-2.0, 2.0)
+                                    )[:,:,:self.SCALAR_CHN].square().sum()
 
-        target_loss /= 2.
-        aux_target_loss /= 2.
-        diff_loss = diff_loss*10.0
-        loss = target_loss + overflow_loss+diff_loss + aux_target_loss
-        return x_final_step,loss
+            final_step_output = outputs[-1]
+                
+            x_final_step = final_step_output['agents']['automata']['cell_state']
+            target_loss = self.target_loss_f(x_final_step[:,:self.target.shape[0]])
+
+            target_loss /= 2.
+            aux_target_loss /= 2.
+            diff_loss = diff_loss*10.0
+            loss = target_loss + overflow_loss+diff_loss + aux_target_loss
+            return x_final_step,loss
 
     def save_output(self, i, x_final_step):
             if i % 500 == 0:
@@ -209,10 +219,44 @@ if __name__ == "__main__":
         config_file = args.config
     
     else:
-        config_file = "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/config.yaml"
+        config_file = "/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch/models/nca/config.yaml"
     
-    config, registry = configure_nca(config_file)
-    runner = NCARunnerWithPool(read_config('/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/config_nca.yaml'), registry)
+    params = {
+    "num_episodes": 150000,
+    "num_steps_per_episode": 5,
+    "num_substeps_per_step": 1,
+    "w": 48,
+    "h": 48,
+    "n_channels": 16,
+    "batch_size": 8,
+    "hidden_size": 128,
+    "device": "cpu",
+    "fire_rate": 0.5,
+    "angle": 0.0,
+    "learning_params": {
+        "lr": 2e-3,
+        "betas": [0.5, 0.5],
+        "lr_gamma": 0.9999,
+        "model_path": "saved_model.pth"
+    },
+    "angle_chn": 0,
+    "chn": 16,
+    "scalar_chn": 16,
+    "update_rate": 0.5,
+    "seed_size": 1,
+    "pool_size": 128,
+    "target": "heart",
+    "aux_l_type": "binary",
+    "model_type": "laplacian",
+    "mirror": False,
+    "alive_threshold_value": 0.1,
+    "pool_size": 128,
+    "hex_grid": False
+    }
+    
+    config, registry = configure_nca(config_file,params)
+    runner = NCARunnerWithPool(read_config(config_file), registry)
+    
     runner.init()
     trainer = TrainNca(runner)
     trainer.train()

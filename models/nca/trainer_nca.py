@@ -1,3 +1,6 @@
+import sys
+
+sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch')
 import argparse
 import numpy as np
 import torch
@@ -12,7 +15,7 @@ import torchvision.models as models
 from functools import partial
 import cv2
 from torchvision.transforms.functional_tensor import gaussian_blur
-from AgentTorch.AgentTorch.utils import initialise_wandb
+from AgentTorch.utils import initialise_wandb
 
 from simulator import configure_nca, NCARunnerWithPool
 from AgentTorch.helpers import read_config

@@ -10,29 +10,19 @@ from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
 
 def configure_nca(config_path, params, custom_transition_network=None,custom_observation_network=None,custom_action_network=None):
-    conf = Configurator()
-    
-    #add config metadata
-    add_configuration(conf, params)
-    
-    #retrieve config values
-    config_values = get_config_values(conf, ['angle', 'seed_size', 'n_channels', 'batch_size', 'scalar_chn', 'chn', 'device', 'w', 'pool_size','h'])   
-    automata_number = config_values['w'] * config_values['h']
-    conf.add_agents(key="automata", number=automata_number)
-    
-    #add agent and network
-    add_agent_properties(conf, config_values, automata_number)
-    add_environment_network(conf, config_values)
-    
+    conf = set_config(params)   
     #define active agent
-    active_agent = "automata"    
+    active_agent = "automata" 
     
     #add transition
+    perc_n = 32
+    hidden_n = 192
     custom_transition_network = torch.nn.Sequential(
-        torch.nn.Conv2d(config_values['n_channels'], config_values['n_channels'], 1),
-        torch.nn.ReLU(),
-        torch.nn.Conv2d(config_values['n_channels'], config_values['n_channels'], 1, bias=False)
-    )
+            torch.nn.Conv2d(perc_n, hidden_n, 1),
+            torch.nn.ReLU(),
+            torch.nn.Conv2d(hidden_n, 16, 1, bias=False)
+        )
+    custom_transition_network[0].weight.data.zero_()
     from substeps.evolve_cell.transition import IsoNCAEvolve
     if custom_transition_network is None:
         evolve_transition = conf.create_function(IsoNCAEvolve, input_variables={'cell_state': f'agents/{active_agent}/cell_state'}, output_variables=['cell_state'], fn_type="transition")
@@ -63,6 +53,24 @@ def configure_nca(config_path, params, custom_transition_network=None,custom_obs
     conf.render(config_path)
     
     return read_config(config_path), conf.reg
+
+def set_config(params):
+    conf = Configurator()
+    
+    #add config metadata
+    add_configuration(conf, params)
+    
+    #retrieve config values
+    config_values = get_config_values(conf, ['angle', 'seed_size', 'n_channels', 'batch_size', 'scalar_chn', 'chn', 'device', 'w', 'pool_size','h'])   
+    automata_number = config_values['w'] * config_values['h']
+    conf.add_agents(key="automata", number=automata_number)
+    
+    #add agent and network
+    add_agent_properties(conf, config_values, automata_number)
+    add_environment_network(conf, config_values)
+    
+    
+    return conf
 
 
 class NCARunnerWithPool(Runner):

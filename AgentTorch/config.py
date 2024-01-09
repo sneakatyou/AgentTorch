@@ -152,8 +152,7 @@ class Configurator(nn.Module):
             transition_fn_obj = OmegaConf.create()
             _created_substep.update({'transition': transition_fn_obj})
         else:
-            for agent in active_agents:
-                _created_substep.update({'transition': {agent:OmegaConf.merge(*transition_fn)}})
+            _created_substep.update({'transition': OmegaConf.merge(*transition_fn)})
 
         self.config['substeps'].update({str(self.substep_counter): _created_substep})
         self.substep_counter += 1

@@ -203,12 +203,12 @@ class Initializer(nn.Module):
                         self.policy_function[substep][agent_type][policy_func] = self.registry.policy_helpers[policy_func](self.config, input_variables, output_variables, arguments)
                 
             # transition function
-            substep_transitions = self.config["substeps"][substep]["transition"][agent_type]
-            self.transition_function[substep][agent_type] = nn.ModuleDict()
+            substep_transitions = self.config["substeps"][substep]["transition"]
+            self.transition_function[substep] = nn.ModuleDict()
             
             for transition_func in substep_transitions:
                 input_variables, output_variables, arguments = self._parse_function(substep_transitions[transition_func], name_root=f"_transition_{transition_func}")
-                self.transition_function[substep][agent_type][transition_func] = self.registry.transition_helpers[transition_func](self.config, input_variables, output_variables, arguments)
+                self.transition_function[substep][transition_func] = self.registry.transition_helpers[transition_func](self.config, input_variables, output_variables, arguments)
         
     
     def initialize(self):

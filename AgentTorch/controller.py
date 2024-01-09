@@ -35,19 +35,19 @@ class Controller(nn.Module):
             
         return action
     
-    def progress(self, state, action, transition_function,agent_type):
+    def progress(self, state, action, transition_function):
         next_state = copy_module(state)
             
         substep = state['current_substep']
         next_substep = (int(substep) + 1)%self.config["simulation_metadata"]["num_substeps_per_step"]
         next_state['current_substep'] = str(next_substep)
                         
-        for trans_func in self.config['substeps'][substep]["transition"][agent_type].keys():
-            updated_vals = transition_function[substep][agent_type][trans_func](state=state, action=action)
+        for trans_func in self.config['substeps'][substep]["transition"].keys():
+            updated_vals = {**transition_function[substep][trans_func](state=state, action=action)}
             for var_name in updated_vals:
-                assert self.config["substeps"][substep]["transition"][agent_type][trans_func]['input_variables'][var_name]
+                assert self.config["substeps"][substep]["transition"][trans_func]['input_variables'][var_name]
                 
-                source_path =  self.config["substeps"][substep]["transition"][agent_type][trans_func]["input_variables"][var_name]
+                source_path =  self.config["substeps"][substep]["transition"][trans_func]["input_variables"][var_name]
                 set_by_path(next_state, re.split("/", source_path), updated_vals[var_name])
                 
         return next_state

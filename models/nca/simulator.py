@@ -8,7 +8,7 @@ from models.nca.utils_simulator import add_agent_properties, add_configuration, 
 from models.nca.substeps.utils import make_circle_masks
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
-
+from torchvision.transforms import v2 
 def configure_nca(config_path, params, custom_transition_network=None,custom_observation_network=None,custom_action_network=None):
     conf = set_config(params)   
     #define active agent
@@ -17,12 +17,15 @@ def configure_nca(config_path, params, custom_transition_network=None,custom_obs
     #add transition
     perc_n = 32
     hidden_n = 192
-    custom_transition_network = torch.nn.Sequential(
-            torch.nn.Conv2d(perc_n, hidden_n, 1),
-            torch.nn.ReLU(),
-            torch.nn.Conv2d(hidden_n, 16, 1, bias=False)
-        )
-    custom_transition_network[0].weight.data.zero_()
+    # custom_transition_network = torch.nn.Sequential(
+    #         torch.nn.Conv2d(perc_n, hidden_n, 1),
+    #         torch.nn.ReLU(),
+    #         torch.nn.Conv2d(hidden_n, 16, 1, bias=False)
+    #     )
+    # custom_transition_network[0].weight.data.zero_()
+    gaussian_blur = v2.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5.))
+    
+    custom_transition_network = gaussian_blur
     from substeps.evolve_cell.transition import IsoNCAEvolve
     if custom_transition_network is None:
         evolve_transition = conf.create_function(IsoNCAEvolve, input_variables={'cell_state': f'agents/{active_agent}/cell_state'}, output_variables=['cell_state'], fn_type="transition")

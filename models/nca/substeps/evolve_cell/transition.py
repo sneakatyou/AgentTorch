@@ -16,7 +16,7 @@ class IsoNCAEvolve(SubstepTransition):
         hidden_n = 8*1024//(perc_n+self.CHN)
         hidden_n = (hidden_n+31)//32*32
         print('perc_n:', perc_n, 'hidden_n:', hidden_n)
-        if self.custom_transition_network is not None:
+        if self.custom_transition_network is None:
             self.model = torch.nn.Sequential(
                 torch.nn.Conv2d(perc_n, hidden_n, 1),
                 torch.nn.ReLU(),
@@ -31,6 +31,7 @@ class IsoNCAEvolve(SubstepTransition):
         y = action['automata']['StateVector']
         if self.custom_transition_network is not None:
             y = self.custom_transition_network(y)
+            y = y[:, :self.CHN, :, :]
         else:
             y = self.model(y)
         b, c, h, w = y.shape

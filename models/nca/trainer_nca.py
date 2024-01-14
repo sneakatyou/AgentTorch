@@ -10,11 +10,6 @@ import numpy as np
 import matplotlib.pylab as pl
 import sys
 from IPython.display import clear_output
-from tqdm import tqdm_notebook, tnrange
-import torchvision.models as models
-from functools import partial
-import cv2
-from torchvision.transforms.functional_tensor import gaussian_blur
 from AgentTorch.utils import initialise_wandb
 
 from simulator import configure_nca, NCARunnerWithPool
@@ -101,18 +96,18 @@ class TrainNca:
         "epochs": self.runner.config['simulation_metadata']['num_episodes'],
         })
         
-    def train(self):
+    def train(self,calculate_grads=True):
         print("Starting training...")
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             # step_n = np.random.randint(64, 96)
             step_n = 50
-            self.train_step(i, step_n)
+            self.train_step(i, step_n,calculate_grads=calculate_grads)
         
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
 
-    def train_step(self, i, step_n):
+    def train_step(self, i, step_n, calculate_grads=True):
         self.runner.reset(1,i,len(self.loss_log))
         self.opt.zero_grad()
         self.runner.step(step_n) 
@@ -121,19 +116,22 @@ class TrainNca:
         self.wandb_log("lr",self.lr_sched.get_lr()[0])
             
         with torch.no_grad():
-            try:
-                loss.backward()
-            except Exception as e:
-                print(e)
-                import ipdb
-                ipdb.set_trace()
+            if calculate_grads:
+                try:
+                    loss.backward()
+                except Exception as e:
+                    print(e)
+                    import ipdb
+                    ipdb.set_trace()
+                    
+                if self.normalize_gradients:
+                    for p in self.runner.parameters():
+                        p.grad = p.grad/(p.grad.norm()+1e-8) if p.grad is not None else p.grad   # normalize gradients
                 
-            if self.normalize_gradients:
-                for p in self.runner.parameters():
-                    p.grad = p.grad/(p.grad.norm()+1e-8) if p.grad is not None else p.grad   # normalize gradients
-            
-            self.opt.step()
-            self.lr_sched.step()
+                self.opt.step()
+                self.lr_sched.step()
+            outputs = self.runner.state_trajectory[-1][-step_n:]
+            x_final_step = outputs[-1]['agents']['automata']['cell_state']
             self.runner.update_pool(x_final_step)
                 
             self.loss_log.append(loss.item())
@@ -170,19 +168,26 @@ class TrainNca:
             return x_final_step,loss
 
     def save_output(self, i, x_final_step):
-            if i % 500 == 0:
+            if i % 50 == 0:
                 clear_output(True)
-                pl.plot(self.loss_log, '.', alpha=0.1)
-                pl.yscale('log')
-                pl.ylim(np.min(self.loss_log), self.loss_log[0])
-                        # pl.show()
-                pl.savefig('loss_curve.png')
+                #log loss curve
+                try:
+                    pl.plot(self.loss_log, '.', alpha=0.1)
+                    pl.yscale('log')
+                    pl.ylim(np.min(self.loss_log), self.loss_log[0])
+                            # pl.show()
+                    pl.savefig('loss_curve.png')
+                    wandb.log({"loss curve":[wandb.Image('loss_curve.png',caption=f"loss for the episode {i}")]})
+                except Exception as e:
+                    print(e)
+                    pass
+                
+                #log output images
                 imgs = self.ops.to_rgb(x_final_step)
                 if self.hex_grid:
                     imgs = F.grid_sample(imgs, self.xy_grid[None, :].repeat(
                                 [len(imgs), 1, 1, 1]), mode='bicubic')
                 imgs = imgs.cpu()
-                wandb.log({"loss curve":[wandb.Image('loss_curve.png',caption=f"loss for the episode {i}")]})
                 wandb.log({"output_result_image": [wandb.Image(im) for im in imgs]})
                         # log_preds_table(imgs,loss)
 
@@ -260,6 +265,21 @@ if __name__ == "__main__":
     config, registry = configure_nca(config_file,params)
     runner = NCARunnerWithPool(read_config(config_file), registry)
     
+    def seed(self, pool_size, seed_size):
+    # Generate a tensor with random values between 0 and 1
+        x = torch.randint(0, 256, (pool_size, self.config['simulation_metadata']['chn'], self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])).float()
+        if self.config['simulation_metadata']['scalar_chn'] != self.config['simulation_metadata']['chn']:
+            x[:,-1] = torch.rand(pool_size, self.config['simulation_metadata']['w'], self.config['simulation_metadata']['h'])*np.pi*2.0
+        # The rest of your code...
+        r, s = self.config['simulation_metadata']['w']//2, seed_size
+        x[:,3:self.config['simulation_metadata']['scalar_chn'],r:r+s, r:r+s] = 1.0
+        if self.config['simulation_metadata']['angle'] is not None:
+            x[:,-1,r:r+s, r:r+s] = self.config['simulation_metadata']['angle']
+        x = x.to(self.config['simulation_metadata']['device'])
+    
+        return x
+    
+    assign_method(runner, 'seed', seed)
     runner.init()
     trainer = TrainNca(runner)
     trainer.train()

@@ -1,2082 +1,0 @@
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111020-x04a9h33
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_heart_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/x04a9h33
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: heart
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:163: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111328-pgwg403j
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_heart_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/pgwg403j
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: heart
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:163: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111404-lckz5s6r
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_smiley_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/lckz5s6r
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: smiley
-cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
-> [0;32m/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py[0m(121)[0;36mtrain_step[0;34m()[0m
-[0;32m    120 [0;31m[0;34m[0m[0m
-[0m[0;32m--> 121 [0;31m            [0;32mif[0m [0mself[0m[0;34m.[0m[0mnormalize_gradients[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m[0;32m    122 [0;31m                [0;32mfor[0m [0mp[0m [0;32min[0m [0mself[0m[0;34m.[0m[0mrunner[0m[0;34m.[0m[0mparameters[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m
-ipdb> Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/usr/lib/python3.10/bdb.py", line 90, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/lib/python3.10/bdb.py", line 114, in dispatch_line
-    self.user_line(frame)
-  File "/usr/lib/python3.10/pdb.py", line 262, in user_line
-    self.interaction(frame, None)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/IPython/core/debugger.py", line 335, in interaction
-    OldPdb.interaction(self, frame, traceback)
-  File "/usr/lib/python3.10/pdb.py", line 357, in interaction
-    self._cmdloop()
-  File "/usr/lib/python3.10/pdb.py", line 322, in _cmdloop
-    self.cmdloop()
-  File "/usr/lib/python3.10/cmd.py", line 126, in cmdloop
-    line = input(self.prompt)
-OSError: [Errno 9] Bad file descriptor
-
-If you suspect this is an IPython 8.12.2 bug, please report it at:
-    https://github.com/ipython/ipython/issues
-or send an email to the mailing list at ipython-dev@python.org
-
-You can print a more detailed traceback right now with "%tb", or use "%debug"
-to interactively debug it.
-
-Extra-detailed tracebacks for bug-reporting purposes can be enabled via:
-    %config Application.verbose_crash=True
-
-wandb: 
-wandb: Run history:
-wandb: loss ▁
-wandb:   lr ▁
-wandb: 
-wandb: Run summary:
-wandb: loss 16576.50586
-wandb:   lr 0.002
-wandb: 
-wandb: 🚀 View run laplacian_smiley_binary at: https://wandb.ai/blankpoint/NCA/runs/lckz5s6r
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v26
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111404-lckz5s6r/logs
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111453-36yqbxhe
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_spiderweb_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/36yqbxhe
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: spiderweb
-cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
-> [0;32m/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py[0m(121)[0;36mtrain_step[0;34m()[0m
-[0;32m    120 [0;31m[0;34m[0m[0m
-[0m[0;32m--> 121 [0;31m            [0;32mif[0m [0mself[0m[0;34m.[0m[0mnormalize_gradients[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m[0;32m    122 [0;31m                [0;32mfor[0m [0mp[0m [0;32min[0m [0mself[0m[0;34m.[0m[0mrunner[0m[0;34m.[0m[0mparameters[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m
-ipdb> Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/usr/lib/python3.10/bdb.py", line 90, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/lib/python3.10/bdb.py", line 114, in dispatch_line
-    self.user_line(frame)
-  File "/usr/lib/python3.10/pdb.py", line 262, in user_line
-    self.interaction(frame, None)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/IPython/core/debugger.py", line 335, in interaction
-    OldPdb.interaction(self, frame, traceback)
-  File "/usr/lib/python3.10/pdb.py", line 357, in interaction
-    self._cmdloop()
-  File "/usr/lib/python3.10/pdb.py", line 322, in _cmdloop
-    self.cmdloop()
-  File "/usr/lib/python3.10/cmd.py", line 126, in cmdloop
-    line = input(self.prompt)
-OSError: [Errno 9] Bad file descriptor
-
-If you suspect this is an IPython 8.12.2 bug, please report it at:
-    https://github.com/ipython/ipython/issues
-or send an email to the mailing list at ipython-dev@python.org
-
-You can print a more detailed traceback right now with "%tb", or use "%debug"
-to interactively debug it.
-
-Extra-detailed tracebacks for bug-reporting purposes can be enabled via:
-    %config Application.verbose_crash=True
-
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-wandb: 
-wandb: Run history:
-wandb: loss ▁
-wandb:   lr ▁
-wandb: 
-wandb: Run summary:
-wandb: loss 18.61941
-wandb:   lr 0.002
-wandb: 
-wandb: 🚀 View run laplacian_spiderweb_binary at: https://wandb.ai/blankpoint/NCA/runs/36yqbxhe
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v27
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111453-36yqbxhe/logs
-Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 213, in <module>
-    config, registry = configure_nca(config_file)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/simulator.py", line 134, in configure_nca
-    from substeps.evolve_cell.transition import IsoNCAEvolve
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/evolve_cell/transition.py", line 1, in <module>
-    from AgentTorch.substep import SubstepTransition
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/substep.py", line 3, in <module>
-    from torch_geometric.nn import MessagePassing
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch_geometric/__init__.py", line 6, in <module>
-    import torch_geometric.datasets
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch_geometric/datasets/__init__.py", line 17, in <module>
-    from .qm9 import QM9
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch_geometric/datasets/qm9.py", line 20, in <module>
-    conversion = torch.tensor([
-RuntimeError: CUDA error: out of memory
-CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
-For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
-Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
-
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111528-2q6l34xz
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lollipop_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/2q6l34xz
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lollipop
-cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
-> [0;32m/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py[0m(121)[0;36mtrain_step[0;34m()[0m
-[0;32m    120 [0;31m[0;34m[0m[0m
-[0m[0;32m--> 121 [0;31m            [0;32mif[0m [0mself[0m[0;34m.[0m[0mnormalize_gradients[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m[0;32m    122 [0;31m                [0;32mfor[0m [0mp[0m [0;32min[0m [0mself[0m[0;34m.[0m[0mrunner[0m[0;34m.[0m[0mparameters[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m
-ipdb> Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 121, in train_step
-    if self.normalize_gradients:
-  File "/usr/lib/python3.10/bdb.py", line 90, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/lib/python3.10/bdb.py", line 114, in dispatch_line
-    self.user_line(frame)
-  File "/usr/lib/python3.10/pdb.py", line 262, in user_line
-    self.interaction(frame, None)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/IPython/core/debugger.py", line 335, in interaction
-    OldPdb.interaction(self, frame, traceback)
-  File "/usr/lib/python3.10/pdb.py", line 357, in interaction
-    self._cmdloop()
-  File "/usr/lib/python3.10/pdb.py", line 322, in _cmdloop
-    self.cmdloop()
-  File "/usr/lib/python3.10/cmd.py", line 126, in cmdloop
-    line = input(self.prompt)
-OSError: [Errno 9] Bad file descriptor
-
-If you suspect this is an IPython 8.12.2 bug, please report it at:
-    https://github.com/ipython/ipython/issues
-or send an email to the mailing list at ipython-dev@python.org
-
-You can print a more detailed traceback right now with "%tb", or use "%debug"
-to interactively debug it.
-
-Extra-detailed tracebacks for bug-reporting purposes can be enabled via:
-    %config Application.verbose_crash=True
-
-wandb: 
-wandb: Run history:
-wandb: loss ▁
-wandb:   lr ▁
-wandb: 
-wandb: Run summary:
-wandb: loss 120.08115
-wandb:   lr 0.002
-wandb: 
-wandb: 🚀 View run laplacian_lollipop_binary at: https://wandb.ai/blankpoint/NCA/runs/2q6l34xz
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v28
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111528-2q6l34xz/logs
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111618-widc36js
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lollipop_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/widc36js
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lollipop
-Expected all tensors to be on the same device, but found at least two devices, cuda:1 and cuda:0! (when checking argument for argument weight in method wrapper_CUDA__cudnn_convolution)
-{'environment': {}, 'agents': {'automata': {'cell_state': tensor([[[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        ...,
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]]], device='cuda:1')}}, 'objects': {}, 'network': {'agent_agent': {'evolution_network': {'graph': <networkx.classes.graph.Graph object at 0x7fc9d8626620>, 'adjacency_matrix': tensor([[0, 1, 0,  ..., 0, 0, 0],
-        [1, 0, 1,  ..., 0, 0, 0],
-        [0, 1, 0,  ..., 0, 0, 0],
-        ...,
-        [0, 0, 0,  ..., 0, 1, 0],
-        [0, 0, 0,  ..., 1, 0, 1],
-        [0, 0, 0,  ..., 0, 1, 0]])}}, 'agent_object': {}, 'object_object': {}}, 'current_step': 0, 'current_substep': '0'}
-ObserveNeighborsState()
-Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 108, in train_step
-    self.runner.step(step_n)  # its is sampled randomly right now
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/runner.py", line 95, in step
-    next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/controller.py", line 46, in progress
-    updated_vals = transition_function[substep][trans_func](state=state, action=action)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/evolve_cell/transition.py", line 40, in forward
-    alive = action['automata']['AliveMask']
-TypeError: 'NoneType' object is not subscriptable
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: 🚀 View run laplacian_lollipop_binary at: https://wandb.ai/blankpoint/NCA/runs/widc36js
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v29
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111618-widc36js/logs
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111641-wh2cgrw8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lollipop_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/wh2cgrw8
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lollipop
-Expected all tensors to be on the same device, but found at least two devices, cuda:1 and cuda:0! (when checking argument for argument weight in method wrapper_CUDA__cudnn_convolution)
-{'environment': {}, 'agents': {'automata': {'cell_state': tensor([[[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        ...,
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]]], device='cuda:1')}}, 'objects': {}, 'network': {'agent_agent': {'evolution_network': {'graph': <networkx.classes.graph.Graph object at 0x7fabf060e7d0>, 'adjacency_matrix': tensor([[0, 1, 0,  ..., 0, 0, 0],
-        [1, 0, 1,  ..., 0, 0, 0],
-        [0, 1, 0,  ..., 0, 0, 0],
-        ...,
-        [0, 0, 0,  ..., 0, 1, 0],
-        [0, 0, 0,  ..., 1, 0, 1],
-        [0, 0, 0,  ..., 0, 1, 0]])}}, 'agent_object': {}, 'object_object': {}}, 'current_step': 0, 'current_substep': '0'}
-ObserveNeighborsState()
-Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 108, in train_step
-    self.runner.step(step_n)  # its is sampled randomly right now
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/runner.py", line 95, in step
-    next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/controller.py", line 46, in progress
-    updated_vals = transition_function[substep][trans_func](state=state, action=action)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/evolve_cell/transition.py", line 40, in forward
-    alive = action['automata']['AliveMask']
-TypeError: 'NoneType' object is not subscriptable
-wandb: 🚀 View run laplacian_lollipop_binary at: https://wandb.ai/blankpoint/NCA/runs/wh2cgrw8
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v29
-wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111641-wh2cgrw8/logs
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_111800-ls0u2mhu
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lollipop_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/ls0u2mhu
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lollipop
-Expected all tensors to be on the same device, but found at least two devices, cuda:1 and cuda:0! (when checking argument for argument weight in method wrapper_CUDA__cudnn_convolution)
-{'environment': {}, 'agents': {'automata': {'cell_state': tensor([[[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        ...,
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]]], device='cuda:1')}}, 'objects': {}, 'network': {'agent_agent': {'evolution_network': {'graph': <networkx.classes.graph.Graph object at 0x7f5d4c21be20>, 'adjacency_matrix': tensor([[0, 1, 0,  ..., 0, 0, 0],
-        [1, 0, 1,  ..., 0, 0, 0],
-        [0, 1, 0,  ..., 0, 0, 0],
-        ...,
-        [0, 0, 0,  ..., 0, 1, 0],
-        [0, 0, 0,  ..., 1, 0, 1],
-        [0, 0, 0,  ..., 0, 1, 0]])}}, 'agent_object': {}, 'object_object': {}}, 'current_step': 0, 'current_substep': '0'}
-ObserveNeighborsState()
-Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 217, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 100, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 108, in train_step
-    self.runner.step(step_n)  # its is sampled randomly right now
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/runner.py", line 95, in step
-    next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/controller.py", line 46, in progress
-    updated_vals = transition_function[substep][trans_func](state=state, action=action)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/evolve_cell/transition.py", line 40, in forward
-    alive = action['automata']['AliveMask']
-TypeError: 'NoneType' object is not subscriptable
-wandb: 🚀 View run laplacian_lollipop_binary at: https://wandb.ai/blankpoint/NCA/runs/ls0u2mhu
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v30
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_111800-ls0u2mhu/logs
-[2K[2K/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113229-gwa99g6x
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lizard_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/gwa99g6x
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lizard
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113304-wh48a5pc
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_lizard_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/wh48a5pc
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: lizard
-Expected all tensors to be on the same device, but found at least two devices, cuda:2 and cuda:1! (when checking argument for argument weight in method wrapper_CUDA__cudnn_convolution)
-{'environment': {}, 'agents': {'automata': {'cell_state': tensor([[[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        ...,
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]],
-
-
-        [[[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         ...,
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]],
-
-         [[0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          ...,
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.],
-          [0., 0., 0.,  ..., 0., 0., 0.]]]], device='cuda:2')}}, 'objects': {}, 'network': {'agent_agent': {'evolution_network': {'graph': <networkx.classes.graph.Graph object at 0x7fe39243a3e0>, 'adjacency_matrix': tensor([[0, 1, 0,  ..., 0, 0, 0],
-        [1, 0, 1,  ..., 0, 0, 0],
-        [0, 1, 0,  ..., 0, 0, 0],
-        ...,
-        [0, 0, 0,  ..., 0, 1, 0],
-        [0, 0, 0,  ..., 1, 0, 1],
-        [0, 0, 0,  ..., 0, 1, 0]])}}, 'agent_object': {}, 'object_object': {}}, 'current_step': 0, 'current_substep': '0'}
-ObserveNeighborsState()
-Traceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 218, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 101, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 109, in train_step
-    self.runner.step(step_n)  # its is sampled randomly right now
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/runner.py", line 95, in step
-    next_state = self.controller.progress(self.state, action_profile, self.initializer.transition_function)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/AgentTorch/controller.py", line 46, in progress
-    updated_vals = transition_function[substep][trans_func](state=state, action=action)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/evolve_cell/transition.py", line 40, in forward
-    alive = action['automata']['AliveMask']
-TypeError: 'NoneType' object is not subscriptable
-wandb: 🚀 View run laplacian_lizard_binary at: https://wandb.ai/blankpoint/NCA/runs/wh48a5pc
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v31
-wandb: Synced 6 W&B file(s), 0 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_113304-wh48a5pc/logs
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113350-70n02p7o
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_unicorn_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/70n02p7o
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: unicorn
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113420-y7q9ahvi
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_unicorn_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/y7q9ahvi
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: unicorn
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113507-3i51mybf
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_spiderweb_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/3i51mybf
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: spiderweb
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_113924-9fby2cig
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_spiderweb_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/9fby2cig
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: spiderweb
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint (video_anomaly_detection). Use `wandb login --relogin` to force relogin
-/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/substeps/utils.py:305: UserWarning: torch.range is deprecated and will be removed in a future release because its behavior is inconsistent with Python's range builtin. Instead, use torch.arange, which produces values in [start, end).
-  self.angle = a = torch.range(0, self.W*np.pi,device=self.device)/(self.W/2)
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-wandb: Currently logged in as: blankpoint. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.1
-wandb: Run data is saved locally in /u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/wandb/run-20231208_114037-al37an1z
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run laplacian_heart_binary
-wandb: ⭐️ View project at https://wandb.ai/blankpoint/NCA
-wandb: 🚀 View run at https://wandb.ai/blankpoint/NCA/runs/al37an1z
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/nn/functional.py:4236: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
-  warnings.warn(
-/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:595: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
-  warnings.warn("To get the last learning rate computed by the scheduler, "
-resolvers already registered..
-Skipping..  environment
-Skipping:  objects
-Simulator done..
-Simulator initialization done..
-perc_n: 32 hidden_n: 192
-initialization complete..
-torch.Size([1, 72, 72])
-Starting training...
-Target is: heart
-[2K/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py:164: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
-  pl.ylim(np.min(self.loss_log), self.loss_log[0])
-[2Klaplacian_heart_binary_0001000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0001000.pt
-[2K[2Klaplacian_unicorn_binary_0001000.pt
-[2K[2Klaplacian_unicorn_binary_0001000.pt
-[2K[2Klaplacian_spiderweb_binary_0001000.pt
-[2K[2Klaplacian_heart_binary_0001000.pt
-[2K[2Klaplacian_heart_binary_0002000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0002000.pt
-[2K[2Klaplacian_unicorn_binary_0002000.pt
-[2K[2Klaplacian_unicorn_binary_0002000.pt
-[2K[2Klaplacian_spiderweb_binary_0002000.pt
-[2K[2Klaplacian_heart_binary_0002000.pt
-[2K[2Klaplacian_heart_binary_0003000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0003000.pt
-[2K[2Klaplacian_unicorn_binary_0003000.pt
-[2K[2Klaplacian_unicorn_binary_0003000.pt
-[2K[2Klaplacian_spiderweb_binary_0003000.pt
-[2K[2Klaplacian_heart_binary_0003000.pt
-[2K[2Klaplacian_heart_binary_0004000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0004000.pt
-[2K[2Klaplacian_unicorn_binary_0004000.pt
-[2K[2Klaplacian_unicorn_binary_0004000.pt
-[2K[2Klaplacian_spiderweb_binary_0004000.pt
-[2K[2Klaplacian_heart_binary_0004000.pt
-[2K[2Klaplacian_heart_binary_0005000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0005000.pt
-[2K[2Klaplacian_unicorn_binary_0005000.pt
-[2K[2Klaplacian_unicorn_binary_0005000.pt
-[2K[2Klaplacian_spiderweb_binary_0005000.pt
-[2K[2Klaplacian_heart_binary_0005000.pt
-[2K[2Klaplacian_heart_binary_0006000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_unicorn_binary_0006000.pt
-[2K[2Klaplacian_lizard_binary_0006000.pt
-[2K[2Klaplacian_unicorn_binary_0006000.pt
-[2K[2Klaplacian_spiderweb_binary_0006000.pt
-[2K[2Klaplacian_heart_binary_0006000.pt
-[2K[2Klaplacian_heart_binary_0007000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_unicorn_binary_0007000.pt
-[2K[2Klaplacian_lizard_binary_0007000.pt
-[2K[2Klaplacian_unicorn_binary_0007000.pt
-[2K[2Klaplacian_spiderweb_binary_0007000.pt
-[2K[2Klaplacian_heart_binary_0007000.pt
-[2K[2Klaplacian_heart_binary_0008000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0008000.pt
-[2K[2Klaplacian_unicorn_binary_0008000.pt
-[2K[2KTraceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 218, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 101, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 131, in train_step
-    self.save_output(i, x_final_step)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 164, in save_output
-    pl.ylim(np.min(self.loss_log), self.loss_log[0])
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/pyplot.py", line 1831, in ylim
-    ret = ax.set_ylim(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/_api/deprecation.py", line 454, in wrapper
-    return func(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3882, in set_ylim
-    return self.yaxis._set_lim(bottom, top, emit=emit, auto=auto)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axis.py", line 1184, in _set_lim
-    v0 = self.axes._validate_converted_limits(v0, self.convert_units)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3570, in _validate_converted_limits
-    raise ValueError("Axis limits cannot be NaN or Inf")
-ValueError: Axis limits cannot be NaN or Inf
-wandb: 
-wandb: Run history:
-wandb: loss ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁▁▁▁ 
-wandb:   lr ███▇▇▇▇▆▆▆▆▅▅▅▅▅▄▄▄▄▄▄▃▃▃▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁
-wandb: 
-wandb: Run summary:
-wandb: loss nan
-wandb:   lr 0.0009
-wandb: 
-wandb: 🚀 View run laplacian_unicorn_binary at: https://wandb.ai/blankpoint/NCA/runs/70n02p7o
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v32
-wandb: Synced 6 W&B file(s), 144 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_113350-70n02p7o/logs
-[2Klaplacian_unicorn_binary_0008000.pt
-[2K[2Klaplacian_spiderweb_binary_0008000.pt
-[2K[2Klaplacian_heart_binary_0008000.pt
-[2K[2KTraceback (most recent call last):
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 218, in <module>
-    trainer.train()
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 101, in train
-    self.train_step(i, step_n)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 131, in train_step
-    self.save_output(i, x_final_step)
-  File "/u/ayushc/projects/COLLAB/nca_collab/NCA/AT_gpu/AgentTorch/models/nca/trainer_nca.py", line 164, in save_output
-    pl.ylim(np.min(self.loss_log), self.loss_log[0])
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/pyplot.py", line 1831, in ylim
-    ret = ax.set_ylim(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/_api/deprecation.py", line 454, in wrapper
-    return func(*args, **kwargs)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3882, in set_ylim
-    return self.yaxis._set_lim(bottom, top, emit=emit, auto=auto)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axis.py", line 1184, in _set_lim
-    v0 = self.axes._validate_converted_limits(v0, self.convert_units)
-  File "/u/ayushc/projects/COLLAB/nca_collab/shashank/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3570, in _validate_converted_limits
-    raise ValueError("Axis limits cannot be NaN or Inf")
-ValueError: Axis limits cannot be NaN or Inf
-wandb: 
-wandb: Run history:
-wandb: loss ▁▁▁▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ 
-wandb:   lr ███▇▇▇▇▆▆▆▆▅▅▅▅▅▄▄▄▄▄▄▃▃▃▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁
-wandb: 
-wandb: Run summary:
-wandb: loss nan
-wandb:   lr 0.0009
-wandb: 
-wandb: 🚀 View run laplacian_heart_binary at: https://wandb.ai/blankpoint/NCA/runs/al37an1z
-wandb: ️⚡ View job at https://wandb.ai/blankpoint/NCA/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyMDU0MTM2Mg==/version_details/v33
-wandb: Synced 6 W&B file(s), 144 media file(s), 3 artifact file(s) and 1 other file(s)
-wandb: Find logs at: ./wandb/run-20231208_114037-al37an1z/logs
-[2Klaplacian_heart_binary_0009000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0009000.pt
-[2K[2Klaplacian_unicorn_binary_0009000.pt
-[2K[2Klaplacian_spiderweb_binary_0009000.pt
-[2K[2Klaplacian_heart_binary_0010000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0010000.pt
-[2K[2Klaplacian_unicorn_binary_0010000.pt
-[2K[2Klaplacian_spiderweb_binary_0010000.pt
-[2K[2Klaplacian_heart_binary_0011000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0011000.pt
-[2K[2Klaplacian_unicorn_binary_0011000.pt
-[2K[2Klaplacian_spiderweb_binary_0011000.pt
-[2K[2Klaplacian_heart_binary_0012000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_lizard_binary_0012000.pt
-[2K[2Klaplacian_unicorn_binary_0012000.pt
-[2K[2Klaplacian_spiderweb_binary_0012000.pt
-[2K[2Klaplacian_heart_binary_0013000.pt
-[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2K[2Klaplacian_heart_binary_0001000.pt
-[2K[2K[2K[2Klaplacian_heart_binary_0002000.pt
-[2K[2K[2K[2Klaplacian_heart_binary_0003000.pt
-[2K[2K[2K[2Klaplacian_heart_binary_0004000.pt
-[2K[2K[2K[2Klaplacian_heart_binary_0005000.pt
-[2K[2K[2K

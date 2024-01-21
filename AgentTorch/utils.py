@@ -1,5 +1,12 @@
 import wandb
 
+def get_config_values(conf, keys):
+    return {key: conf.get(f'simulation_metadata.{key}') for key in keys}
+
+def add_metadata(conf, params):
+    for key, value in params.items():
+        conf.add_metadata(key, value)
+
 def set_custom_transition_network_factory(custom_transition_network):
     def set_custom_transition_network(cls):
         class CustomTransition(cls):
@@ -38,19 +45,19 @@ def initialise_wandb(entity, project, name, config):
             config=config
             )  
         
-def create_dicts_based_on_length(input_dict):
+def create_dicts_list(params):
     # Find the key with a list value
-    list_key = next((key for key, value in input_dict.items() if isinstance(value, list)), None)
+    list_key = next((key for key, value in params.items() if isinstance(value, list)), None)
     
     # If no key with a list value is found, return the input dictionary as the only element in a list
     if list_key is None:
-        return [input_dict]
+        return [params]
     
     # Create a list of dictionaries based on the length of the list value
-    list_value = input_dict[list_key]
+    list_value = params[list_key]
     dict_list = []
     for i in range(len(list_value)):
-        new_dict = input_dict.copy()
+        new_dict = params.copy()
         new_dict[list_key] = list_value[i]
         dict_list.append(new_dict)
     

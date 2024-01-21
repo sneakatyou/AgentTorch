@@ -1,12 +1,12 @@
 import sys
 
-from AgentTorch.utils import set_custom_transition_network_factory
+from AgentTorch.utils import add_metadata, get_config_values, set_custom_transition_network_factory
 
 sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch')
 import numpy as np
 import torch
 import torch.nn.functional as F
-from models.nca.utils_simulator import add_agent_properties, add_configuration, add_environment_network, add_metadata, add_substep, create_variables, get_config_values
+from models.nca.utils_simulator import add_agent_properties, add_environment_network, add_substep
 from models.nca.substeps.utils import make_circle_masks
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
@@ -65,7 +65,7 @@ def set_config(params):
     
     #add config metadata
     add_metadata(conf, params)
-    
+    get_config_values(conf, ['angle', 'seed_size', 'n_channels', 'batch_size', 'scalar_chn', 'chn', 'device', 'w', 'pool_size','h'])
     #retrieve config values
     config_values = get_config_values(conf, ['angle', 'seed_size', 'n_channels', 'batch_size', 'scalar_chn', 'chn', 'device', 'w', 'pool_size','h'])   
     automata_number = config_values['w'] * config_values['h']

@@ -1,10 +1,3 @@
-def get_config_values(conf, keys):
-    return {key: conf.get(f'simulation_metadata.{key}') for key in keys}
-
-def add_metadata(conf, params):
-    for key, value in params.items():
-        conf.add_metadata(key, value)
-
 def create_variables(conf, params):
     arguments_list = []
     for key, value in params.items():

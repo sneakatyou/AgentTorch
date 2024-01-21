@@ -1,14 +1,17 @@
 import sys
 
+from AgentTorch.utils import set_custom_transition_network_factory
+
 sys.path.insert(0, '/Users/shashankkumar/Documents/AgentTorchLatest/AgentTorch')
 import numpy as np
 import torch
 import torch.nn.functional as F
-from models.nca.utils_simulator import add_agent_properties, add_configuration, add_environment_network, add_substep, create_variables, get_config_values, set_custom_transition_network_factory
+from models.nca.utils_simulator import add_agent_properties, add_configuration, add_environment_network, add_metadata, add_substep, create_variables, get_config_values
 from models.nca.substeps.utils import make_circle_masks
 from AgentTorch import Configurator, Runner
 from AgentTorch.helpers import read_config
 from torchvision.transforms import v2 
+
 def configure_nca(config_path, params, custom_transition_network=None,custom_observation_network=None,custom_action_network=None):
     conf = set_config(params)   
     #define active agent
@@ -26,12 +29,12 @@ def configure_nca(config_path, params, custom_transition_network=None,custom_obs
     gaussian_blur = v2.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5.))
     
     custom_transition_network = gaussian_blur
-    from substeps.evolve_cell.transition import IsoNCAEvolve
+    from substeps.evolve_cell.transition import NCAEvolve
     if custom_transition_network is None:
-        evolve_transition = conf.create_function(IsoNCAEvolve, input_variables={'cell_state': f'agents/{active_agent}/cell_state'}, output_variables=['cell_state'], fn_type="transition")
+        evolve_transition = conf.create_function(NCAEvolve, input_variables={'cell_state': f'agents/{active_agent}/cell_state'}, output_variables=['cell_state'], fn_type="transition")
     else:
         @set_custom_transition_network_factory(custom_transition_network)
-        class CustomNCAEvolve(IsoNCAEvolve):
+        class CustomNCAEvolve(NCAEvolve):
             pass
         
         evolve_transition = conf.create_function(CustomNCAEvolve, input_variables={'cell_state': f'agents/{active_agent}/cell_state'}, output_variables=['cell_state'], fn_type="transition")
@@ -61,7 +64,7 @@ def set_config(params):
     conf = Configurator()
     
     #add config metadata
-    add_configuration(conf, params)
+    add_metadata(conf, params)
     
     #retrieve config values
     config_values = get_config_values(conf, ['angle', 'seed_size', 'n_channels', 'batch_size', 'scalar_chn', 'chn', 'device', 'w', 'pool_size','h'])   
@@ -76,7 +79,7 @@ def set_config(params):
     return conf
 
 
-class NCARunnerWithPool(Runner):
+class NCARunner(Runner):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

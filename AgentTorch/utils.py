@@ -1,6 +1,5 @@
 import wandb
 
-
 def set_custom_transition_network_factory(custom_transition_network):
     def set_custom_transition_network(cls):
         class CustomTransition(cls):
@@ -38,3 +37,21 @@ def initialise_wandb(entity, project, name, config):
             name=name, 
             config=config
             )  
+        
+def create_dicts_based_on_length(input_dict):
+    # Find the key with a list value
+    list_key = next((key for key, value in input_dict.items() if isinstance(value, list)), None)
+    
+    # If no key with a list value is found, return the input dictionary as the only element in a list
+    if list_key is None:
+        return [input_dict]
+    
+    # Create a list of dictionaries based on the length of the list value
+    list_value = input_dict[list_key]
+    dict_list = []
+    for i in range(len(list_value)):
+        new_dict = input_dict.copy()
+        new_dict[list_key] = list_value[i]
+        dict_list.append(new_dict)
+    
+    return dict_list

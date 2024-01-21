@@ -12,7 +12,7 @@ import sys
 from IPython.display import clear_output
 from AgentTorch.utils import initialise_wandb
 
-from simulator import configure_nca, NCARunnerWithPool
+from simulator import configure_nca, NCARunner
 from AgentTorch.helpers import read_config
 from substeps.utils import AddAuxilaryChannel, InvariantLoss, IsoNcaOps, assign_method, make_circle_masks
 import wandb
@@ -85,7 +85,7 @@ class TrainNca:
         self.num_steps_per_episode = self.runner.config["simulation_metadata"]["num_steps_per_episode"]
         self.normalize_gradient =  False
         self.pool_size = self.runner.config["simulation_metadata"]["pool_size"]
-        
+        self.trainable_transition_network = self.runner.config["simulation_metadata"]["trainable_transition_network"]
         initialise_wandb(entity="blankpoint",
         project="NCA",         
         name=f"{self.model_suffix}", 
@@ -96,18 +96,18 @@ class TrainNca:
         "epochs": self.runner.config['simulation_metadata']['num_episodes'],
         })
         
-    def train(self,calculate_grads=True):
+    def train(self):
         print("Starting training...")
         print(f"Target is: {self.runner.config['simulation_metadata']['target']}",)
         for i in range(self.runner.config['simulation_metadata']['num_episodes']):
             # step_n = np.random.randint(64, 96)
             step_n = 50
-            self.train_step(i, step_n,calculate_grads=calculate_grads)
+            self.train_step(i, step_n)
         
         torch.save(self.runner.state_dict(
         ), self.runner.config['simulation_metadata']['learning_params']['model_path'])
 
-    def train_step(self, i, step_n, calculate_grads=True):
+    def train_step(self, i, step_n):
         self.runner.reset(1,i,len(self.loss_log))
         self.opt.zero_grad()
         self.runner.step(step_n) 
@@ -116,7 +116,7 @@ class TrainNca:
         self.wandb_log("lr",self.lr_sched.get_lr()[0])
             
         with torch.no_grad():
-            if calculate_grads:
+            if self.trainable_transition_network:
                 try:
                     loss.backward()
                 except Exception as e:
@@ -259,11 +259,16 @@ if __name__ == "__main__":
     "mirror": False,
     "alive_threshold_value": 0.1,
     "pool_size": 128,
-    "hex_grid": False
+    "hex_grid": False,
+    "trainable_transition_network" : True
     }
     
+    if params['device'] != 'cpu':
+        torch.cuda.set_device(params.device)
+        torch.set_default_tensor_type('torch.cuda.FloatTensor')
+    
     config, registry = configure_nca(config_file,params)
-    runner = NCARunnerWithPool(read_config(config_file), registry)
+    runner = NCARunner(read_config(config_file), registry)
     
     def seed(self, pool_size, seed_size):
     # Generate a tensor with random values between 0 and 1
@@ -280,6 +285,6 @@ if __name__ == "__main__":
         return x
     
     assign_method(runner, 'seed', seed)
-    runner.init()
+    runner.init()  
     trainer = TrainNca(runner)
     trainer.train()

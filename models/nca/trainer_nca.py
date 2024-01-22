@@ -169,7 +169,6 @@ class TrainNca:
 
     def save_output(self, i, x_final_step):
             if i % 50 == 0:
-                clear_output(True)
                 #log loss curve
                 try:
                     pl.plot(self.loss_log, '.', alpha=0.1)
